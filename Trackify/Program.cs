@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Trackify
 {
     public class Program
@@ -8,8 +10,13 @@ namespace Trackify
 
             // Add services to the container.
             builder.Services.AddRazorPages();
-
+            builder.Services.AddSession();
+            
+            //builder.Services.AddSingleton<IUser, User>();
+            //builder.Services.AddSingleton<IMusic, Music>();
             var app = builder.Build();
+
+            app.UseSession();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
