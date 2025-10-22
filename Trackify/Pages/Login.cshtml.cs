@@ -7,6 +7,7 @@ namespace Trackify.Pages
     {
         public void OnGet()
         {
+            HttpContext.Session.SetInt32("NoNavBar", 1);
         }
     }
 }

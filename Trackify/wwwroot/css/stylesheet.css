@@ -1,1 +1,47 @@
-﻿
+﻿.gradientUp {
+    background: linear-gradient(to bottom, #292929 0%, #020202 100%);
+}
+
+#LoginPage {
+    color: white;
+    
+}
+#LoginPage.card {
+    background-color: #121212;
+    color: white;
+    row-gap: normal;
+    border-radius: 8px;
+    padding-bottom: 32px;
+}
+input.LoginPage {
+    display: block;
+    opacity: 0;
+    box-sizing: border-box;
+    outline-color: rgb(179, 179, 179);
+}
+input.LoginPage:hover {
+    outline-color: white;
+}
+
+.divider {
+    background: #fff;
+    height: 25px;
+    margin: 16px;
+    width: 1px;
+}
+.navbar{
+    background-color: black;
+}
+
+.footer.Login {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+    background: #121212;
+    color: rgb(179, 179, 179);
+}
+a.Login {
+    color: rgb(179, 179, 179);
+}

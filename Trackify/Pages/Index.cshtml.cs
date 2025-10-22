@@ -14,7 +14,7 @@ namespace Trackify.Pages
 
         public void OnGet()
         {
-
+            HttpContext.Session.Remove("NoNavBar");
         }
     }
 }
