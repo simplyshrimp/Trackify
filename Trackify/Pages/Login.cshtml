@@ -1,0 +1,62 @@
+﻿@page
+@model Trackify.Pages.LoginModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - Trackify</title>
+        <script type="importmap"></script>
+        <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/Trackify.styles.css" asp-append-version="true" />
+    </head>
+<body class="gradientUp">
+        <div>
+            <header>
+                <div class=" d-flex justify-content-center pt-5 mt-5" style="height:auto;">
+                    <div id="LoginPage" class="card text-center pt-3" style="height: 300px; width: 668px;">
+                        <div class="row gap-2">
+                            <div>
+                                <svg bootstrap-icon="Spotify" width="46" height="46" aria-label="Trackify"></svg>
+                                <i class="bi bi-spotify"></i>
+                            </div>
+                            <div>
+                                <h4 class="fw-bold"> Log in to Trackify</h4>
+                            </div>
+                            <div>
+                                <div class="border"></div>
+                            </div>
+                            <div>
+                            <form method="post">
+                                <div class="row gap-4">
+                                    <div>
+                                        <label class="fw-bold small">Email or username</label>
+                                        <br />
+                                        <input class="LoginPage" placeholder="Email or username">
+                                    </div>
+                                    <div>
+                                        <a class="btn border rounded-5" href="">Continue</a>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                            <div class="mt-3">
+                                <p> Don't have an account? <a class="text-decoration-underline text-white">Sign up for Trackify</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        <footer class="Login border-top-0 footer text-muted small align-content-center" style="height:81px;">
+            <div class="container d-flex justify-content-center">
+                &copy; 2025 - Trackify - <a class="Login" asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+    </body>
+</html>
