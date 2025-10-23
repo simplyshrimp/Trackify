@@ -13,7 +13,7 @@ USE Trackify
 CREATE TABLE Users(
 UserID int identity(1,1) primary key,
 UserName nvarchar(50),
-HashedPassword nvarchar(50),
+HashPassword nvarchar(50),
 Salt nvarchar(36),
 FirstName nvarchar(50),
 LastName nvarchar(50),
@@ -108,14 +108,22 @@ AS
 	VALUES (@Username, HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), @Salt, @FirstName,@LastName,@Email,@Birthday,@Subscription) SELECT SCOPE_IDENTITY() AS UserID;
 
 GO
-CREATE OR ALTER PROCEDURE LoginSP
+CREATE OR ALTER PROCEDURE LoginUsernameSP
 	@Username nvarchar(50),
 	@Password nvarchar(50)
 AS
 	SET NOCOUNT ON
 	SELECT UserID FROM Users WHERE Username=@Username AND HashPassword=HASHBYTES('SHA2_512', @Password+CAST(Salt AS nvarchar(36))) SELECT SCOPE_IDENTITY() AS UserID
+GO
+CREATE OR ALTER PROCEDURE LoginEmailSP
+	@Email nvarchar(50),
+	@Password nvarchar(50)
+AS
+	SET NOCOUNT ON
+	SELECT UserID FROM Users WHERE Email=@Email AND HashPassword=HASHBYTES('SHA2_512', @Password+CAST(Salt AS nvarchar(36))) SELECT SCOPE_IDENTITY() AS UserID
 
 GO
+
 CREATE OR ALTER PROCEDURE GetUserByIDSP
 	@UserID int
 AS
@@ -149,3 +157,4 @@ AS
 	UPDATE Users
 	SET HashPassword=HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), Salt=@Salt
 	WHERE UserID=@UserID
+GO

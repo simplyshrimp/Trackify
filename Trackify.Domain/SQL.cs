@@ -50,15 +50,36 @@ namespace Trackify.Domain
             return null;
         }
 
-        public int Login(string username, string password)
+        public int LoginByUsername(string username, string password)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("LoginSP", conn);
+                    SqlCommand cmd = new SqlCommand("LoginUsernameSP", conn);
                     cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    return userId;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("login went wrong");
+                    throw;
+                }
+            }
+        }
+        public int LoginByEmail(string email, string password)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("LoginEmailSP", conn);
+                    cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@Password", password);
                     cmd.CommandType = CommandType.StoredProcedure;
                     int userId = Convert.ToInt32(cmd.ExecuteScalar());

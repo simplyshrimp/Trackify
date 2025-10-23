@@ -15,7 +15,8 @@ namespace Trackify.Service
         public User(IConfiguration configuration) => connection = new SQL(configuration);
 
         public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, int subscriptionType) => connection.SignUp(username, password, confirmPassword, firstName, lastName, email, birthday, subscriptionType);
-        public int Login(string username, string password) => connection.Login(username, password);
+        public int LoginByUsername(string username, string password) => connection.LoginByUsername(username, password);
+        public int LoginByEmail(string email, string password) => connection.LoginByEmail(email, password);
         public Users GetUserByID(int id) => connection.GetUserByID(id);
         public Users UpdateUser(Users updatedUser) => connection.UpdateUser(updatedUser);
         public void UpdatePassword(int id, string newPassword) => connection.UpdatePassword(id, newPassword);

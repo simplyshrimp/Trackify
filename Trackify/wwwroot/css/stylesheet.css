@@ -14,10 +14,11 @@
     padding-bottom: 32px;
 }
 input.LoginPage {
-    display: block;
-    opacity: 0;
     box-sizing: border-box;
     outline-color: rgb(179, 179, 179);
+    background: #1f1f1f;
+    border: 1px solid;
+    border-radius: 2%;
 }
 input.LoginPage:hover {
     outline-color: white;
@@ -45,3 +46,29 @@ input.LoginPage:hover {
 a.Login {
     color: rgb(179, 179, 179);
 }
+.searchbox {
+    background: #1f1f1f;
+    border: none;
+}
+.searchbox:hover {
+    background: #2a2a2a;
+    outline:thin;
+    outline-color: white;
+}
+
+.loggedInBody {
+    background: linear-gradient(to bottom, #31285c 0%, #121212 50%) !important;
+}
+
+.roundbutton {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1f1f1f;
+    border-radius: 100px;
+    width: 48px;
+    height: 48px;
+    border: none;
+}
+

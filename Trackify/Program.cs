@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Trackify.Service;
 
 namespace Trackify
 {
@@ -12,7 +13,7 @@ namespace Trackify
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             
-            //builder.Services.AddSingleton<IUser, User>();
+            builder.Services.AddSingleton<IUser, User>();
             //builder.Services.AddSingleton<IMusic, Music>();
             var app = builder.Build();
 
