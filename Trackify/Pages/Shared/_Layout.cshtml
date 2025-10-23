@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Trackify</title>
+    <link rel="icon" type="image/x-icon" href="/ImagesAndSongs/favicon.ico">
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -14,19 +15,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom-0 box-shadow mb-3" style="height: 64px;">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Trackify</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><img class="ms-2" style="height: 38px; width: 38px;" src="~/ImagesAndSongs/Logo/Transparent white.png" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
+
                     </ul>
                     <ul class="navbar-nav flex-grow-1 d-flex justify-content-center">
                         <li>
@@ -53,7 +49,7 @@
                                     <a class="nav-link mt-2 fw-semibold" asp-area="" asp-page="/Signup">Sign up</a>
                                 </li>
                             <li class="nav-item">
-                                <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5" style="width: 108px; height: 48px;" href="/Login">Login</a>
+                                <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Login</a>
                                 </li>    
                             </ul>
                         }
