@@ -30,9 +30,20 @@
                             
                         </li>
                         <li>
-                            <div class="input-group">
-                                <button class="roundbutton round"><svg bootstrap-icon="Search" width="24" height="24"></svg></button>
-                                <input class="searchbox rounded-5 form-control" placeholder="What do you want to play?" style="width: 474px ; height: 48px;" />
+                            <button class="roundbutton me-2">
+                                <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
+                            </button>
+                        </li>
+                        <li>
+                            <div class="search-bar">
+                                <button class="search-submit" tabindex="0">
+                                    <svg bootstrap-icon="Search" height="24px" width="24px"></svg>
+                                </button>
+                                <input type="search" class="search-input" placeholder="What do you want to play?" style="width: 474px ; height: 48px;" tabindex="0" />
+                                <div class="divider"></div>
+                                <button class="search-submit">
+                                    <svg bootstrap-icon="Folder2Open" height="25px" width="25px"></svg>
+                                </button>
                             </div>
                         </li>
                     </ul>
@@ -69,11 +80,11 @@
         </main>
     </div>
 
-    <footer class="border-top-0 footer text-muted" style="height:81px;">
+    <!--<footer class="border-top-0 footer text-muted" style="height:81px;">
         <div class="container">
             &copy; 2025 - Trackify - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer>-->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -46,20 +46,6 @@ input.LoginPage:hover {
 a.Login {
     color: rgb(179, 179, 179);
 }
-.searchbox {
-    background: #1f1f1f;
-    border: none;
-}
-.searchbox:hover {
-    background: #2a2a2a;
-    outline:thin;
-    outline-color: white;
-}
-
-.loggedInBody {
-    background: linear-gradient(to bottom, #31285c 0%, #121212 50%) !important;
-}
-
 .roundbutton {
     flex: none;
     display: flex;
@@ -72,3 +58,65 @@ a.Login {
     border: none;
 }
 
+
+
+.search-bar {
+    --size: 48px;
+    --padding: 8px;
+    --expanded-width: 474;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #1f1f1f;
+    border-radius: 100px;
+    outline: 0px solid transparent;
+    overflow: hidden;
+    padding: var(--padding);
+    margin-inline: auto;
+    width: var(--expanded-width);
+    height: var(--size);
+    max-width: 100%;
+    transition: width 0.5s, outline 0.5s;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar:focus-within {
+    width: var(--expanded-width);
+    outline: white;
+}
+.search-input {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-inline: 1rem;
+    transition: opacity 0.5s;
+}
+
+.search-bar:focus-within .search-input {
+    opacity: 1;
+}
+
+.search-submit {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #fff;
+    background-color: transparent;
+    border-radius: 50%;
+    border: none;
+    width: calc(var(--size) - var(--padding) - var(--padding));
+    aspect-ratio: 1;
+    cursor: pointer;
+}
+.search-bar:hover {
+    background-color: #2a2a2a;
+}
