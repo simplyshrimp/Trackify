@@ -14,10 +14,11 @@
     padding-bottom: 32px;
 }
 input.LoginPage {
-    display: block;
-    opacity: 0;
     box-sizing: border-box;
     outline-color: rgb(179, 179, 179);
+    background: #1f1f1f;
+    border: 1px solid;
+    border-radius: 2%;
 }
 input.LoginPage:hover {
     outline-color: white;
