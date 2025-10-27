@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Trackify</title>
-    <link rel="icon" type="image/x-icon" href="/ImagesAndSongs/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/ImagesAndSongs/favicon2.ico">
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -45,7 +45,47 @@
                     </ul>
                     @{
                         if(Context.Session.GetInt32("LoggedIn") == 1)
-                        {}
+                        {
+                            <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="/Subscribe">Premium</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="/Support">Support</a>
+                                </li>
+                                <li>
+                                    <div class="divider"></div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Log out</a>
+                                </li>
+                                <li class="pt-2">
+                                    <div class="btn-group">
+                                        <button class="m-0 ms-1 roundbuttonbig" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="roundbutton" src="@Context.Session.GetString("pfp")" style="width:32px; height: 32px;" />
+                                        </button>
+                                        <ul class="dropdown-menu text-start">
+                                            <li>
+                                                <a href="/Account">Account</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Profile">Profile</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Support">Support</a>
+                                            </li>
+                                            <li>
+                                                <a href="/Settings">Settings</a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li>
+                                            <li>
+                                                <a href="/LogOut">Log out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
                         else
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
@@ -55,13 +95,18 @@
                                 <li class="nav-item">
                                     <a class="nav-link fw-bold mt-2" asp-area="" asp-page="/Support">Support</a>
                                 </li>
+                                <li>
                                     <div class="divider"></div>
+                                </li>
                                 <li class="nav-item small">
                                     <a class="nav-link mt-2 fw-semibold" asp-area="" asp-page="/Signup">Sign up</a>
                                 </li>
-                            <li class="nav-item">
-                                <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Log in</a>
-                                </li>    
+                                <li class="nav-item">
+                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Log in</a>
+                                </li>
+                                <li>
+                                    <img src="@Context.Session.GetString("pfp")"  />
+                                </li>
                             </ul>
                         }
                     }

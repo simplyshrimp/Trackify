@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,14 @@ namespace Trackify.Domain
                         cmd.CommandType = CommandType.StoredProcedure;
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
-                        string pfp = "/Images/Users/empty-user-pfp.png";
+                        string pfp = "/ImagesAndSong/Users/empty-user-pfp.png";
                         return new Users(userId, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge);
                     }
                     catch (Exception)
                     {
                         Console.WriteLine("something went wrong..");
                         throw;
+                        return null;
                     }
                     finally { conn.Close(); }
                 }

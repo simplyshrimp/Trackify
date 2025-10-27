@@ -19,8 +19,8 @@ FirstName nvarchar(50),
 LastName nvarchar(50),
 Email nvarchar(50),
 Birthday date,
-SubscriptionType int,
-pfp nvarchar(255) default '\ImagesAndSongs\Users\Empty-User-pfp.png',
+SubscriptionType int default '0' not null,
+pfp nvarchar(255) default '/ImagesAndSongs/Users/Empty-User-pfp.png',
 AccountAge date default getdate()
 )
 
@@ -44,7 +44,7 @@ AlbumID int identity (1,1) primary key,
 AlbumTitle nvarchar(255),
 AlbumType nvarchar(50),
 Artist int,
-AlbumImage nvarchar(255) default '\ImagesAndSongs\Albums\Trackify-Album-Placeholder.png',
+AlbumImage nvarchar(255) default '/ImagesAndSongs/Albums/Trackify-Album-Placeholder.png',
 foreign key (Artist) references Artists(ArtistID)
 )
 
@@ -61,7 +61,7 @@ AlbumID int null,
 SongLength decimal(18,2),
 TimesListened int,
 SoundFile nvarchar(255),
-ThumbnailPath nvarchar(255) default '\ImagesAndSongs\Songs\Trackify-Song-Placeholder.png',
+ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
 GenreID int,
 foreign key (GenreID) references Genre(GenreID),
 foreign key (Artist) references Artists(ArtistID),

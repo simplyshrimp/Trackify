@@ -22,7 +22,7 @@
                 <div id="LoginPage" class="card text-center pt-3" style="height: 500px; width: 668px;">
                     <div class="row gap-3">
                         <div>
-                            <img src="~/ImagesAndSongs/Logo/White with Black.png" style="height: 90px; width: 90px;" />
+                            <a href="/Index"><img src="~/ImagesAndSongs/Logo/White with Black.png" style="height: 90px; width: 90px;" /></a>
                             <i class="bi bi-spotify"></i>
                         </div>
                         <div>
@@ -40,6 +40,18 @@
                                 <input class="LoginPage" placeholder="Username" asp-for="Username">
                                 <br />
                                 <span class="text-danger" asp-validation-for="Username"></span>
+                                <br/>
+                                <label class="fw-bold small">First Name</label>
+                                <br />
+                                <input class="LoginPage" placeholder="First Name" asp-for="FirstName">
+                                <br />
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                                <br />
+                                <label class="fw-bold small">Lastname</label>
+                                <br />
+                                <input class="LoginPage" placeholder="Lastname" asp-for="LastName">
+                                <br />
+                                <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
                             <div class="col-5">
                                 <label class="fw-bold small">Password</label>
@@ -48,10 +60,27 @@
                                 <br />
                                 <span class="text-danger" asp-validation-for="Password"></span>
                                 <br />
+                                <label class="fw-bold small"> Confirm Password</label>
                                 <br />
+                                
+                                <input type="password" class="LoginPage" placeholder="Confirm Password" asp-for="ConfirmPassword">
+                                <br />
+                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                <br />
+                                <label class="fw-bold small">Date of birth</label>
+                                <br />
+                                <input type="date" style=" width: 187px" class="LoginPage" value="@DateTime.Now.AddYears(-20).ToString("yyyy-MM-dd")" asp-for="Birthday">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Birthday"></span>
                             </div>
+                                <br />
+                                <label class="fw-bold small">Email</label>
+                                <br />
+                                <input type="email" class="LoginPage" placeholder="Email" asp-for="Email">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Email"></span>
                             <div>
-                                <a class="btn border rounded-5" href="">Continue</a>
+                                <input type="submit" class="btn border rounded-5"Continue>
                             </div>
                         </div>
                     </form>
@@ -63,7 +92,7 @@
         </header>
         <footer class="Login border-top-0 footer text-muted small align-content-center" style="height:81px;">
             <div class="container d-flex justify-content-center">
-                &copy; 2025 - Trackify - <a class="Login" asp-area="" asp-page="/Privacy">Privacy</a>
+                &copy; 2025 - Trackify - <a class="Login" asp-area="" asp-page="/Privacy">Privacy</a>
             </div>
         </footer>
     </div>
