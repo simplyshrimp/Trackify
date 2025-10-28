@@ -1,0 +1,20 @@
+﻿@page
+@model Trackify.Pages.ProfileModel
+@{
+}
+<div class="">
+    <div class="row" style="height: 800px;">
+        <!-- sidebar with playlists -->
+        <div class="col-2 border">
+            <div class="card h-100"></div>
+        </div>
+        <!-- profile pic and info -->
+        <div class="col-9 border">
+            <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
+        </div>
+    <!-- footer 'playing now' -->
+    </div>
+        <div class="container-fluid align-bottom border" style="height: 78px;">
+
+        </div>
+</div>

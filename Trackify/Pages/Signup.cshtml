@@ -19,7 +19,7 @@
     <div>
         <header>
             <div class=" d-flex justify-content-center pt-5 mt-5" style="height:auto;">
-                <div id="LoginPage" class="card text-center pt-3" style="height: 500px; width: 668px;">
+                <div id="LoginPage" class="card text-center pt-3" style="max-height: 600px; max-width: 668px; orphans: 2;">
                     <div class="row gap-3">
                         <div>
                             <a href="/Index"><img src="~/ImagesAndSongs/Logo/White with Black.png" style="height: 90px; width: 90px;" /></a>
@@ -76,11 +76,12 @@
                                 <br />
                                 <label class="fw-bold small">Email</label>
                                 <br />
-                                <input type="email" class="LoginPage" placeholder="Email" asp-for="Email">
+                                <input type="email" class="LoginPage w-50" placeholder="Email" asp-for="Email">
                                 <br />
                                 <span class="text-danger" asp-validation-for="Email"></span>
+                                <br />
                             <div>
-                                <input type="submit" class="btn border rounded-5"Continue>
+                                <input type="submit" class="btn border w-25 rounded-5"Continue>
                             </div>
                         </div>
                     </form>
