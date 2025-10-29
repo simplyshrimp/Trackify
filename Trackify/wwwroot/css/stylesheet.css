@@ -1,4 +1,10 @@
-﻿html body {
+﻿/* Set height */
+
+.main-content {
+    height: calc(100vh - 64px - 82px)
+}
+ 
+html body {
     background-color: #000000;
 }
 
@@ -152,7 +158,7 @@ a.dditem:hover {
 }
 
 /*--profile--*/
-.card {
+div.card {
     background-color: #121212;
 
 }

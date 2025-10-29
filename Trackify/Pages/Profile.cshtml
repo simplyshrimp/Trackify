@@ -2,19 +2,19 @@
 @model Trackify.Pages.ProfileModel
 @{
 }
-<div class="">
-    <div class="row" style="height: 800px;">
-        <!-- sidebar with playlists -->
-        <div class="col-2 border">
-            <div class="card h-100"></div>
-        </div>
-        <!-- profile pic and info -->
-        <div class="col-9 border">
-            <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
-        </div>
-    <!-- footer 'playing now' -->
-    </div>
-        <div class="container-fluid align-bottom border" style="height: 78px;">
 
-        </div>
+<div class="row h-100  " style="">
+    <!-- sidebar with playlists -->
+    <div class="col-2 border  h-100">
+        <div class="card d-flex h-100 flex-grow-1"></div>
+    </div>
+    <!-- profile pic and info -->
+    <div class="col-9 border flex-grow-1 d-flex h-100" style="">
+        <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
+    </div>
+<!-- footer 'playing now' -->
 </div>
+
+<footer class="border fixed-bottom" style="height: 72px;">
+
+</footer>
