@@ -13,6 +13,7 @@ USE Trackify
 CREATE TABLE Users(
 UserID int identity(1,1) primary key,
 UserName nvarchar(50),
+Nickname nvarchar(50),
 HashPassword nvarchar(50),
 Salt nvarchar(36),
 FirstName nvarchar(50),
@@ -45,6 +46,7 @@ AlbumTitle nvarchar(255),
 AlbumType nvarchar(50),
 Artist int,
 AlbumImage nvarchar(255) default '/ImagesAndSongs/Albums/Trackify-Album-Placeholder.png',
+MadePrivate bit default 1,
 foreign key (Artist) references Artists(ArtistID)
 )
 
@@ -62,6 +64,7 @@ SongLength decimal(18,2),
 TimesListened int,
 SoundFile nvarchar(255),
 ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
+MadePrivate bit default 1,
 GenreID int,
 foreign key (GenreID) references Genre(GenreID),
 foreign key (Artist) references Artists(ArtistID),
@@ -71,7 +74,8 @@ foreign key (AlbumID) references Album(AlbumID)
 CREATE TABLE Playlist(
 PlaylistID int identity (1,1) primary key,
 UserID int,
-PlaylistName nvarchar(50)
+PlaylistName nvarchar(50),
+MadePrivate bit default 1,
 foreign key (UserID) references Users(UserID)
 )
 
@@ -104,8 +108,8 @@ AS
 	SET NOCOUNT ON;
 	DECLARE @Salt UNIQUEIDENTIFIER=NEWID()
 
-	INSERT INTO Users (Username,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType)
-	VALUES (@Username, HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), @Salt, @FirstName,@LastName,@Email,@Birthday,@Subscription) SELECT SCOPE_IDENTITY() AS UserID;
+	INSERT INTO Users (Username,Nickname,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType)
+	VALUES (@Username, @Username, HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), @Salt, @FirstName,@LastName,@Email,@Birthday,@Subscription) SELECT SCOPE_IDENTITY() AS UserID;
 
 GO
 CREATE OR ALTER PROCEDURE LoginUsernameSP
@@ -134,6 +138,7 @@ GO
 CREATE OR ALTER PROCEDURE UpdateUserSP
 	@UserID int,
 	@Username nvarchar(50),
+	@Nickname nvarchar(50),
 	@FirstName nvarchar(50),
 	@LastName nvarchar(50),
 	@Email nvarchar(50),
@@ -143,7 +148,7 @@ CREATE OR ALTER PROCEDURE UpdateUserSP
 AS
 	SET NOCOUNT ON
 	UPDATE Users 
-	SET Username=@Username, FirstName=@FirstName, LastName=@LastName, Email=@Email, Birthday=@Birthday, pfp=@pfp, SubscriptionType=@SubscriptionType 
+	SET Username=@Username, Nickname=@Nickname, FirstName=@FirstName, LastName=@LastName, Email=@Email, Birthday=@Birthday, pfp=@pfp, SubscriptionType=@SubscriptionType 
 	WHERE UserID=@UserID
 
 GO

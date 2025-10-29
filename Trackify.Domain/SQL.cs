@@ -38,13 +38,12 @@ namespace Trackify.Domain
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
                         string pfp = "/ImagesAndSong/Users/empty-user-pfp.png";
-                        return new Users(userId, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge);
+                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge);
                     }
                     catch (Exception)
                     {
                         Console.WriteLine("something went wrong..");
                         throw;
-                        return null;
                     }
                     finally { conn.Close(); }
                 }
@@ -113,6 +112,7 @@ namespace Trackify.Domain
                             return new Users(
                                 id,
                                 reader.GetString("Username"),
+                                reader.GetString("Nickname"),
                                 reader.GetString("FirstName"),
                                 reader.GetString("LastName"),
                                 reader.GetString("Email"),
@@ -144,6 +144,7 @@ namespace Trackify.Domain
                     SqlCommand cmd = new SqlCommand("UpdateUserSP", conn);
                     cmd.Parameters.AddWithValue("@UserID", updatedUser.userId);
                     cmd.Parameters.AddWithValue("@Username", updatedUser.username);
+                    cmd.Parameters.AddWithValue("@Nickname", updatedUser.nickname);
                     cmd.Parameters.AddWithValue("@FirstName", updatedUser.firstName);
                     cmd.Parameters.AddWithValue("@LastName", updatedUser.lastName);
                     cmd.Parameters.AddWithValue("@Email", updatedUser.email);

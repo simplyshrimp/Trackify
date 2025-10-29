@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Trackify.Service;
 using Trackify.Domain.Models;
 
-namespace Trackify.Pages
+namespace Trackify.Pages.User
 {
     public class SignupModel : PageModel
     {
@@ -38,7 +38,7 @@ namespace Trackify.Pages
         public void OnGet()
         {
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid == true)
             {
@@ -51,10 +51,12 @@ namespace Trackify.Pages
                 {
                     HttpContext.Session.SetInt32("LoggedIn", 1);
                     HttpContext.Session.SetInt32("Id", signedUp.userId);
-                    HttpContext.Session.SetString("pfp", signedUp.pfp);
+                    HttpContext.Session.SetString("pfp", "/ImagesAndSongs/Users/Empty-User-pfp.png");
+                    return RedirectToPage("/Homepage");
                 }
             }
             else { }
+            return Page();
         }
     }
 }

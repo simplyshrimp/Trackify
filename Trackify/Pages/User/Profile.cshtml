@@ -1,0 +1,36 @@
+﻿@page
+@using Trackify.Domain.Models;
+@model Trackify.Pages.User.ProfileModel
+@{
+}
+
+
+    <div class="row h-100 gap-2">
+        <!-- sidebar with playlists -->
+        <div class="col-2 p-0">
+            <div class="card h-100"></div>
+        </div>
+        <!-- profile pic and info -->
+        <div class="col-9 flex-grow-1 p-0">
+            <div class="card h-100 p-5">
+                <div class="row p-0 m-0">
+                    <div class="col-3 p-0">
+                        <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
+                    </div>
+                    <div class="col-6 p-0">
+                        <br/>
+                        <span class="small">Profile</span>
+                        <br />
+                        <h1 class="fw-bold" style="font-size: 6em;">@Model.user.username</h1>
+                        <span class="small">{WIP} public playlists • </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- footer 'playing now' -->
+<footer class="border fixed-bottom" style="height: 72px;">
+
+</footer>

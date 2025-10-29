@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Trackify.Service;
 using Trackify.Domain.Models;
 
-namespace Trackify.Pages
+namespace Trackify.Pages.User
 {
     public class LoginModel : PageModel
     {

@@ -56,9 +56,6 @@
                                 <li>
                                     <div class="divider"></div>
                                 </li>
-                                <li class="nav-item">
-                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Log out</a>
-                                </li>
                                 <li class="pt-1">
                                     <div class="btn-group">
                                         <button class="m-0 ms-1 roundbuttonbig" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -71,7 +68,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" href="/Profile">
+                                                <a class="dditem" href="/User/Profile">
                                                     <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
@@ -87,7 +84,7 @@
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
-                                                <a class="dditem" href="/LogOut">
+                                                <a class="dditem" href="/User/LogOut">
                                                     <button class="dditem btn w-100 text-start ">Log out</button>
                                                 </a>
                                             </li>
@@ -109,10 +106,10 @@
                                     <div class="divider"></div>
                                 </li>
                                 <li class="nav-item small">
-                                    <a class="nav-link mt-2 fw-semibold" asp-area="" asp-page="/Signup">Sign up</a>
+                                    <a class="nav-link mt-2 fw-semibold" asp-area="" asp-page="/User/Signup">Sign up</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/Login">Log in</a>
+                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/User/Login">Log in</a>
                                 </li>
                                 <li>
                                     <img src="@Context.Session.GetString("pfp")"  />

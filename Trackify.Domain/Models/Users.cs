@@ -10,6 +10,7 @@ namespace Trackify.Domain.Models
     {
         public int userId { get; set; }
         public string username { get; set; }
+        public string nickname { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
@@ -19,10 +20,11 @@ namespace Trackify.Domain.Models
         public DateOnly accountAge { get; set; }
 
 
-        public Users(int UserID, string username, string email, string firstName, string lastName, DateOnly birthday, int subscriptionType, string pfp, DateOnly accountAge)
+        public Users(int UserID, string username, string nickname, string email, string firstName, string lastName, DateOnly birthday, int subscriptionType, string pfp, DateOnly accountAge)
         {
             this.userId = UserID;
             this.username = username;
+            this.nickname = nickname;
             this.firstName = firstName;
             this.lastName = lastName;
             this.email = email;
