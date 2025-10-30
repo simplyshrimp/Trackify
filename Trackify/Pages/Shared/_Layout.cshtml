@@ -26,9 +26,11 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1 d-flex justify-content-center">
                         <li>
-                            <button class="roundbutton me-2">
-                                <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
-                            </button>
+                            <a asp-page="/HomePage">
+                                <button class="roundbutton me-2">
+                                    <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
+                                </button>
+                            </a>
                         </li>
                         <li>
                             <div class="search-bar">
@@ -48,10 +50,10 @@
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="/Subscribe">Premium</a>
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Subscribe">Premium</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="/Support">Support</a>
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Support">Support</a>
                                 </li>
                                 <li>
                                     <div class="divider"></div>
@@ -63,28 +65,28 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
                                             <li>
-                                                <a class="dditem" href="/Account">
+                                                <a class="dditem" asp-page="/User/Account">
                                                     <button class="dditem btn w-100 text-start">Account</button>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" href="/User/Profile">
+                                                <a class="dditem" asp-page="/User/Profile">
                                                     <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" href="/Support">
+                                                <a class="dditem" asp-page="/User/Support">
                                                     <button class="dditem btn w-100 text-start">Support</button>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" href="/Settings">
+                                                <a class="dditem" asp-page="/User/Settings">
                                                     <button class="dditem btn w-100 text-start">Settings</button>
                                                 </a>
                                             </li>
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
-                                                <a class="dditem" href="/User/LogOut">
+                                                <a class="dditem" asp-page="/User/LogOut">
                                                     <button class="dditem btn w-100 text-start ">Log out</button>
                                                 </a>
                                             </li>
@@ -109,7 +111,7 @@
                                     <a class="nav-link mt-2 fw-semibold" asp-area="" asp-page="/User/Signup">Sign up</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" href="/User/Login">Log in</a>
+                                    <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" asp-page="/User/Login">Log in</a>
                                 </li>
                                 <li>
                                     <img src="@Context.Session.GetString("pfp")"  />
