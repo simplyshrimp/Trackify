@@ -9,10 +9,12 @@ namespace Trackify.Service
 {
     public interface IUser
     {
-        public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, int subscriptionType);
+        public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, SubscriptionType subscriptionType);
         public int LoginByUsername(string username, string password);
         public int LoginByEmail(string email, string password);
         public Users GetUserByID(int id);
+        public bool GetUserByUsername(string username);
+        public bool GetUserByEmail(string email);
         public Users UpdateUser(Users updatedUser);
         public void UpdatePassword(int id, string password);
     }

@@ -35,6 +35,8 @@ namespace Trackify.Pages.User
         [Required(ErrorMessage = "you must confirm your password")]
         [BindProperty]
         public string ConfirmPassword { get; set; }
+
+
         public void OnGet()
         {
         }
@@ -42,17 +44,34 @@ namespace Trackify.Pages.User
         {
             if (ModelState.IsValid == true)
             {
-                Users signedUp = userMethod.SignUp(Username, Password, ConfirmPassword, FirstName, LastName, Email, Birthday, 0);
-                if (signedUp == null)
+                bool signUp = false; /*add modelstate errors and stuff, there might be a much better way to do this*/
+                if (userMethod.GetUserByUsername(Username) == true)
                 {
-                    ModelState.AddModelError(nameof(Email), "User could not be signed up");
+                    signUp = false;
+                    ModelState.AddModelError(nameof(Username), "Username is already taken");
                 }
-                else
+                else { signUp = true; }
+                if (userMethod.GetUserByEmail(Email) == true)
                 {
-                    HttpContext.Session.SetInt32("LoggedIn", 1);
-                    HttpContext.Session.SetInt32("Id", signedUp.userId);
-                    HttpContext.Session.SetString("pfp", "/ImagesAndSongs/Users/Empty-User-pfp.png");
-                    return RedirectToPage("/Homepage");
+                    signUp = false;
+                    ModelState.AddModelError(nameof(Email), "Email is already in use");
+                }
+                else { signUp = true; } /* test this!*/
+
+                if (signUp == true)
+                {
+                    Users signedUp = userMethod.SignUp(Username, Password, ConfirmPassword, FirstName, LastName, Email, Birthday, 0);
+                    if (signedUp == null)
+                    {
+                        ModelState.AddModelError("Submit" ,"User could not be signed up");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetInt32("LoggedIn", 1);
+                        HttpContext.Session.SetInt32("Id", signedUp.userId);
+                        HttpContext.Session.SetString("pfp", "/ImagesAndSongs/Users/Empty-User-pfp.png");
+                        return RedirectToPage("/Homepage");
+                    }
                 }
             }
             else { }

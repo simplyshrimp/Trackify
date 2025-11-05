@@ -94,8 +94,9 @@ SubscriptionStart date default getdate(),
 SubscriptionEnd date,
 foreign key (UserID) references Users(UserID)
 )
-----------------------------------------------------------Procedures-----------------------------------------------------
 GO
+----------------------------------------------------------Procedures-----------------------------------------------------
+
 CREATE OR ALTER PROCEDURE CreateUserSP 	
 	@Username nvarchar(50),
 	@Password nvarchar(50),
@@ -110,8 +111,8 @@ AS
 
 	INSERT INTO Users (Username,Nickname,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType)
 	VALUES (@Username, @Username, HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), @Salt, @FirstName,@LastName,@Email,@Birthday,@Subscription) SELECT SCOPE_IDENTITY() AS UserID;
-
 GO
+
 CREATE OR ALTER PROCEDURE LoginUsernameSP
 	@Username nvarchar(50),
 	@Password nvarchar(50)
@@ -119,22 +120,38 @@ AS
 	SET NOCOUNT ON
 	SELECT UserID FROM Users WHERE Username=@Username AND HashPassword=HASHBYTES('SHA2_512', @Password+CAST(Salt AS nvarchar(36))) SELECT SCOPE_IDENTITY() AS UserID
 GO
+
 CREATE OR ALTER PROCEDURE LoginEmailSP
 	@Email nvarchar(50),
 	@Password nvarchar(50)
 AS
 	SET NOCOUNT ON
 	SELECT UserID FROM Users WHERE Email=@Email AND HashPassword=HASHBYTES('SHA2_512', @Password+CAST(Salt AS nvarchar(36))) SELECT SCOPE_IDENTITY() AS UserID
-
 GO
+
 
 CREATE OR ALTER PROCEDURE GetUserByIDSP
 	@UserID int
 AS
 	SET NOCOUNT ON
 	SELECT * FROM Users WHERE UserID=@UserID
-
 GO
+
+CREATE OR ALTER PROCEDURE GetUserByUsernameSP
+	@Username int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Users WHERE Username=@Username
+GO
+
+CREATE OR ALTER PROCEDURE GetUserByEmailSP
+	@Email int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Users WHERE Email=@Email
+GO
+
+
 CREATE OR ALTER PROCEDURE UpdateUserSP
 	@UserID int,
 	@Username nvarchar(50),
@@ -150,8 +167,8 @@ AS
 	UPDATE Users 
 	SET Username=@Username, Nickname=@Nickname, FirstName=@FirstName, LastName=@LastName, Email=@Email, Birthday=@Birthday, pfp=@pfp, SubscriptionType=@SubscriptionType 
 	WHERE UserID=@UserID
-
 GO
+
 CREATE OR ALTER PROCEDURE UpdatePasswordSP
 	@UserID int,
 	@Password nvarchar(50)

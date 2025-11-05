@@ -17,7 +17,7 @@ namespace Trackify.Domain
         public SQL(IConfiguration configuration) => connectionString = configuration.GetConnectionString("Default");
 
         /*------------------------------------------------------------Users---------------------------------------------------*/
-        public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, int subscriptionType)
+        public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, SubscriptionType subscriptionType)
         {
             if (password == confirmPassword)
             {
@@ -33,7 +33,7 @@ namespace Trackify.Domain
                         cmd.Parameters.AddWithValue("@LastName", lastName);
                         cmd.Parameters.AddWithValue("@Email", email);
                         cmd.Parameters.AddWithValue("@Birthday", birthday);
-                        cmd.Parameters.AddWithValue("@Subscription", subscriptionType);
+                        cmd.Parameters.AddWithValue("@Subscription", Convert.ToInt32(subscriptionType));
                         cmd.CommandType = CommandType.StoredProcedure;
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
@@ -117,7 +117,7 @@ namespace Trackify.Domain
                                 reader.GetString("LastName"),
                                 reader.GetString("Email"),
                                 DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
-                                reader.GetInt32("SubscriptionType"),
+                                (SubscriptionType)reader.GetInt32("SubscriptionType"),
                                 reader.GetString("pfp"),
                                 DateOnly.FromDateTime(reader.GetDateTime("AccountAge"))
                                 );
@@ -133,6 +133,55 @@ namespace Trackify.Domain
             return null;
 
         }
+        public bool GetUserByUsername(string username)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetUserByUsernameSP", conn);
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return false;
+        }
+        public bool GetUserByEmail(string email)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetUserByEmailSP", conn);
+                    cmd.Parameters.AddWithValue ("@Email", email);
+                    cmd.CommandType= CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return false;
+        }
+
 
         public Users UpdateUser(Users updatedUser)
         {

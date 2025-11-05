@@ -37,33 +37,33 @@
                             <div class="col-5">
                                 <label class="fw-bold small">Username</label>
                                 <br />
-                                <input class="LoginPage" placeholder="Username" asp-for="Username">
+                                <input class="LoginPage" maxlength="50" placeholder="Username" asp-for="Username">
                                 <br />
                                 <span class="text-danger" asp-validation-for="Username"></span>
                                 <br/>
                                 <label class="fw-bold small">First Name</label>
                                 <br />
-                                <input class="LoginPage" placeholder="First Name" asp-for="FirstName">
+                                <input class="LoginPage" maxlength="50" placeholder="First Name" asp-for="FirstName">
                                 <br />
                                 <span class="text-danger" asp-validation-for="FirstName"></span>
                                 <br />
                                 <label class="fw-bold small">Lastname</label>
                                 <br />
-                                <input class="LoginPage" placeholder="Lastname" asp-for="LastName">
+                                <input class="LoginPage" maxlength="50" placeholder="Lastname" asp-for="LastName">
                                 <br />
                                 <span class="text-danger" asp-validation-for="LastName"></span>
                             </div>
                             <div class="col-5">
                                 <label class="fw-bold small">Password</label>
                                 <br />
-                                <input type="password" class="LoginPage" placeholder="Password" asp-for="Password">
+                                <input type="password" class="LoginPage" maxlength="50" placeholder="Password" asp-for="Password">
                                 <br />
                                 <span class="text-danger" asp-validation-for="Password"></span>
                                 <br />
                                 <label class="fw-bold small"> Confirm Password</label>
                                 <br />
                                 
-                                <input type="password" class="LoginPage" placeholder="Confirm Password" asp-for="ConfirmPassword">
+                                <input type="password" class="LoginPage" maxlength="50" placeholder="Confirm Password" asp-for="ConfirmPassword">
                                 <br />
                                 <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
                                 <br />
@@ -81,7 +81,9 @@
                                 <span class="text-danger" asp-validation-for="Email"></span>
                                 <br />
                             <div>
-                                <input type="submit" class="btn border w-25 rounded-5"Continue>
+                                <input type="submit" class="btn border w-25 rounded-5">
+                                
+
                             </div>
                         </div>
                     </form>

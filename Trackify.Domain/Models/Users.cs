@@ -15,12 +15,12 @@ namespace Trackify.Domain.Models
         public string lastName { get; set; }
         public string email { get; set; }
         public DateOnly birthday { get; set; }
-        public int subscriptionType { get; set; }
+        public SubscriptionType subscriptionType { get; set; }
         public string pfp { get; set; }
         public DateOnly accountAge { get; set; }
 
 
-        public Users(int UserID, string username, string nickname, string email, string firstName, string lastName, DateOnly birthday, int subscriptionType, string pfp, DateOnly accountAge)
+        public Users(int UserID, string username, string nickname, string email, string firstName, string lastName, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge)
         {
             this.userId = UserID;
             this.username = username;
