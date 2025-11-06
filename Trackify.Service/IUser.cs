@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trackify.Domain.Models;
+using Trackify.Domain.Models.Enums;
 
 namespace Trackify.Service
 {

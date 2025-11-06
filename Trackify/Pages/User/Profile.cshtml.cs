@@ -29,6 +29,8 @@ namespace Trackify.Pages.User
                 }
             }
             else { return RedirectToPage("/Index"); }
+
+            //make artist application now and then songs
         }
     }
 }

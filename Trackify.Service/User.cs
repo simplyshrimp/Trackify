@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Trackify.Domain;
 using Trackify.Domain.Models;
 using Microsoft.Extensions.Configuration;
+using Trackify.Domain.Models.Enums;
 
 namespace Trackify.Service
 {

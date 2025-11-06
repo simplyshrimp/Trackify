@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trackify.Domain.Models;
+using Trackify.Domain.Models.Enums;
 
 namespace Trackify.Domain
 {
@@ -231,6 +232,20 @@ namespace Trackify.Domain
                 throw;
             }
         }
+        /*------------------------------------------Applications--------------------------------------------------*/
 
+        public bool CreateApplication(int id)
+        {
+            try
+            {
+                 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return false;
+        }
     }
 }

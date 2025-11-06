@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trackify.Domain.Models
+namespace Trackify.Domain.Models.Enums
 {
-    public enum SubscriptionType
+    public enum AStatus
     {
-        Free, Premium
+        Pending, Under_review, Accepted, Denied, Timed_out
     }
 }
