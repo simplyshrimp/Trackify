@@ -18,5 +18,11 @@ namespace Trackify.Service
         public bool GetUserByEmail(string email);
         public Users UpdateUser(Users updatedUser);
         public void UpdatePassword(int id, string password);
+
+        public bool CreateApplication(int id);
+        public bool DeleteApplication(int id);
+        public List<Applications> ShowAllApplications();
+        public Applications ShowApplicationByID(int id);
+        public void ChangeApplicationStatus(int id, int status);
     }
 }

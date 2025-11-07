@@ -29,7 +29,7 @@ CREATE TABLE ArtistApplication(
 ApplicationID int identity (1,1) primary key,
 UserID int,
 ApplicationDate date default getdate(),
-ApplicationStatus nvarchar(50)
+ApplicationStatus int default 0,
 foreign key (UserID) references Users(UserID)
 )
 
@@ -96,7 +96,7 @@ foreign key (UserID) references Users(UserID)
 )
 GO
 ----------------------------------------------------------Procedures-----------------------------------------------------
-
+-------------------------Users---------------------------------
 CREATE OR ALTER PROCEDURE CreateUserSP 	
 	@Username nvarchar(50),
 	@Password nvarchar(50),
@@ -138,14 +138,14 @@ AS
 GO
 
 CREATE OR ALTER PROCEDURE GetUserByUsernameSP
-	@Username int
+	@Username nvarchar(50)
 AS
 	SET NOCOUNT ON
 	SELECT * FROM Users WHERE Username=@Username
 GO
 
 CREATE OR ALTER PROCEDURE GetUserByEmailSP
-	@Email int
+	@Email nvarchar(50)
 AS
 	SET NOCOUNT ON
 	SELECT * FROM Users WHERE Email=@Email
@@ -178,5 +178,40 @@ AS
 
 	UPDATE Users
 	SET HashPassword=HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), Salt=@Salt
+	WHERE UserID=@UserID
+GO
+-----------------Applications-----------------
+CREATE OR ALTER PROCEDURE CreateApplicationSP
+	@UserID int
+AS
+	SET NOCOUNT ON
+
+	INSERT INTO ArtistApplication (UserID) 
+	VALUES (@UserID)
+GO
+
+CREATE OR ALTER PROCEDURE ShowAllApplicationsSP
+AS
+	SET NOCOUNT ON
+
+	SELECT * FROM ArtistApplication
+GO
+
+CREATE OR ALTER PROCEDURE ShowApplicationByIDSP
+	@UserID int
+AS
+	SET NOCOUNT ON
+
+	SELECT * FROM ArtistApplication WHERE UserID=@UserID
+GO
+
+CREATE OR ALTER PROCEDURE ChangeApplicationStatusSP
+	@UserID int,
+	@Status int
+AS
+	SET NOCOUNT ON
+
+	UPDATE ArtistApplication
+	SET ApplicationStatus=@Status
 	WHERE UserID=@UserID
 GO

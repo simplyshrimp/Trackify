@@ -238,7 +238,40 @@ namespace Trackify.Domain
         {
             try
             {
-                 
+                 using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateApplicationSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    var work = cmd.ExecuteScalar();
+                    if (work != null )
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
+            return false;
+        }
+        public bool DeleteApplication(int id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("DeleteApplicationSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    var work = cmd.ExecuteScalar();
+                    if (work != null )
+                       { return true; }
+                }
             }
             catch (Exception)
             {
@@ -246,6 +279,84 @@ namespace Trackify.Domain
                 throw;
             }
             return false;
+        }
+        public List<Applications> ShowAllApplications()
+        {
+            List<Applications> list = new List<Applications>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowAllApplicationsSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new Applications(
+                            reader.GetInt32("ApplicationID"),
+                            GetUserByID(reader.GetInt32("UserID")),
+                            DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
+                            (AStatus)reader.GetInt32("ApplicationStatus")
+                            ));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return list;
+        }
+        public Applications ShowApplicationByID(int id)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowApplicationByIDSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Applications(
+                            reader.GetInt32("ApplicationID"),
+                            GetUserByID(reader.GetInt32("UserID")),
+                            DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
+                            (AStatus)reader.GetInt32("ApplicationStatus")
+                            );
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return null;
+        }
+        public void ChangeApplicationStatus(int userId, int newStatus)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ChangeApplicationStatusSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", userId);
+                    cmd.Parameters.AddWithValue("@Status", newStatus);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

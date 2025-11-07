@@ -10,7 +10,7 @@ namespace Trackify.Domain.Models
     public class Applications
     {
         public int Id { get; set; }
-        public required Users User { get; set; }
+        public Users User { get; set; }
         public DateOnly ApplicationDate { get; set; }
         public AStatus Status { get; set; }
 
