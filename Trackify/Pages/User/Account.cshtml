@@ -6,18 +6,26 @@
 <div class="d-flex justify-content-center">
     <div class="col-5 row row-gap-4">
         <div class="p-0">
-            <div class="card account btn p-0 form-control">
+            <div class="card account btn p-0 form-control pb-3" href="/User/Subscription">
                 <div class="row m-0 row-gap-3">
                     <div class="card-header-pills account small fw-bold card col-2 m-0 p-0" style=" background-color: #404040;">Your current subscription</div>
                     <div class="text-start row m-0 p-0 row-gap-2">
                         <span class="text-white small fw-bold"><img src="~/ImagesAndSongs/Logo/Transparent white.png" style="height: 24px; width: 24px;" /> Premium</span>
                         <br />
                         <span class="h2 fw-bold">Premium</span>
-                        <span>you have a x subcription plan</span> 
+                        <div class="p-0 m-0 row">
+                            <span>you have a x subcription plan</span>
+                            <a class="btn align-content-end w-25" href="User/Subscription"></a> <!--wait no add to the whole card somehow-->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card account">d</div>
+        <div class="card account pt-1">
+            <span class="fw-bold h3">Apply to become artist</span>
+            <form method="post" asp-page-handler="Application">
+                <input type="submit" class="btn w-25" style="background-color: #404040;" value="Press to apply">
+            </form>
+        </div>
     </div>
 </div>

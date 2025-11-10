@@ -14,17 +14,23 @@ namespace Trackify.Pages.User
         }
         [BindProperty]
         public Users user { get; set; }
+        public Applications application { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("LoggedIn") == 1)
             {
                 user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("Id"));
+                application = userMethod.ShowApplicationByID((int)HttpContext.Session.GetInt32("Id"));
                 return Page();
             }
             else
             {
                 return RedirectToPage("/Index");
             }
+        }
+        public void OnPostApplication()
+        {
+            userMethod.CreateApplication((int)HttpContext.Session.GetInt32("Id")); 
         }
     }
 }
