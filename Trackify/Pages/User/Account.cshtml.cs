@@ -13,8 +13,8 @@ namespace Trackify.Pages.User
             userMethod = user;
         }
         [BindProperty]
-        public Users user { get; set; }
-        public Applications application { get; set; }
+        public Users? user { get; set; }
+        public Applications? application { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("LoggedIn") == 1)
