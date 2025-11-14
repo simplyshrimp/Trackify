@@ -21,7 +21,7 @@ namespace Trackify.Domain.Models
         public DateOnly accountAge { get; set; }
 
 
-        public Users(int UserID, string username, string nickname, string email, string firstName, string lastName, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge)
+        public Users(int UserID, string username, string nickname, string firstName, string lastName,string email, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge)
         {
             this.userId = UserID;
             this.username = username;
