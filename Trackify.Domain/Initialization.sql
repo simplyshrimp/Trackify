@@ -22,7 +22,8 @@ Email nvarchar(50),
 Birthday date,
 SubscriptionType int default '0' not null,
 pfp nvarchar(255) default '/ImagesAndSongs/Users/Empty-User-pfp.png',
-AccountAge date default getdate()
+AccountAge date default getdate(),
+Color nvarchar(50) null
 )
 
 CREATE TABLE ArtistApplication(
@@ -47,6 +48,7 @@ AlbumType nvarchar(50),
 Artist int,
 AlbumImage nvarchar(255) default '/ImagesAndSongs/Albums/Trackify-Album-Placeholder.png',
 MadePrivate bit default 1,
+color nvarchar(50),
 foreign key (Artist) references Artists(ArtistID)
 )
 
@@ -155,17 +157,26 @@ GO
 CREATE OR ALTER PROCEDURE UpdateUserSP
 	@UserID int,
 	@Username nvarchar(50),
-	@Nickname nvarchar(50),
 	@FirstName nvarchar(50),
 	@LastName nvarchar(50),
 	@Email nvarchar(50),
-	@Birthday datetime,
-	@pfp nvarchar(255),
-	@SubscriptionType bit
+	@Birthday datetime
 AS
 	SET NOCOUNT ON
 	UPDATE Users 
-	SET Username=@Username, Nickname=@Nickname, FirstName=@FirstName, LastName=@LastName, Email=@Email, Birthday=@Birthday, pfp=@pfp, SubscriptionType=@SubscriptionType 
+	SET Username=@Username, FirstName=@FirstName, LastName=@LastName, Email=@Email, Birthday=@Birthday 
+	WHERE UserID=@UserID
+GO
+
+CREATE OR ALTER PROCEDURE UpdateProfileSP
+	@UserID int,
+	@Nickname nvarchar(50),
+	@pfp nvarchar(255),
+	@Color nvarchar(50)
+AS
+	SET NOCOUNT ON
+	UPDATE Users 
+	SET Nickname=@Nickname, pfp=@pfp, Color=@Color
 	WHERE UserID=@UserID
 GO
 

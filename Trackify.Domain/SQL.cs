@@ -39,7 +39,7 @@ namespace Trackify.Domain
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
                         string pfp = "/ImagesAndSong/Users/empty-user-pfp.png";
-                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge);
+                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge, "#121212");
                     }
                     catch (Exception)
                     {
@@ -120,7 +120,8 @@ namespace Trackify.Domain
                                 DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
                                 (SubscriptionType)reader.GetInt32("SubscriptionType"),
                                 reader.GetString("pfp"),
-                                DateOnly.FromDateTime(reader.GetDateTime("AccountAge"))
+                                DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
+                                reader.GetString("Color")
                                 );
                         }
                     }
@@ -194,16 +195,35 @@ namespace Trackify.Domain
                     SqlCommand cmd = new SqlCommand("UpdateUserSP", conn);
                     cmd.Parameters.AddWithValue("@UserID", updatedUser.userId);
                     cmd.Parameters.AddWithValue("@Username", updatedUser.username);
-                    cmd.Parameters.AddWithValue("@Nickname", updatedUser.nickname);
                     cmd.Parameters.AddWithValue("@FirstName", updatedUser.firstName);
                     cmd.Parameters.AddWithValue("@LastName", updatedUser.lastName);
                     cmd.Parameters.AddWithValue("@Email", updatedUser.email);
                     cmd.Parameters.AddWithValue("@Birthday", updatedUser.birthday);
-                    cmd.Parameters.AddWithValue("@pfp", updatedUser.pfp);
-                    cmd.Parameters.AddWithValue("@SubscriptionType", updatedUser.subscriptionType);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
                     return updatedUser;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void UpdateProfile(int id, Users user)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UpdatePasswordSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", id);
+                    cmd.Parameters.AddWithValue("@Nickname", user.nickname);
+                    cmd.Parameters.AddWithValue("@pfp", user.pfp);
+                    cmd.Parameters.AddWithValue("@Color", user.color);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
                 }
             }
             catch (Exception)

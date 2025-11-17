@@ -19,9 +19,10 @@ namespace Trackify.Domain.Models
         public SubscriptionType subscriptionType { get; set; }
         public string pfp { get; set; }
         public DateOnly accountAge { get; set; }
+        public string color { get; set; }
 
 
-        public Users(int UserID, string username, string nickname, string firstName, string lastName,string email, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge)
+        public Users(int UserID, string username, string nickname, string firstName, string lastName,string email, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge, string color)
         {
             this.userId = UserID;
             this.username = username;
@@ -32,7 +33,8 @@ namespace Trackify.Domain.Models
             this.birthday = birthday;
             this.subscriptionType = subscriptionType;
             this.pfp = pfp;
-            this.accountAge = accountAge;   
+            this.accountAge = accountAge;
+            this.color = color;
         }
     }
 }

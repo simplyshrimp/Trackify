@@ -1,4 +1,22 @@
 ﻿@page
+@using Trackify.Domain.Models;
 @model Trackify.Pages.User.EditInfoModel
 @{
+    Users user = Model.user;
+}
+
+@{
+    <div class=" d-flex justify-content-center">
+        <div class="col-9 border">
+            <form method="post">
+                <input type="text" placeholder="@user.username" />
+                <input type="text" placeholder="@user.nickname" />
+
+                <input placeholder="@user.firstName" />
+                <input placeholder="@user.lastName" />
+                <input type="email" placeholder="@user.email" />
+
+            </form>
+        </div>
+    </div>
 }
