@@ -44,11 +44,11 @@ foreign key (UserID) references Users(UserID)
 CREATE TABLE Album(
 AlbumID int identity (1,1) primary key,
 AlbumTitle nvarchar(255),
-AlbumType nvarchar(50),
+AlbumType int,
 Artist int,
 AlbumImage nvarchar(255) default '/ImagesAndSongs/Albums/Trackify-Album-Placeholder.png',
 MadePrivate bit default 1,
-color nvarchar(50),
+Color nvarchar(50),
 foreign key (Artist) references Artists(ArtistID)
 )
 
@@ -226,3 +226,19 @@ AS
 	SET ApplicationStatus=@Status
 	WHERE UserID=@UserID
 GO
+--------------------Artist------------------
+--------------------Album-------------------
+CREATE OR ALTER PROCEDURE CreateAlbumSP
+	@Artist int,
+	@AlbumTitle nvarchar(255),
+	@AlbumType int,
+	@Color nvarchar(50)
+AS
+	SET NOCOUNT ON
+
+	INSERT INTO Album (AlbumTitle, AlbumType, Artist, Color)
+	VALUES (@AlbumTitle, @AlbumType, @Artist, @Color)
+--------------------Songs-------------------
+--------------------Playlist----------------
+--------------------Genre-------------------
+--------------------Subcriptions------------
