@@ -7,9 +7,15 @@
         <span>Tell us about your album, it'll start as private so you can add songs before releasing it'</span>
         <form method="post">
             <input placeholder="Title" maxlength="255" /> <!--maybe do the textbox thingy? get this to work first though-->
-            
+            <select asp-for="">
+                <option selected>Choose your album type</option>
+                <option value="0">Single</option>
+                <option value="1">EP</option>
+                <option value="2">Album</option>
+                <option value="3">Soundtrack</option>
+            </select>
             <input type="color" />
-            <input type="file"
+            <input type="file" />
         </form>
     </div>
 </div>

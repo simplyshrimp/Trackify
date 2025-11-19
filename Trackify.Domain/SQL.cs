@@ -380,6 +380,53 @@ namespace Trackify.Domain
         }
         /*------------------------------------------Artist--------------------------------------------------*/
         /*------------------------------------------Album--------------------------------------------------*/
+        public int CreateAlbum(int artistID, string albumTitle, int albumType, string color)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateAlbumSP", conn);
+                    cmd.Parameters.AddWithValue("@Artist", artistID);
+                    cmd.Parameters.AddWithValue("@AlbumTitle", albumTitle);
+                    cmd.Parameters.AddWithValue("@AlbumType", albumType);
+                    cmd.Parameters.AddWithValue("@Color", color);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    int userId = Convert.ToInt32(cmd.ExecuteScalar());
+                    return userId;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        public void UpdateAlbum(Albums updatedAlbum)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UpdateAlbumSP", conn);
+                    cmd.Parameters.AddWithValue("@AlbumID", updatedAlbum.albumId);
+                    cmd.Parameters.AddWithValue("@AlbumTitle", updatedAlbum.albumTitle);
+                    cmd.Parameters.AddWithValue("@AlbumType", updatedAlbum.albumType);
+                    cmd.Parameters.AddWithValue("@Artist", updatedAlbum.artistID);
+                    cmd.Parameters.AddWithValue("@AlbumImage", updatedAlbum.albumImage);
+                    cmd.Parameters.AddWithValue("@MadePrivate", updatedAlbum.madePrivate);
+                    cmd.Parameters.AddWithValue("@Color", updatedAlbum.color);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /*------------------------------------------Songs--------------------------------------------------*/
         /*------------------------------------------Playlist--------------------------------------------------*/
         /*------------------------------------------Genre--------------------------------------------------*/
