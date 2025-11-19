@@ -23,7 +23,7 @@ Birthday date,
 SubscriptionType int default '0' not null,
 pfp nvarchar(255) default '/ImagesAndSongs/Users/Empty-User-pfp.png',
 AccountAge date default getdate(),
-Color nvarchar(50) null
+Color nvarchar(50) default '#121212'
 )
 
 CREATE TABLE ArtistApplication(
@@ -48,7 +48,7 @@ AlbumType int,
 Artist int,
 AlbumImage nvarchar(255) default '/ImagesAndSongs/Albums/Trackify-Album-Placeholder.png',
 MadePrivate bit default 1,
-Color nvarchar(50),
+Color nvarchar(50) default '#121212',
 foreign key (Artist) references Artists(ArtistID)
 )
 
@@ -237,7 +237,23 @@ AS
 	SET NOCOUNT ON
 
 	INSERT INTO Album (AlbumTitle, AlbumType, Artist, Color)
-	VALUES (@AlbumTitle, @AlbumType, @Artist, @Color)
+	VALUES (@AlbumTitle, @AlbumType, @Artist, @Color) SELECT SCOPE_IDENTITY() AS AlbumID 
+GO
+
+CREATE OR ALTER PROCEDURE UpdateAlbumSP
+	@AlbumID int,
+	@AlbumTitle nvarchar(255),
+	@AlbumType int,
+	@Artist int,
+	@AlbumImage nvarchar(255),
+	@MadePrivate bit,
+	@Color nvarchar(50)
+AS
+	SET NOCOUNT ON
+	UPDATE Album
+	SET AlbumTitle=@AlbumTitle, AlbumType=@AlbumType, Artist=@Artist, AlbumImage=@AlbumImage, MadePrivate=@MadePrivate, Color=@Color
+	WHERE AlbumID=@AlbumID
+GO
 --------------------Songs-------------------
 --------------------Playlist----------------
 --------------------Genre-------------------
