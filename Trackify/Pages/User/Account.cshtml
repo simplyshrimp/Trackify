@@ -26,11 +26,25 @@
         <div class="card account pt-1"> <!--try just margin/padding end on the first one-->
             <div class="row">
                 <div class="me-5 col-6">
-                    <span class="fw-bold h3">Apply to Become Artist</span>
-                    <div class="form-control invisible"> </div>
-                    <form method="post" asp-page-handler="Application">
-                        <input type="submit" class="btn w-50" style="background-color: #404040;" value="Press to Apply">
-                    </form>
+                    @{
+                        if(Model.application == null || Model.application.Status == Domain.Models.Enums.AStatus.Cancelled)
+                        {
+                            <span class="fw-bold h3">Apply to Become Artist</span>
+                            <div class="form-control invisible"> </div>
+                            <form method="post" asp-page-handler="Application">
+                                <input type="submit" class="btn w-50" style="background-color: #404040;" value="Press to Apply">
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="fw-bold h3">Cancel your application</span>
+                            <div class="form-control invisible"> </div>
+                            <form method="post" asp-page-handler="CancelApplication">
+                                <input type="submit" class="btn w-50" style="background-color: #D45C5C;" value="Press to Cancel">
+                            </form>
+                        }
+                    }
+               
                 </div>
                 @{
                     if (Model.application != null)

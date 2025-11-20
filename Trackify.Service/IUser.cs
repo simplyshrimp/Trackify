@@ -24,5 +24,9 @@ namespace Trackify.Service
         public List<Applications> ShowAllApplications();
         public Applications ShowApplicationByID(int id);
         public void ChangeApplicationStatus(int id, int status);
+
+        public void CreateArtist(int id);
+        public Artists ShowArtistByUserID(int id);
+        public void VerifyArtist(int id, bool verification);
     }
 }

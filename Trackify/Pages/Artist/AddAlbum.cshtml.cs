@@ -8,10 +8,10 @@ namespace Trackify.Pages.Artist
 {
     public class AddAlbumModel : PageModel
     {
-        private readonly IUser userMethod;
-        public AddAlbumModel(IUser user)
+        private readonly IMusic musicMethod;
+        public AddAlbumModel(IMusic music)
         {
-            userMethod = user;
+            musicMethod = music;
         }
         [Required(ErrorMessage = "You need to add a title to your album")]
         [BindProperty]
@@ -34,9 +34,10 @@ namespace Trackify.Pages.Artist
             try
             {
                 string imagePath = "";
-                //int id = musicMethod          do sql first, either update whole album and make 1 or update just image and dod 2
+                int id = musicMethod.CreateAlbum((int)HttpContext.Session.GetInt32("ArtistID"), Title, AlbumTypeInput, Color);
+                //if artist get ArtistID as session?
 
-                string filePath = $"{Directory.GetCurrentDirectory()}/ImagesAndSongs/Albums/{id}{Path.GetExtension(AlbumCover)}";
+                string filePath = $"{Directory.GetCurrentDirectory()}/ImagesAndSongs/Albums/{id}{Path.GetExtension(AlbumCover.FileName)}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
             }
             catch (Exception)

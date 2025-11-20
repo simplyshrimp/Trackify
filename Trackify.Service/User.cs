@@ -24,10 +24,16 @@ namespace Trackify.Service
         public Users UpdateUser(Users updatedUser) => connection.UpdateUser(updatedUser);
         public void UpdatePassword(int id, string newPassword) => connection.UpdatePassword(id, newPassword);
 
+        /*-----------------------------------------------------*/
         public bool CreateApplication(int id) => connection.CreateApplication(id);
         public bool DeleteApplication(int id) => connection.DeleteApplication(id);
         public List<Applications> ShowAllApplications() => connection.ShowAllApplications();
         public Applications ShowApplicationByID(int id) => connection.ShowApplicationByID(id);
         public void ChangeApplicationStatus(int id, int status) => connection.ChangeApplicationStatus(id, status);
+
+        /*-----------------------------------------------------*/
+        public void CreateArtist(int userId) => connection.CreateArtist(userId);
+        public Artists ShowArtistByUserID(int userId) => connection.ShowArtistByUserID(userId);
+        public void VerifyArtist(int artistId,bool verification) => connection.VerifyArtist(artistId, verification);
     }
 }

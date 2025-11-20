@@ -379,8 +379,75 @@ namespace Trackify.Domain
             }
         }
         /*------------------------------------------Artist--------------------------------------------------*/
+        public int CreateArtist(int userId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateArtistSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", userId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public Artists ShowArtistByUserID(int UserID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowArtistByUserIDSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", UserID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Artists(
+                            reader.GetInt32("ArtistID"),
+                            GetUserByID(UserID),
+                            reader.GetBoolean("Verification")
+                            );
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return null;
+        }
+        public void VerifyArtist(int artistId, bool verification)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("VerifyArtistSP", conn);
+                    cmd.Parameters.AddWithValue("@ArtistID", artistId);
+                    cmd.Parameters.AddWithValue("@Verification", verification);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         /*------------------------------------------Album--------------------------------------------------*/
-        public int CreateAlbum(int artistID, string albumTitle, int albumType, string color)
+        public int CreateAlbum(int artistID, string albumTitle, AlbumType albumType, string color)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {

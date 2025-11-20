@@ -37,8 +37,13 @@ namespace Trackify.Pages.User
             if (application == null) 
             {
                 userMethod.CreateApplication((int)HttpContext.Session.GetInt32("Id"));
-                return RedirectToPage("/User/Account");
             }
+            return RedirectToPage("/User/Account");
+        }
+        public IActionResult OnPostCancelApplication()
+        {
+            application = userMethod.ShowApplicationByID((int)HttpContext.Session.GetInt32("Id"));
+            userMethod.ChangeApplicationStatus(application.User.userId, 4);
             return RedirectToPage("/User/Account");
         }
 
@@ -61,6 +66,10 @@ namespace Trackify.Pages.User
                 case AStatus.Timed_out:
                     {
                         return "#C2BABA";
+                    }
+                case AStatus.Cancelled:
+                    {
+                        return "#6C728A";
                     }
                 default:
                     {

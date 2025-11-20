@@ -13,8 +13,9 @@ namespace Trackify
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
             
+            //add interfaces
             builder.Services.AddSingleton<IUser, User>();
-            //builder.Services.AddSingleton<IMusic, Music>();
+            builder.Services.AddSingleton<IMusic, Music>();
             var app = builder.Build();
 
             app.UseSession();

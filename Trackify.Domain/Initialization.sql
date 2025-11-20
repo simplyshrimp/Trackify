@@ -37,7 +37,7 @@ foreign key (UserID) references Users(UserID)
 CREATE TABLE Artists(
 ArtistID int identity (1,1) primary key,
 UserID int,
-Verification bit,
+Verification bit default 0,
 foreign key (UserID) references Users(UserID)
 )
 
@@ -227,6 +227,29 @@ AS
 	WHERE UserID=@UserID
 GO
 --------------------Artist------------------
+CREATE OR ALTER PROCEDURE CreateArtistSP
+	@UserID int
+AS
+	SET NOCOUNT ON
+
+	INSERT INTO Artists (UserID)
+	VALUES (@UserID)
+GO
+
+CREATE OR ALTER PROCEDURE ShowArtistByUserIDSP
+	@UserID int
+AS
+	SELECT ArtistID FROM Artists WHERE UserID=@UserID
+GO
+
+CREATE OR ALTER PROCEDURE VerifyArtistSP
+	@ArtistID int,
+	@Verification bit
+AS
+	UPDATE Artists
+	SET Verification=@Verification
+	WHERE ArtistID=@ArtistID
+GO
 --------------------Album-------------------
 CREATE OR ALTER PROCEDURE CreateAlbumSP
 	@Artist int,
