@@ -23,7 +23,8 @@ Birthday date,
 SubscriptionType int default '0' not null,
 pfp nvarchar(255) default '/ImagesAndSongs/Users/Empty-User-pfp.png',
 AccountAge date default getdate(),
-Color nvarchar(50) default '#121212'
+Color nvarchar(50) default '#121212',
+IsAdmin bit default 0
 )
 
 CREATE TABLE ArtistApplication(
@@ -98,6 +99,15 @@ foreign key (UserID) references Users(UserID)
 )
 GO
 ----------------------------------------------------------Procedures-----------------------------------------------------
+CREATE OR ALTER PROCEDURE CreateAdminUserSP
+AS
+	SET NOCOUNT ON;
+	DECLARE @Salt UNIQUEIDENTIFIER=NEWID()
+
+	INSERT INTO Users(Username,NickName,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType,pfp,IsAdmin)
+VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/Images/Users/empty_user_pfp.png',1)
+
+GO
 -------------------------Users---------------------------------
 CREATE OR ALTER PROCEDURE CreateUserSP 	
 	@Username nvarchar(50),
@@ -213,7 +223,7 @@ CREATE OR ALTER PROCEDURE ShowApplicationByIDSP
 AS
 	SET NOCOUNT ON
 
-	SELECT * FROM ArtistApplication WHERE UserID=@UserID
+	SELECT * FROM ArtistApplication WHERE UserID=@UserID AND ApplicationStatus NOT LIKE 4
 GO
 
 CREATE OR ALTER PROCEDURE ChangeApplicationStatusSP
@@ -250,6 +260,19 @@ AS
 	SET Verification=@Verification
 	WHERE ArtistID=@ArtistID
 GO
+
+CREATE OR ALTER PROCEDURE GetArtistByIDSP
+	@ArtistID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Artists WHERE ArtistID=@ArtistID
+GO
+
+CREATE OR ALTER PROCEDURE ShowAllArtistsSP
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Artists
+GO
 --------------------Album-------------------
 CREATE OR ALTER PROCEDURE CreateAlbumSP
 	@Artist int,
@@ -277,6 +300,19 @@ AS
 	SET AlbumTitle=@AlbumTitle, AlbumType=@AlbumType, Artist=@Artist, AlbumImage=@AlbumImage, MadePrivate=@MadePrivate, Color=@Color
 	WHERE AlbumID=@AlbumID
 GO
+CREATE OR ALTER PROCEDURE GetAlbumByIDSP
+	@AlbumID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Album WHERE AlbumID=@AlbumID
+GO
+
+CREATE OR ALTER PROCEDURE ShowAllAlbumsSP
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Album
+GO
+
 --------------------Songs-------------------
 --------------------Playlist----------------
 --------------------Genre-------------------

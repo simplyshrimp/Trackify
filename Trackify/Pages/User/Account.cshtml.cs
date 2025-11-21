@@ -46,6 +46,13 @@ namespace Trackify.Pages.User
             userMethod.ChangeApplicationStatus(application.User.userId, 4);
             return RedirectToPage("/User/Account");
         }
+        public IActionResult OnPostAcceptArtist()
+        {
+            //should check if profile pic and not allow if not, but later
+            userMethod.CreateArtist((int)HttpContext.Session.GetInt32("Id"));
+            return RedirectToPage("/User/Account");
+
+        }
 
         public string ChangeColorByStatus(AStatus currentStatus)
         {

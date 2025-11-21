@@ -446,6 +446,62 @@ namespace Trackify.Domain
                 throw;
             }
         }
+        public Artists ShowArtistByID(int artistID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowArtistByIDSP", conn);
+                    cmd.Parameters.AddWithValue("@ArtistID", artistID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Artists(
+                            reader.GetInt32("ArtistID"),
+                            GetUserByID(reader.GetInt32("UserID")),
+                            reader.GetBoolean("Verification")
+                            );
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return null;
+        }
+        public List<Artists> ShowAllArtists()
+        {
+            try
+            {
+                List<Artists> allArtists = new List<Artists>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowAllArtistSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                         allArtists.Add(new Artists(
+                            reader.GetInt32("ArtistID"),
+                            GetUserByID(reader.GetInt32("UserID")),
+                            reader.GetBoolean("Verification")
+                            ));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
+
         /*------------------------------------------Album--------------------------------------------------*/
         public int CreateAlbum(int artistID, string albumTitle, AlbumType albumType, string color)
         {
@@ -493,6 +549,37 @@ namespace Trackify.Domain
 
                 throw;
             }
+        }
+        public Albums GetAlbumByID(int albumID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowAllArtistSP", conn);
+                    cmd.Parameters.AddWithValue("@AlbumID", albumID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Albums(
+                           reader.GetInt32("AlbumID"),
+                           reader.GetString("AlbumTitle"),
+                           (AlbumType)reader.GetInt32("AlbumType"),
+                           reader.GetInt32("Artist"),
+                           reader.GetString("AlbumImage"),
+                           reader.GetBoolean("MadePrivate"),
+                           reader.GetString("Color")
+                           );
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
         }
         /*------------------------------------------Songs--------------------------------------------------*/
         /*------------------------------------------Playlist--------------------------------------------------*/

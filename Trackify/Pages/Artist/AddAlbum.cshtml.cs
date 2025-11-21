@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
+using Trackify.Domain.Models;
 using Trackify.Domain.Models.Enums;
 using Trackify.Service;
 
@@ -19,6 +20,7 @@ namespace Trackify.Pages.Artist
         [Required(ErrorMessage = "You need to choose an albumtype")]
         [BindProperty]
         public AlbumType AlbumTypeInput { get; set; }
+        [Required (ErrorMessage = "please choose a color for your album")]
         [BindProperty]
         public string? Color { get; set; }
         [Required(ErrorMessage = "You need to upload an album cover")]
@@ -39,6 +41,9 @@ namespace Trackify.Pages.Artist
 
                 string filePath = $"{Directory.GetCurrentDirectory()}/ImagesAndSongs/Albums/{id}{Path.GetExtension(AlbumCover.FileName)}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
+
+                Albums updatedAlbum = new(id, Title, AlbumTypeInput, (int)HttpContext.Session.GetInt32("ArtistID"), imagePath, true, Color);
+                musicMethod.UpdateAlbum(updatedAlbum);
             }
             catch (Exception)
             {
