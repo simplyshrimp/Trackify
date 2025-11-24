@@ -12,11 +12,12 @@ namespace Trackify.Pages.Artist
         {
             musicMethod = music;
         }
-        [BindProperty(SupportsGet = true)]
         public Albums album {  get; set; }
+        [BindProperty(SupportsGet = true)]
         public int id { get; set; }
         public void OnGet()
         {
+            album = musicMethod.GetAlbumByID(id);
         }
     }
 }

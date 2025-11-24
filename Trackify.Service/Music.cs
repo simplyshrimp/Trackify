@@ -16,5 +16,7 @@ namespace Trackify.Service
         public Music(IConfiguration configuration) => connection = new SQL(configuration);
         public int CreateAlbum(int artistID, string albumTitle, AlbumType albumType, string color) => connection.CreateAlbum(artistID, albumTitle, albumType, color);
         public void UpdateAlbum(Albums updatedAlbum) => connection.UpdateAlbum(updatedAlbum);
+        public Albums GetAlbumByID(int albumID) => connection.GetAlbumByID(albumID);
+        public List<Albums> ShowAllAlbums() => connection.ShowAllAlbums();
     }
 }

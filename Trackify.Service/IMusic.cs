@@ -12,5 +12,7 @@ namespace Trackify.Service
     {
         public int CreateAlbum(int artistID, string albumtitle, AlbumType albumType, string color);
         public void UpdateAlbum(Albums updatedAlbum);
+        public Albums GetAlbumByID(int albumID);
+        public List<Albums> ShowAllAlbums();
     }
 }

@@ -46,13 +46,17 @@ namespace Trackify.Pages.Artist
 
                 Albums updatedAlbum = new(id, Title, AlbumTypeInput, (int)HttpContext.Session.GetInt32("ArtistID"), imagePath, true, Color);
                 musicMethod.UpdateAlbum(updatedAlbum);
-                return RedirectToPage($"/Artist/Album/{id}");
+                return RedirectToAlbumPage(id);
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+        public IActionResult RedirectToAlbumPage(int albumId)
+        {
+            return Redirect($"/Artist/Album/{albumId}");
         }
     }
 }
