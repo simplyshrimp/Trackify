@@ -5,8 +5,8 @@
 <div class="d-flex justify-content-center">
     <div class="card">
         <span>Tell us about your album, it'll start as private so you can add songs before releasing it'</span>
-        <form method="post">
-            <input placeholder="Title" maxlength="255" /> <!--maybe do the textbox thingy? get this to work first though-->
+        <form method="post" enctype="multipart/form-data">
+            <input placeholder="Title" maxlength="255" asp-for="Title"/> <!--maybe do the textbox thingy? get this to work first though-->
             <select asp-for="AlbumTypeInput">
                 <option selected>Choose your album type</option>
                 <option value="0">Single</option>
@@ -14,9 +14,9 @@
                 <option value="2">Album</option>
                 <option value="3">Soundtrack</option>
             </select>
-            <input type="color" />
-            <input type="file" />
-            <input type="submit" />
+            <input type="color" asp-for="Color" />
+            <input type="file" asp-for="AlbumCover" accept=".jpg, .png, .jpeg .webp" />
+            <input type="submit" asp-page="/Album" asp />
         </form>
     </div>
 </div>

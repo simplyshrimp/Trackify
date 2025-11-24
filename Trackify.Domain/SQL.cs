@@ -415,7 +415,7 @@ namespace Trackify.Domain
                             reader.GetInt32("ArtistID"),
                             GetUserByID(UserID),
                             reader.GetBoolean("Verification")
-                            );
+                        );
                     }
                 }
             }

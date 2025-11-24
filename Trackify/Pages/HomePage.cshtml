@@ -2,3 +2,10 @@
 @model Trackify.Pages.HomePageModel
 @{
 }
+
+<div>
+    <p>@HttpContext.Session.GetInt32("LoggedIn")</p> <br />
+    <p>@HttpContext.Session.GetInt32("Id")</p> <br />
+    <p>@HttpContext.Session.GetString("pfp")</p> <br />
+    <p>@HttpContext.Session.GetInt32("ArtistID")</p>
+</div>

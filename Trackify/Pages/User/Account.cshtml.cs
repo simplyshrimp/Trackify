@@ -50,6 +50,7 @@ namespace Trackify.Pages.User
         {
             //should check if profile pic and not allow if not, but later
             userMethod.CreateArtist((int)HttpContext.Session.GetInt32("Id"));
+            HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID((int)HttpContext.Session.GetInt32("Id")).artistID);
             return RedirectToPage("/User/Account");
 
         }

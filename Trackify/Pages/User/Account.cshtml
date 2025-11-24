@@ -58,7 +58,7 @@
                             <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
                             <br />
                             <span>Date Applied: @Model.application.ApplicationDate</span>
-                            <form method="post" asp-asp-page-handler="AcceptArtist">
+                            <form method="post" asp-page-handler="AcceptArtist">
                                 <input type="submit" class="form-control" value="Become Artist" />
                             </form>
                         </div>
