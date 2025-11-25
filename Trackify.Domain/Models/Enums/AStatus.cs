@@ -8,6 +8,6 @@ namespace Trackify.Domain.Models.Enums
 {
     public enum AStatus
     {
-        Pending, Accepted, Denied, Timed_out, Cancelled
+        Pending, Accepted, Denied, Timed_out, Cancelled, Accepted_By_User
     }
 }

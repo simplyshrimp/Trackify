@@ -50,7 +50,7 @@ namespace Trackify.Pages.Artist
             }
             catch (Exception)
             {
-
+                
                 throw;
             }
         }

@@ -27,13 +27,18 @@
             <div class="row">
                 <div class="me-5 col-6">
                     @{
-                        if(Model.application == null || Model.application.Status == Domain.Models.Enums.AStatus.Cancelled)
+                        if (Model.application == null || Model.application.Status == Domain.Models.Enums.AStatus.Cancelled)
                         {
                             <span class="fw-bold h3">Apply to Become Artist</span>
                             <div class="form-control invisible"> </div>
                             <form method="post" asp-page-handler="Application">
                                 <input type="submit" class="btn w-50" style="background-color: #404040;" value="Press to Apply">
                             </form>
+                        }
+                        else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
+                        {
+                            <span class="fw-bold h3">You're already an artist</span>
+                            <div class="form-control invisible"> </div>
                         }
                         else
                         {
@@ -44,38 +49,44 @@
                             </form>
                         }
                     }
-               
+
                 </div>
                 @{
-                    if (Model.application != null)
+                if (Model.application != null)
+                {
+                    if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
                     {
-                        if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
-                        {
-                        <div class="col-5">
-                            <span class="fw-bold h5">Current Application</span>
-                            <br />
-                            <span>Status: </span>
-                            <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
-                            <br />
-                            <span>Date Applied: @Model.application.ApplicationDate</span>
-                            <form method="post" asp-page-handler="AcceptArtist">
-                                <input type="submit" class="form-control" value="Become Artist" />
-                            </form>
-                        </div>
-                        }
-                        else
-                        {
-                        <div class="col-5">
-                            <span class="fw-bold h5">Current Application</span>
-                            <br />
-                            <span>Status: </span>
-                            <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_',' ')</span>
-                            <br />
-                            <span>Date Applied: @Model.application.ApplicationDate</span>
-                        </div>  
-                        }
+                    <div class="col-5">
+                        <span class="fw-bold h5">Current Application</span>
+                        <br />
+                        <span>Status: </span>
+                        <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                        <br />
+                        <span>Date Applied: @Model.application.ApplicationDate</span>
+                        <form method="post" asp-page-handler="AcceptArtist">
+                            <input type="submit" class="form-control" value="Become Artist" style="background-color: #404040;" />
+                        </form>
+                    </div>
                     }
-                    else{}
+                    else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
+                    {
+                            <form method="post" asp-page-handler="Verify">
+                                <input type="submit" class="form-control" value="Get Verified" style="background-color: #404040;" />
+                            </form>
+                    }
+                    else
+                    {
+                    <div class="col-5">
+                        <span class="fw-bold h5">Current Application</span>
+                        <br />
+                        <span>Status: </span>
+                        <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                        <br />
+                        <span>Date Applied: @Model.application.ApplicationDate</span>
+                    </div>  
+                    }
+                }
+                else{}
                 }
             </div>
         </div>

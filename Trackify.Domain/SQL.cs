@@ -389,7 +389,7 @@ namespace Trackify.Domain
                     SqlCommand cmd = new SqlCommand("CreateArtistSP", conn);
                     cmd.Parameters.AddWithValue("@UserID", userId);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    return (int)cmd.ExecuteScalar();
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch (Exception)
@@ -557,7 +557,7 @@ namespace Trackify.Domain
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("GetAlbuByIDSP", conn);
+                    SqlCommand cmd = new SqlCommand("GetAlbumByIDSP", conn);
                     cmd.Parameters.AddWithValue("@AlbumID", albumID);
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataReader reader = cmd.ExecuteReader();

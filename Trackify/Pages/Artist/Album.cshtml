@@ -3,4 +3,34 @@
 @model Trackify.Pages.Artist.AlbumModel
 @{
     Albums album = Model.album;
+    string albumPrivacyStatus = "";
+    if (album.madePrivate)
+        albumPrivacyStatus = "private";
+    else
+        albumPrivacyStatus = "public";
+
 }
+
+<div class="row h-100 gap-2">
+    <!-- sidebar with playlists -->
+    <div class="col-2 p-0">
+        <div class="card h-100"></div>
+    </div>
+    <!-- album pic and info + songs -->
+    <div class="col-9 flex-grow-1 p-0">
+        <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @album.color 0%, #121212 25%);">
+            <div class="row p-0 m-0">
+                <div class="col-3 p-0">
+                    <img src="@album.albumImage" style="height: 200px; width: 200px;" class="" />
+                </div>
+                <div class="col-6 p-0">
+                    <br />
+                    <span class="small">@Model.artist.user.nickname</span>
+                    <br />
+                    <h1 class="fw-bold" style="font-size: 6em;">@album.albumTitle</h1>
+                    <span class="small">@albumPrivacyStatus @album.albumType • {nr} songs</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

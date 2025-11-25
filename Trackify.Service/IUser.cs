@@ -27,6 +27,7 @@ namespace Trackify.Service
 
         public void CreateArtist(int id);
         public Artists ShowArtistByUserID(int id);
+        public Artists ShowArtistByID(int artistId);
         public void VerifyArtist(int id, bool verification);
     }
 }

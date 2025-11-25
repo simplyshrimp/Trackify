@@ -49,8 +49,10 @@ namespace Trackify.Pages.User
         public IActionResult OnPostAcceptArtist()
         {
             //should check if profile pic and not allow if not, but later
-            userMethod.CreateArtist((int)HttpContext.Session.GetInt32("Id"));
-            HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID((int)HttpContext.Session.GetInt32("Id")).artistID);
+            int id = (int)HttpContext.Session.GetInt32("Id");
+            userMethod.CreateArtist(id);
+            HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID(id).artistID);
+            userMethod.ChangeApplicationStatus(id, 5);
             return RedirectToPage("/User/Account");
 
         }
