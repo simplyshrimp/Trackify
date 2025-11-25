@@ -52,41 +52,50 @@
 
                 </div>
                 @{
-                if (Model.application != null)
-                {
-                    if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
+                    if (Model.application != null)
                     {
-                    <div class="col-5">
-                        <span class="fw-bold h5">Current Application</span>
-                        <br />
-                        <span>Status: </span>
-                        <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
-                        <br />
-                        <span>Date Applied: @Model.application.ApplicationDate</span>
-                        <form method="post" asp-page-handler="AcceptArtist">
-                            <input type="submit" class="form-control" value="Become Artist" style="background-color: #404040;" />
-                        </form>
-                    </div>
+                        if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
+                        {
+                            <div class="col-5">
+                                <span class="fw-bold h5">Current Application</span>
+                                <br />
+                                <span>Status: </span>
+                                <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                                <br />
+                                <span>Date Applied: @Model.application.ApplicationDate</span>
+                                <form method="post" asp-page-handler="AcceptArtist">
+                                    <input type="submit" class="form-control" value="Become Artist" style="background-color: #404040;" />
+                                </form>
+                            </div>
+                        }
+                        else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
+                        {
+                            if (Model.artist.verified != null && Model.artist.verified == false)
+                            {
+                                <form method="post" asp-page-handler="Verify">
+                                    <input type="submit" class="form-control" value="Get Verified" style="background-color: #404040;" />
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="form-control invisible"> </div>
+                                <span class="form-control fw-bold">Verified</span>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="col-5">
+                                <span class="fw-bold h5">Current Application</span>
+                                <br />
+                                <span>Status: </span>
+                                <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                                <br />
+                                <span>Date Applied: @Model.application.ApplicationDate</span>
+                            </div>
+                        }
                     }
-                    else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
-                    {
-                            <form method="post" asp-page-handler="Verify">
-                                <input type="submit" class="form-control" value="Get Verified" style="background-color: #404040;" />
-                            </form>
-                    }
-                    else
-                    {
-                    <div class="col-5">
-                        <span class="fw-bold h5">Current Application</span>
-                        <br />
-                        <span>Status: </span>
-                        <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
-                        <br />
-                        <span>Date Applied: @Model.application.ApplicationDate</span>
-                    </div>  
-                    }
-                }
-                else{}
+                    else { }
                 }
             </div>
         </div>

@@ -18,12 +18,14 @@ namespace Trackify.Pages.User
         public Users? user { get; set; }
         
         public Applications? application { get; set; }
+        public Artists? artist {  get; set; } 
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("LoggedIn") == 1)
             {
                 user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("Id"));
                 application = userMethod.ShowApplicationByID(user.userId);
+                artist = userMethod.ShowArtistByUserID(user.userId);
                 return Page();
             }
             else
@@ -50,11 +52,17 @@ namespace Trackify.Pages.User
         {
             //should check if profile pic and not allow if not, but later
             int id = (int)HttpContext.Session.GetInt32("Id");
-            userMethod.CreateArtist(id);
-            HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID(id).artistID);
+            artist = userMethod.ShowArtistByUserID(userMethod.CreateArtist(id));
+            HttpContext.Session.SetInt32("ArtistID", artist.artistID);
             userMethod.ChangeApplicationStatus(id, 5);
             return RedirectToPage("/User/Account");
 
+        }
+        public IActionResult OnPostVerify()
+        {
+            artist = userMethod.ShowArtistByID((int)HttpContext.Session.GetInt32("ArtistID"));
+            userMethod.VerifyArtist(artist.artistID,true);
+            return RedirectToPage("/User/Account");
         }
 
         public string ChangeColorByStatus(AStatus currentStatus)

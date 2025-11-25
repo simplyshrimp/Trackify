@@ -32,7 +32,7 @@ namespace Trackify.Service
         public void ChangeApplicationStatus(int id, int status) => connection.ChangeApplicationStatus(id, status);
 
         /*-----------------------------------------------------*/
-        public void CreateArtist(int userId) => connection.CreateArtist(userId);
+        public int CreateArtist(int userId) => connection.CreateArtist(userId);
         public Artists ShowArtistByUserID(int userId) => connection.ShowArtistByUserID(userId);
         public Artists ShowArtistByID(int artistId) => connection.ShowArtistByID(artistId);
         public void VerifyArtist(int artistId,bool verification) => connection.VerifyArtist(artistId, verification);
