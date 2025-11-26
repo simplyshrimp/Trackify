@@ -23,22 +23,31 @@
                 </div>
             </a>
         </div>
-        <div class="card account pt-1"> <!--try just margin/padding end on the first one-->
+        <div class="card account"> <!--try just margin/padding end on the first one-->
             <div class="row">
-                <div class="me-5 col-6">
+                <div class=" col">
                     @{
                         if (Model.application == null || Model.application.Status == Domain.Models.Enums.AStatus.Cancelled)
                         {
                             <span class="fw-bold h3">Apply to Become Artist</span>
                             <div class="form-control invisible"> </div>
                             <form method="post" asp-page-handler="Application">
-                                <input type="submit" class="btn w-50" style="background-color: #404040;" value="Press to Apply">
+                                <input type="submit" class="btn w-25" style="background-color: #404040;" value="Press to Apply">
                             </form>
                         }
                         else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
-                        {
-                            <span class="fw-bold h3">You're already an artist</span>
-                            <div class="form-control invisible"> </div>
+                        {   
+                            <div class="row p-0 d-flex">
+                                <div class="col-11 flex-fill">
+                                    <span class="fw-bold h3">You're already an artist</span>
+                                    <div class="form-control invisible"> </div>
+                                </div>
+                                <div class="col-1 d-flex justify-content-end p-0 m-0">
+                                    <button class="card-header-pills account small fw-bold card col-2 m-0 p-1 " style="background-color: #404040; height: 2rem; width: 2rem;">
+                                        i
+                                    </button>
+                                </div>
+                            </div>
                         }
                         else
                         {
@@ -79,7 +88,9 @@
                             else
                             {
                                 <div class="form-control invisible"> </div>
-                                <span class="form-control fw-bold">Verified</span>
+                                <div class="d-flex justify-content-center p-0 m-0">
+                                    <div class="form-control fw-bold w-75 text-center" style="background-color:#2C2C2C;">Verified</div>
+                                </div>
                             }
 
                         }

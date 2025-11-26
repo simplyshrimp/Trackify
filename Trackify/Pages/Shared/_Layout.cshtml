@@ -22,7 +22,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-
                     </ul>
                     <ul class="navbar-nav flex-grow-1 d-flex justify-content-center">
                         <li>
@@ -46,7 +45,7 @@
                         </li>
                     </ul>
                     @{
-                        if(Context.Session.GetInt32("LoggedIn") == 1)
+                        if (Context.Session.GetInt32("LoggedIn") == 1)
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
                                 <li class="nav-item">
@@ -84,6 +83,8 @@
                                                     <button class="dditem btn w-100 text-start">Settings</button>
                                                 </a>
                                             </li>
+
+
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
                                                 <a class="dditem" asp-page="/User/LogOut">
@@ -95,6 +96,8 @@
                                 </li>
                             </ul>
                         }
+                        else if (Context.Session.GetInt32("ArtistID") != null)
+                            <li><hr class="dropdown-divider"></li>
                         else
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
@@ -114,7 +117,7 @@
                                     <a class=" btn ms-2 mt-1 pt-1 nav-link fw-semibold form-control bg-white text-black rounded-5 align-content-center" style="width: 108px; height: 48px;" asp-page="/User/Login">Log in</a>
                                 </li>
                                 <li>
-                                    <img src="@Context.Session.GetString("pfp")"  />
+                                    <img src="@Context.Session.GetString("pfp")" />
                                 </li>
                             </ul>
                         }
