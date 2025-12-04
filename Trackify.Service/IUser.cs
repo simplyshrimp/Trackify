@@ -10,6 +10,8 @@ namespace Trackify.Service
 {
     public interface IUser
     {
+        /*Users*/
+        public void CreateAdmin();
         public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, SubscriptionType subscriptionType);
         public int LoginByUsername(string username, string password);
         public int LoginByEmail(string email, string password);
@@ -18,13 +20,16 @@ namespace Trackify.Service
         public bool GetUserByEmail(string email);
         public Users UpdateUser(Users updatedUser);
         public void UpdatePassword(int id, string password);
+        public List<Users> GetAllUsers();
 
+        /*Applications*/
         public bool CreateApplication(int id);
         public bool DeleteApplication(int id);
         public List<Applications> ShowAllApplications();
         public Applications ShowApplicationByID(int id);
         public void ChangeApplicationStatus(int id, int status);
 
+        /*Artist*/
         public int CreateArtist(int id);
         public Artists ShowArtistByUserID(int id);
         public Artists ShowArtistByID(int artistId);

@@ -15,6 +15,7 @@ namespace Trackify.Service
         SQL connection;
         public User(IConfiguration configuration) => connection = new SQL(configuration);
 
+        public void CreateAdmin() => connection.CreateAdmin();
         public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, SubscriptionType subscriptionType) => connection.SignUp(username, password, confirmPassword, firstName, lastName, email, birthday, subscriptionType);
         public int LoginByUsername(string username, string password) => connection.LoginByUsername(username, password);
         public int LoginByEmail(string email, string password) => connection.LoginByEmail(email, password);
@@ -23,6 +24,7 @@ namespace Trackify.Service
         public bool GetUserByEmail(string email) => connection.GetUserByEmail(email);
         public Users UpdateUser(Users updatedUser) => connection.UpdateUser(updatedUser);
         public void UpdatePassword(int id, string newPassword) => connection.UpdatePassword(id, newPassword);
+        public List<Users> GetAllUsers() => connection.GetAllUsers();
 
         /*-----------------------------------------------------*/
         public bool CreateApplication(int id) => connection.CreateApplication(id);

@@ -105,7 +105,7 @@ AS
 	DECLARE @Salt UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Users(Username,NickName,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType,pfp,IsAdmin)
-VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/Images/Users/empty_user_pfp.png',1)
+VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/ImagesAndSongs/Users/empty_user_pfp.png',1)
 
 GO
 -------------------------Users---------------------------------
@@ -200,6 +200,12 @@ AS
 	UPDATE Users
 	SET HashPassword=HASHBYTES('SHA2_512',@Password+CAST(@Salt AS NVARCHAR(36))), Salt=@Salt
 	WHERE UserID=@UserID
+GO
+
+CREATE OR ALTER PROCEDURE GetAllUsersSP
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Users
 GO
 -----------------Applications-----------------
 CREATE OR ALTER PROCEDURE CreateApplicationSP
@@ -311,6 +317,13 @@ CREATE OR ALTER PROCEDURE ShowAllAlbumsSP
 AS
 	SET NOCOUNT ON
 	SELECT * FROM Album
+GO
+
+CREATE OR ALTER PROCEDURE GetAllAlbumsByArtist
+	@Artist int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Album WHERE Artist=@Artist
 GO
 
 --------------------Songs-------------------

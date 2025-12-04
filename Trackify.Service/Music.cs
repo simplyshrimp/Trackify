@@ -18,5 +18,6 @@ namespace Trackify.Service
         public void UpdateAlbum(Albums updatedAlbum) => connection.UpdateAlbum(updatedAlbum);
         public Albums GetAlbumByID(int albumID) => connection.GetAlbumByID(albumID);
         public List<Albums> ShowAllAlbums() => connection.ShowAllAlbums();
+        public List<Albums> ShowAllAlbumsByArtist(int artistID) => connection.ShowAllAlbumsByArtist(artistID);
     }
 }

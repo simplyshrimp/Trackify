@@ -47,6 +47,10 @@ namespace Trackify.Pages.User
                     HttpContext.Session.SetInt32("LoggedIn", 1);
                     HttpContext.Session.SetInt32("Id", id);
                     HttpContext.Session.SetString("pfp", loggedIn.pfp);
+                    if (loggedIn.isAdmin)
+                    {
+                        HttpContext.Session.SetInt32("Admin", 1);
+                    }
                     if (userMethod.ShowArtistByUserID(id) != null)
                     {
                         HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID(id).artistID);

@@ -1,0 +1,25 @@
+﻿@page
+@using Trackify.Domain.Models
+@model Trackify.Pages.Admin.ReviewApplicationsModel
+@{
+    List<Applications> allApplications = Model.allApplications;
+}
+
+<div class="d-flex justify-content-center">
+    <div class="col-8 overflow-auto row h-100">
+        @{ 
+            foreach (Applications application in allApplications)
+            {
+                <div class="card col-3 p-0">
+                    <button class="card-header-pills account card p-0 m-0" asp-page="/User/Profile/@application.User.userId">@application.User.nickname</button>
+                    <span>Username: @@@application.User.username</span> <br />
+                    <span>Account created: @application.User.accountAge</span> <br /><br />
+
+                    <span>Date Applied: @application.ApplicationDate</span> <br />
+                    <span>Current Status: </span> <span style="color: @Model.ChangeColorByStatus;">@application.Status.ToString().Replace('_', ' ')</span>
+                </div>
+            }
+        }
+
+    </div>
+</div>

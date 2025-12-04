@@ -45,14 +45,64 @@
                         </li>
                     </ul>
                     @{
-                        if (Context.Session.GetInt32("LoggedIn") == 1)
+                        if (Context.Session.GetInt32("Admin") == 1)
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
                                 <li class="nav-item">
                                     <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Subscribe">Premium</a>
                                 </li>
+                                <li>
+                                    <div class="divider"></div>
+                                </li>
+                                <li class="pt-1">
+                                    <div class="btn-group">
+                                        <button class="m-0 ms-1 roundbuttonbig" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="roundbutton" src="@Context.Session.GetString("pfp")" style="width:32px; height: 32px;" />
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Account">
+                                                    <button class="dditem btn w-100 text-start">Account</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Profile">
+                                                    <button class="dditem btn w-100 text-start">Profile</button>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Settings">
+                                                    <button class="dditem btn w-100 text-start">Settings</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Admin-->
+                                            <li>
+                                                <a class="dditem" asp-page="/Admin/ReviewApplications">
+                                                    <button class="dditem btn w-100 text-start">View Artist Applications</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/Admin/AdminSupport">
+                                                    <button class="dditem btn w-100 text-start">Support</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Log out-->
+                                            <li>
+                                                <a class="dditem" asp-page="/User/LogOut">
+                                                    <button class="dditem btn w-100 text-start ">Log out</button>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                        else if (Context.Session.GetInt32("ArtistID") != null)
+                        {
+                            <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Support">Support</a>
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Subscribe">Premium</a>
                                 </li>
                                 <li>
                                     <div class="divider"></div>
@@ -83,9 +133,18 @@
                                                     <button class="dditem btn w-100 text-start">Settings</button>
                                                 </a>
                                             </li>
-
-
-                                            <li><hr class="dropdown-divider"></li>
+                                            <li><hr class="dropdown-divider"></li> <!--Artist-->
+                                            <li>
+                                                <a class="dditem" asp-page="/Artist/AddAlbum">
+                                                    <button class="dditem btn w-100 text-start">Add Albums</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/Artist/AllAlbums">
+                                                    <button class="dditem btn w-100 text-start">See all your albums</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Log out-->
                                             <li>
                                                 <a class="dditem" asp-page="/User/LogOut">
                                                     <button class="dditem btn w-100 text-start ">Log out</button>
@@ -96,8 +155,52 @@
                                 </li>
                             </ul>
                         }
-                        else if (Context.Session.GetInt32("ArtistID") != null)
-                            <li><hr class="dropdown-divider"></li>
+                        else if (Context.Session.GetInt32("LoggedIn") == 1)
+                        {
+                            <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Subscribe">Premium</a>
+                                </li>
+                                <li>
+                                    <div class="divider"></div>
+                                </li>
+                                <li class="pt-1">
+                                    <div class="btn-group">
+                                        <button class="m-0 ms-1 roundbuttonbig" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="roundbutton" src="@Context.Session.GetString("pfp")" style="width:32px; height: 32px;" />
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Account">
+                                                    <button class="dditem btn w-100 text-start">Account</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Profile">
+                                                    <button class="dditem btn w-100 text-start">Profile</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Support">
+                                                    <button class="dditem btn w-100 text-start">Support</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Settings">
+                                                    <button class="dditem btn w-100 text-start">Settings</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Log out-->
+                                            <li>
+                                                <a class="dditem" asp-page="/User/LogOut">
+                                                    <button class="dditem btn w-100 text-start ">Log out</button>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
                         else
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">

@@ -16,7 +16,25 @@ namespace Trackify.Domain
     {
         private readonly string connectionString;
         public SQL(IConfiguration configuration) => connectionString = configuration.GetConnectionString("Default");
+        /*------------------------------------------------------------Admin---------------------------------------------------*/
+        public void CreateAdmin()
+        {
+            using (SqlConnection conn  = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateAdminUserSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
 
+                    throw;
+                }
+            }
+        }
         /*------------------------------------------------------------Users---------------------------------------------------*/
         public Users SignUp(string username, string password, string confirmPassword, string firstName, string lastName, string email, DateOnly birthday, SubscriptionType subscriptionType)
         {
@@ -39,7 +57,7 @@ namespace Trackify.Domain
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
                         string pfp = "/ImagesAndSong/Users/empty-user-pfp.png";
-                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge, "#121212");
+                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge, "#121212", false);
                     }
                     catch (Exception)
                     {
@@ -121,7 +139,8 @@ namespace Trackify.Domain
                                 (SubscriptionType)reader.GetInt32("SubscriptionType"),
                                 reader.GetString("pfp"),
                                 DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
-                                reader.GetString("Color")
+                                reader.GetString("Color"),
+                                reader.GetBoolean("IsAdmin")
                                 );
                         }
                     }
@@ -217,7 +236,7 @@ namespace Trackify.Domain
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("UpdatePasswordSP", conn);
+                    SqlCommand cmd = new SqlCommand("UpdateProfileSP", conn);
                     cmd.Parameters.AddWithValue("@UserID", id);
                     cmd.Parameters.AddWithValue("@Nickname", user.nickname);
                     cmd.Parameters.AddWithValue("@pfp", user.pfp);
@@ -251,6 +270,50 @@ namespace Trackify.Domain
 
                 throw;
             }
+        }
+        public List<Users> GetAllUsers()
+        {
+            List<Users> allUsers = new List<Users>();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetAllUsersSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            allUsers.Add(new Users(
+                                reader.GetInt32("UserID"),
+                                reader.GetString("Username"),
+                                reader.GetString("Nickname"),
+                                reader.GetString("FirstName"),
+                                reader.GetString("LastName"),
+                                reader.GetString("Email"),
+                                DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
+                                (SubscriptionType)reader.GetInt32("SubscriptionType"),
+                                reader.GetString("pfp"),
+                                DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
+                                reader.GetString("Color"),
+                                reader.GetBoolean("IsAdmin")
+                                ));
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            if (allUsers.Count > 0)
+            {
+                return allUsers;
+            }
+            else return null;
         }
         /*------------------------------------------Applications--------------------------------------------------*/
 
@@ -603,6 +666,38 @@ namespace Trackify.Domain
                            reader.GetBoolean("MadePrivate"),
                            reader.GetString("Color")
                            ));
+                    }
+                }
+                return allAlbums;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
+        public List<Albums> ShowAllAlbumsByArtist(int artistID)
+        {
+            try
+            {
+                List<Albums> allAlbums = new List<Albums>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("ShowAllAlbumsSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        allAlbums.Add(new Albums(
+                          reader.GetInt32("AlbumID"),
+                          reader.GetString("AlbumTitle"),
+                          (AlbumType)reader.GetInt32("AlbumType"),
+                          reader.GetInt32("Artist"),
+                          reader.GetString("AlbumImage"),
+                          reader.GetBoolean("MadePrivate"),
+                          reader.GetString("Color")
+                          ));
                     }
                 }
                 return allAlbums;
