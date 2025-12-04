@@ -105,7 +105,7 @@ AS
 	DECLARE @Salt UNIQUEIDENTIFIER=NEWID()
 
 	INSERT INTO Users(Username,NickName,HashPassword,Salt,FirstName,LastName,Email,Birthday,SubscriptionType,pfp,IsAdmin)
-VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/ImagesAndSongs/Users/empty_user_pfp.png',1)
+VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/ImagesAndSongs/Users/Empty-User-pfp.png',1)
 
 GO
 -------------------------Users---------------------------------
