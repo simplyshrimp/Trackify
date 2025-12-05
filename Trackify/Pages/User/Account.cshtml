@@ -61,7 +61,7 @@
 
                 </div>
                 @{
-                    if (Model.application != null)
+                    if (Model.application != null && Model.application.Status != Trackify.Domain.Models.Enums.AStatus.Cancelled)
                     {
                         if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
                         {

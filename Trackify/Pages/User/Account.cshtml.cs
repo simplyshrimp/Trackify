@@ -35,10 +35,14 @@ namespace Trackify.Pages.User
         }
         public IActionResult OnPostApplication()
         {
-
-            if (application == null) 
+            int id = (int)HttpContext.Session.GetInt32("Id");
+            if (userMethod.ShowApplicationByID(id) == null) 
             {
-                userMethod.CreateApplication((int)HttpContext.Session.GetInt32("Id"));
+                userMethod.CreateApplication(id);
+            }
+            else
+            {
+                userMethod.ChangeApplicationStatus(id, 0);
             }
             return RedirectToPage("/User/Account");
         }

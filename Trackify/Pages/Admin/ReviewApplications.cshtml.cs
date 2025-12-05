@@ -14,6 +14,7 @@ namespace Trackify.Pages.Admin
             userMethod = user;
         }
         public List<Applications> allApplications { get; set; }
+        public int hiddenID { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("Admin") == 1)
@@ -25,6 +26,16 @@ namespace Trackify.Pages.Admin
             {
                 return RedirectToPage("/index");
             }
+        }
+        public IActionResult OnPostAccept()
+        {
+            userMethod.ChangeApplicationStatus(hiddenID, 1);
+            return RedirectToPage("/Admin/ReviewApplications");
+        }
+        public IActionResult OnPostDeny()
+        {
+            userMethod.ChangeApplicationStatus(hiddenID, 2);
+            return RedirectToPage("/Admin/ReviewApplications");
         }
         public string ChangeColorByStatus(AStatus currentStatus) //yes i know i have this somewhere else but i'm tired okay
         {
