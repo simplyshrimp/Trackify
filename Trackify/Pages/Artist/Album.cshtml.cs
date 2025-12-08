@@ -21,7 +21,6 @@ namespace Trackify.Pages.Artist
         public void OnGet()
         {
             album = musicMethod.GetAlbumByID(id);
-            artist = userMethod.ShowArtistByID(album.artistID);
         }
     }
 }

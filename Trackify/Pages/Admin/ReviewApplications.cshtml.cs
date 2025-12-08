@@ -14,6 +14,8 @@ namespace Trackify.Pages.Admin
             userMethod = user;
         }
         public List<Applications> allApplications { get; set; }
+
+        [BindProperty]
         public int hiddenID { get; set; }
         public IActionResult OnGet()
         {

@@ -10,9 +10,11 @@ namespace Trackify.Pages.Artist
     public class AddAlbumModel : PageModel
     {
         private readonly IMusic musicMethod;
-        public AddAlbumModel(IMusic music)
+        private readonly IUser userMethod;
+        public AddAlbumModel(IMusic music, IUser user)
         {
             musicMethod = music;
+            userMethod = user;
         }
         [Required(ErrorMessage = "You need to add a title to your album")]
         [BindProperty]
@@ -44,7 +46,7 @@ namespace Trackify.Pages.Artist
 
                 imagePath = $"/ImagesAndSongs/Albums/{id}{Path.GetExtension(AlbumCover.FileName)}";
 
-                Albums updatedAlbum = new(id, Title, AlbumTypeInput, (int)HttpContext.Session.GetInt32("ArtistID"), imagePath, true, Color);
+                Albums updatedAlbum = new(id, Title, AlbumTypeInput, userMethod.ShowArtistByID((int)HttpContext.Session.GetInt32("ArtistID")), imagePath, true, Color, []);
                 musicMethod.UpdateAlbum(updatedAlbum);
                 return RedirectToAlbumPage(id);
             }

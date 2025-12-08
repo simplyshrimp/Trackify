@@ -1,0 +1,51 @@
+﻿@page
+@using Trackify.Domain.Models
+@model Trackify.Pages.Artist.AllArtistAlbumsModel
+@{
+    List<Albums> AllArtistAlbums = Model.allArtistAlbums;
+}
+
+<div class="row h-100 gap-2">
+    <!-- sidebar with playlists -->
+    <div class="col-2 p-0">
+        <div class="card h-100"></div>
+    </div>
+    <!-- profile pic and info -->
+    <div class="col-9 flex-grow-1 p-0">
+        <div class="card p-5">
+            <div class="row p-0 m-0 overflow-auto gap-2" style="height: 651px">
+                @{ 
+                    foreach(Albums album in AllArtistAlbums)
+                    {
+                        <div class="card p-2">
+                            <div class="row m-0">
+                                <div class="col-3 p-4">
+                                    <img src="@album.albumImage" style="height: 220px; width: 220px;" class="" />
+                                </div>
+                                <div class="col-8 p-0">
+                                    <br />
+                                    <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId" >@album.albumTitle</a>
+                                    <br />
+                                    <h1 class="fw-bold" style="font-size: 6em;">
+                                    </h1>
+                                    <span class="small">@album.albumType • @album.songs.Count() songs</span>
+                                    <div class="border-top overflow-auto">
+                                        @{ 
+                                            foreach(Songs song in album.songs)
+                                            {
+                                                <div class="border-top border-bottom row">
+
+                                                </div>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

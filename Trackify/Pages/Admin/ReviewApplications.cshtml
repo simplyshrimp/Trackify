@@ -27,7 +27,7 @@
             {
                 <div class="card col-3 p-0 border-2 overflow-y-auto overflow-x-hidden" style="height: 220px; width: 250px;">
                             <div class="row">
-                                <div class="card-header-pills account btn card p-0 m-0 col-5">@application.User.nickname</div> <!--route? but then i need to do extra on the profile-->
+                                <a asp-page="/User/Profile" asp-route-id="@application.User.userId" class="card-header-pills account btn card p-0 m-0 col-5">@application.User.nickname</a> <!--route? but then i need to do extra on the profile-->
                                 <div class="col-7">
                                     <span>Status: </span> <span class="fw-bold" style="color: @Model.ChangeColorByStatus(application.Status);">@application.Status.ToString().Replace('_', ' ')</span>
                                 </div>

@@ -12,15 +12,17 @@ namespace Trackify.Pages.User
         {
             userMethod = user;
         }
+        [BindProperty(SupportsGet = true)]
+        public int? id { get; set; }
         [BindProperty]
         public Users user { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetInt32("LoggedIn") ==1)
             {
-                if (HttpContext.Session.GetInt32("Id") != 0)
+                if (id != 0)
                 {
-                    user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("Id"));
+                    user = userMethod.GetUserByID((int)id);
                     return Page();
                 }
                 else

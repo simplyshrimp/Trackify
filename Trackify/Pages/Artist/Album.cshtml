@@ -3,6 +3,7 @@
 @model Trackify.Pages.Artist.AlbumModel
 @{
     Albums album = Model.album;
+    Artists artist = Model.artist;
     string albumPrivacyStatus = "";
     if (album.madePrivate)
         albumPrivacyStatus = "private";
@@ -25,10 +26,18 @@
                 </div>
                 <div class="col-6 p-0">
                     <br />
-                    <span class="small">@Model.artist.user.nickname</span>
+                    <span class="small">@albumPrivacyStatus @album.albumType</span>
                     <br />
                     <h1 class="fw-bold" style="font-size: 6em;">@album.albumTitle</h1>
-                    <span class="small">@albumPrivacyStatus @album.albumType • {nr} songs</span>
+                    <div class="row p-0 col-12">
+                        <div class="col-1">
+                            <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
+                        </div>
+                        <div class="col-6 p-0 align-content-center">
+                            <span class="fw-bold">@album.artist.user.nickname</span>
+                            <span class="small"> • @album.songs.Count() songs,</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

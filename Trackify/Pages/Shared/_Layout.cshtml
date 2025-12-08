@@ -13,7 +13,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom-0 box-shadow mb-3" style="height: 64px;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom-0 box-shadow mb-1" style="height: 64px;">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index"><img class="ms-2" style="height: 38px; width: 38px;" src="~/ImagesAndSongs/Logo/Transparent white.png" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -45,7 +45,7 @@
                         </li>
                     </ul>
                     @{
-                        if (Context.Session.GetInt32("Admin") == 1)
+                        if (Context.Session.GetInt32("Admin") == 1 && Context.Session.GetInt32("ArtistID") != null)
                         {
                             <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
                                 <li class="nav-item">
@@ -66,7 +66,71 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" asp-page="/User/Profile">
+                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
+                                                    <button class="dditem btn w-100 text-start">Profile</button>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Settings">
+                                                    <button class="dditem btn w-100 text-start">Settings</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Artist-->
+                                            <li>
+                                                <a class="dditem" asp-page="/Artist/AddAlbum">
+                                                    <button class="dditem btn w-100 text-start">Add Albums</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/Artist/AllArtistAlbums">
+                                                    <button class="dditem btn w-100 text-start">See all your albums</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Admin-->
+                                            <li>
+                                                <a class="dditem" asp-page="/Admin/ReviewApplications">
+                                                    <button class="dditem btn w-100 text-start">View Artist Applications</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-page="/Admin/AdminSupport">
+                                                    <button class="dditem btn w-100 text-start">Support</button>
+                                                </a>
+                                            </li>
+                                            <li><hr class="dropdown-divider"></li> <!--Log out-->
+                                            <li>
+                                                <a class="dditem" asp-page="/User/LogOut">
+                                                    <button class="dditem btn w-100 text-start ">Log out</button>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
+                        else if (Context.Session.GetInt32("Admin") == 1)
+                        {
+                            <ul class="navbar-nav flex-grow-1 d-flex justify-content-end">
+                                <li class="nav-item">
+                                    <a class="nav-link fw-bold mt-2" asp-area="" asp-page="User/Subscribe">Premium</a>
+                                </li>
+                                <li>
+                                    <div class="divider"></div>
+                                </li>
+                                <li class="pt-1">
+                                    <div class="btn-group">
+                                        <button class="m-0 ms-1 roundbuttonbig" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img class="roundbutton" src="@Context.Session.GetString("pfp")" style="width:32px; height: 32px;" />
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
+                                            <li>
+                                                <a class="dditem" asp-page="/User/Account">
+                                                    <button class="dditem btn w-100 text-start">Account</button>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
                                                     <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
@@ -119,7 +183,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" asp-page="/User/Profile">
+                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
                                                     <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
@@ -140,7 +204,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" asp-page="/Artist/AllAlbums">
+                                                <a class="dditem" asp-page="/Artist/AllArtistAlbums">
                                                     <button class="dditem btn w-100 text-start">See all your albums</button>
                                                 </a>
                                             </li>
@@ -176,7 +240,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" asp-page="/User/Profile">
+                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
                                                     <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
@@ -231,16 +295,16 @@
         
     </header>
     <div class="container-fluid main-content">
-        <main role="main" class="pb-3 h-100">
+        <main role="main" class="pb-3 h-100 row">
             @RenderBody()
         </main>
     </div>
 
-    <!--<footer class="border-top-0 footer text-muted" style="height:81px;">
-        <div class="container">
+    <footer class="border-top-0 footer text-muted" style="height:81px;">
+        <div class="container-fluid h-100">
             &copy; 2025 - Trackify - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-    </footer>-->
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

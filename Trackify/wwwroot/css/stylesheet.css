@@ -172,3 +172,10 @@ div.card.account.btn:hover {
     background-color: #242424;
     padding-bottom: 16px;
 }
+
+#clickable-link {
+    text-decoration-line: none;
+}
+#clickable-link:hover {
+    text-decoration-line: underline !important;
+}

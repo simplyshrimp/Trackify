@@ -599,7 +599,7 @@ namespace Trackify.Domain
                     cmd.Parameters.AddWithValue("@AlbumID", updatedAlbum.albumId);
                     cmd.Parameters.AddWithValue("@AlbumTitle", updatedAlbum.albumTitle);
                     cmd.Parameters.AddWithValue("@AlbumType", updatedAlbum.albumType);
-                    cmd.Parameters.AddWithValue("@Artist", updatedAlbum.artistID);
+                    cmd.Parameters.AddWithValue("@Artist", updatedAlbum.artist.artistID);
                     cmd.Parameters.AddWithValue("@AlbumImage", updatedAlbum.albumImage);
                     cmd.Parameters.AddWithValue("@MadePrivate", updatedAlbum.madePrivate);
                     cmd.Parameters.AddWithValue("@Color", updatedAlbum.color);
@@ -630,10 +630,11 @@ namespace Trackify.Domain
                            reader.GetInt32("AlbumID"),
                            reader.GetString("AlbumTitle"),
                            (AlbumType)reader.GetInt32("AlbumType"),
-                           reader.GetInt32("Artist"),
+                           ShowArtistByID(reader.GetInt32("Artist")),
                            reader.GetString("AlbumImage"),
                            reader.GetBoolean("MadePrivate"),
-                           reader.GetString("Color")
+                           reader.GetString("Color"),
+                           []
                            );
                     }
                 }
@@ -661,10 +662,11 @@ namespace Trackify.Domain
                            reader.GetInt32("AlbumID"),
                            reader.GetString("AlbumTitle"),
                            (AlbumType)reader.GetInt32("AlbumType"),
-                           reader.GetInt32("Artist"),
+                           ShowArtistByID(reader.GetInt32("Artist")),
                            reader.GetString("AlbumImage"),
                            reader.GetBoolean("MadePrivate"),
-                           reader.GetString("Color")
+                           reader.GetString("Color"),
+                           []
                            ));
                     }
                 }
@@ -693,10 +695,11 @@ namespace Trackify.Domain
                           reader.GetInt32("AlbumID"),
                           reader.GetString("AlbumTitle"),
                           (AlbumType)reader.GetInt32("AlbumType"),
-                          reader.GetInt32("Artist"),
+                          ShowArtistByID(reader.GetInt32("Artist")),
                           reader.GetString("AlbumImage"),
                           reader.GetBoolean("MadePrivate"),
-                          reader.GetString("Color")
+                          reader.GetString("Color"),
+                          []
                           ));
                     }
                 }
