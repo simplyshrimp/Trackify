@@ -5,32 +5,67 @@
 }
 
 
-    <div class="row h-100 gap-2">
-        <!-- sidebar with playlists -->
-        <div class="col-2 p-0">
-            <div class="card h-100"></div>
-        </div>
-        <!-- profile pic and info -->
-        <div class="col-9 flex-grow-1 p-0">
+<div class="row h-100 gap-2">
+    <!-- sidebar with playlists -->
+    <div class="col-2 p-0">
+        <div class="card h-100"></div>
+    </div>
+    <!-- profile pic and info -->
+    <div class="col-9 flex-grow-1 p-0">
         <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
-                <div class="row p-0 m-0">
-                    <div class="col-3 p-0">
-                        <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
-                    </div>
-                    <div class="col-6 p-0">
-                        <br/>
-                        <span class="small">Profile</span>
-                        <br />
+            <div class="row p-0 m-0">
+                <div type="button" class="col-2 p-0 me-5" data-bs-toggle="modal" data-bs-target="#EditProfileModal">
+                    <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
+                </div>
+                <div class="col-6 p-0">
+                    <br />
+                    <span class="small">Profile</span>
+                    <br />
+                    <div type="button" data-bs-toggle="modal" data-bs-target="#EditProfileModal">
                         <h1 class="fw-bold" style="font-size: 6em;">@Model.user.username</h1>
-                        <span class="small">{WIP} public playlists • </span>
                     </div>
+                    <span class="small">{WIP} public playlists • </span>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Modal -->
+<div class="modal fade" id="EditProfileModal" tabindex="-1" aria-labelledby="EditProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <h1 class="modal-title fs-5" id="EditProfileModalLabel">Profile details</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            <div class="modal-body">
+                <form method="dialog" enctype="multipart/form-data" asp-page-handler="EditProfile">
+                    <div class="row">
+                        <div class="col-7">
+                            <input type="file" asp-for="NewPfp" />
+                        </div>
+                        <div class="col-2 ms-3">
+                            <input type="color" asp-for="NewColor"/>
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <input maxlength="50" class="form-control" asp-for="NewNickname"/>
+                    </div>
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-end mb-3">
+
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Close" />
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
 
 <!-- footer 'playing now' -->
 <footer class="border fixed-bottom" style="height: 72px;">
-
 </footer>

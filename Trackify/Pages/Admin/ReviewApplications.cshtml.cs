@@ -13,7 +13,13 @@ namespace Trackify.Pages.Admin
         {
             userMethod = user;
         }
+
+        [BindProperty(SupportsGet = true)]
+        public int? filterOptions { get; set; }
+
         public List<Applications> allApplications { get; set; }
+        public List<Applications> filteredApplications { get; set; }
+        public List<Applications> chosenList { get; set; }
 
         [BindProperty]
         public int hiddenID { get; set; }
@@ -22,7 +28,26 @@ namespace Trackify.Pages.Admin
             if (HttpContext.Session.GetInt32("Admin") == 1)
             {
                 allApplications = userMethod.ShowAllApplications();
-                return Page();
+                chosenList = allApplications;
+                if (filterOptions == null)
+                {
+                    chosenList = allApplications;
+                    return Page();
+                }
+                else
+                {
+                    filteredApplications = new List<Applications>();
+                    foreach (Applications apps in allApplications)
+                    {
+                        if ((AStatus)filterOptions == apps.Status)
+                        {
+                            filteredApplications.Add(apps);
+                        }
+                    }
+                    chosenList = filteredApplications;
+                    return Page();
+                }
+                
             }
             else
             {
@@ -39,6 +64,13 @@ namespace Trackify.Pages.Admin
             userMethod.ChangeApplicationStatus(hiddenID, 2);
             return RedirectToPage("/Admin/ReviewApplications");
         }
+        public IActionResult OnPostChange()
+        {
+            userMethod.ChangeApplicationStatus(hiddenID, 0);
+            return RedirectToPage("/Admin/ReviewApplications");
+        }
+
+
         public string ChangeColorByStatus(AStatus currentStatus) //yes i know i have this somewhere else but i'm tired okay
         {
             switch (currentStatus)
