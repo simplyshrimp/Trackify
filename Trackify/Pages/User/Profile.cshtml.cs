@@ -16,8 +16,8 @@ namespace Trackify.Pages.User
         //for displaying profile
         [BindProperty(SupportsGet = true)]
         public int? id { get; set; }
-        [BindProperty]
-        public Users user { get; set; }
+
+        public Users? user;
 
         //for EditProfile
         [BindProperty]
@@ -45,7 +45,7 @@ namespace Trackify.Pages.User
 
             //make artist application now and then songs
         }
-        public IActionResult OnDialogEditProfile()
+        public IActionResult OnPostEditProfile()
         {
             id = HttpContext.Session.GetInt32("Id");
             Users newUser = userMethod.GetUserByID((int)id);
@@ -68,8 +68,8 @@ namespace Trackify.Pages.User
             {
                 newUser.nickname = NewNickname;
             }
-            userMethod.UpdateUser(newUser);
-            return RedirectToPage($"/User/Profile/{newUser.userId}");
+            userMethod.UpdateProfile(newUser);
+            return Redirect($"/User/Profile/{newUser.userId}");
         }
     }
 }

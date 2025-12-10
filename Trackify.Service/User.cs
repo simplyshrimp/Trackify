@@ -23,6 +23,7 @@ namespace Trackify.Service
         public bool GetUserByUsername(string username) => connection.GetUserByUsername(username);
         public bool GetUserByEmail(string email) => connection.GetUserByEmail(email);
         public Users UpdateUser(Users updatedUser) => connection.UpdateUser(updatedUser);
+        public void UpdateProfile(Users user) => connection.UpdateProfile(user);
         public void UpdatePassword(int id, string newPassword) => connection.UpdatePassword(id, newPassword);
         public List<Users> GetAllUsers() => connection.GetAllUsers();
 

@@ -229,7 +229,7 @@ namespace Trackify.Domain
                 throw;
             }
         }
-        public void UpdateProfile(int id, Users user)
+        public void UpdateProfile(Users user)
         {
             try
             {
@@ -237,7 +237,7 @@ namespace Trackify.Domain
                 {
                     conn.Open();
                     SqlCommand cmd = new SqlCommand("UpdateProfileSP", conn);
-                    cmd.Parameters.AddWithValue("@UserID", id);
+                    cmd.Parameters.AddWithValue("@UserID", user.userId);
                     cmd.Parameters.AddWithValue("@Nickname", user.nickname);
                     cmd.Parameters.AddWithValue("@pfp", user.pfp);
                     cmd.Parameters.AddWithValue("@Color", user.color);

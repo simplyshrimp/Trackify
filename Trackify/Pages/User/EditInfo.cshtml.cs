@@ -17,7 +17,7 @@ namespace Trackify.Pages.User
         {
             if (HttpContext.Session.GetInt32("LoggedIn") == 1)
             {
-                user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("LoggedIn"));
+                user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("Id"));
             }
         }
     }

@@ -19,6 +19,7 @@ namespace Trackify.Service
         public bool GetUserByUsername(string username);
         public bool GetUserByEmail(string email);
         public Users UpdateUser(Users updatedUser);
+        public void UpdateProfile(Users user);
         public void UpdatePassword(int id, string password);
         public List<Users> GetAllUsers();
 
