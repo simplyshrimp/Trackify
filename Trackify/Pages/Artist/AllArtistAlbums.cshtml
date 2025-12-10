@@ -3,6 +3,15 @@
 @model Trackify.Pages.Artist.AllArtistAlbumsModel
 @{
     List<Albums> AllArtistAlbums = Model.allArtistAlbums;
+
+    string albumPrivacyStatus = "";
+    String CheckPrivacyStatus(Albums album)
+    {
+        if (album.madePrivate)
+            return albumPrivacyStatus = "private";
+        else
+            return albumPrivacyStatus = "public";
+    }
 }
 
 <div class="row h-100 gap-2">
@@ -15,8 +24,10 @@
         <div class="card p-5">
             <div class="row p-0 m-0 overflow-auto gap-2" style="height: 651px">
                 @{ 
-                    foreach(Albums album in AllArtistAlbums)
+                    foreach (Albums album in AllArtistAlbums)
                     {
+                        if(album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
+                        {
                         <div class="card p-2">
                             <div class="row m-0">
                                 <div class="col-3 p-4">
@@ -28,7 +39,7 @@
                                     <br />
                                     <h1 class="fw-bold" style="font-size: 6em;">
                                     </h1>
-                                    <span class="small">@album.albumType • @album.songs.Count() songs</span>
+                                    <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
                                     <div class="border-top overflow-auto">
                                         @{ 
                                             foreach(Songs song in album.songs)
@@ -43,6 +54,7 @@
                                 </div>
                             </div>
                         </div>
+                        }
                     }
                 }
             </div>

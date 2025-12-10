@@ -363,5 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # image and song files
-C:\Users\cecby0001\source\repos\Trackify\Trackify\wwwroot\ImagesAndSongs\
-C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/
+/Trackify/wwwroot/ImagesAndSongs/

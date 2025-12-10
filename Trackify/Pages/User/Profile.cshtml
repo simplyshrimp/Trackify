@@ -1,4 +1,4 @@
-﻿@page "{id:int}"
+﻿@page "{Id:int}"
 @using Trackify.Domain.Models;
 @model Trackify.Pages.User.ProfileModel
 @{
@@ -15,7 +15,7 @@
         <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
             <div class="row p-0 m-0">
                 <div type="button" class="col-2 p-0 me-5" data-bs-toggle="modal" data-bs-target="#EditProfileModal">
-                    <img src="@HttpContext.Session.GetString("pfp")" style="height: 200px; width: 200px;" class="roundbutton" />
+                    <img src="@Model.user.pfp" style="height: 200px; width: 200px;" class="roundbutton" />
                 </div>
                 <div class="col-6 p-0">
                     <br />
@@ -35,9 +35,10 @@
 <div class="modal fade" id="EditProfileModal" tabindex="-1" aria-labelledby="EditProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <h1 class="modal-title fs-5" id="EditProfileModalLabel">Profile details</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="EditProfileModalLabel">Profile details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
 
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" asp-page-handler="EditProfile">

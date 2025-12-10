@@ -57,7 +57,7 @@ namespace Trackify.Domain
                         int userId = Convert.ToInt32(cmd.ExecuteScalar());
                         DateOnly accountAge = DateOnly.FromDateTime(DateTime.Now);
                         string pfp = "/ImagesAndSong/Users/empty-user-pfp.png";
-                        return new Users(userId, username, username, firstName, lastName, email, birthday, subscriptionType, pfp, accountAge, "#121212", false);
+                        return new Users{userId=userId, username=username, nickname=username, firstName=firstName, lastName = lastName, email = email, birthday = birthday, subscriptionType = subscriptionType, pfp = pfp, accountAge = accountAge, color = "#121212", isAdmin= false};
                     }
                     catch (Exception)
                     {
@@ -128,20 +128,20 @@ namespace Trackify.Domain
                     {
                         while (reader.Read())
                         {
-                            return new Users(
-                                id,
-                                reader.GetString("Username"),
-                                reader.GetString("Nickname"),
-                                reader.GetString("FirstName"),
-                                reader.GetString("LastName"),
-                                reader.GetString("Email"),
-                                DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
-                                (SubscriptionType)reader.GetInt32("SubscriptionType"),
-                                reader.GetString("pfp"),
-                                DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
-                                reader.GetString("Color"),
-                                reader.GetBoolean("IsAdmin")
-                                );
+                            return new Users {
+                                userId = id,
+                                username = reader.GetString("Username"),
+                                nickname = reader.GetString("Nickname"),
+                                firstName = reader.GetString("FirstName"),
+                                lastName = reader.GetString("LastName"),
+                                email = reader.GetString("Email"),
+                                birthday = DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
+                                subscriptionType = (SubscriptionType)reader.GetInt32("SubscriptionType"),
+                                pfp = reader.GetString("pfp"),
+                                accountAge = DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
+                                color = reader.GetString("Color"),
+                                isAdmin = reader.GetBoolean("IsAdmin")
+                                };
                         }
                     }
                 }
@@ -229,6 +229,7 @@ namespace Trackify.Domain
                 throw;
             }
         }
+
         public void UpdateProfile(Users user)
         {
             try
@@ -251,6 +252,7 @@ namespace Trackify.Domain
                 throw;
             }
         }
+
         public void UpdatePassword(int id, string newPassword)
         {
             try
@@ -271,6 +273,7 @@ namespace Trackify.Domain
                 throw;
             }
         }
+
         public List<Users> GetAllUsers()
         {
             List<Users> allUsers = new List<Users>();
@@ -286,20 +289,20 @@ namespace Trackify.Domain
                     {
                         while (reader.Read())
                         {
-                            allUsers.Add(new Users(
-                                reader.GetInt32("UserID"),
-                                reader.GetString("Username"),
-                                reader.GetString("Nickname"),
-                                reader.GetString("FirstName"),
-                                reader.GetString("LastName"),
-                                reader.GetString("Email"),
-                                DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
-                                (SubscriptionType)reader.GetInt32("SubscriptionType"),
-                                reader.GetString("pfp"),
-                                DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
-                                reader.GetString("Color"),
-                                reader.GetBoolean("IsAdmin")
-                                ));
+                            allUsers.Add(new Users {
+                                userId = reader.GetInt32("UserID"),
+                                username = reader.GetString("Username"),
+                                nickname = reader.GetString("Nickname"),
+                                firstName = reader.GetString("FirstName"),
+                                lastName = reader.GetString("LastName"),
+                                email = reader.GetString("Email"),
+                                birthday = DateOnly.FromDateTime(reader.GetDateTime("Birthday")),
+                                subscriptionType = (SubscriptionType)reader.GetInt32("SubscriptionType"),
+                                pfp = reader.GetString("pfp"),
+                                accountAge = DateOnly.FromDateTime(reader.GetDateTime("AccountAge")),
+                                color = reader.GetString("Color"),
+                                isAdmin = reader.GetBoolean("IsAdmin")
+                            });
                         }
                     }
                 }

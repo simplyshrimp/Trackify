@@ -21,22 +21,5 @@ namespace Trackify.Domain.Models
         public DateOnly accountAge { get; set; }
         public string color { get; set; }
         public bool isAdmin { get; set; }
-
-
-        public Users(int UserID, string username, string nickname, string firstName, string lastName,string email, DateOnly birthday, SubscriptionType subscriptionType, string pfp, DateOnly accountAge, string color, bool isAdmin)
-        {
-            this.userId = UserID;
-            this.username = username;
-            this.nickname = nickname;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-            this.birthday = birthday;
-            this.subscriptionType = subscriptionType;
-            this.pfp = pfp;
-            this.accountAge = accountAge;
-            this.color = color;
-            this.isAdmin = isAdmin;
-        }
     }
 }

@@ -13,27 +13,30 @@ namespace Trackify.Pages.User
         {
             userMethod = user;
         }
+
         //for displaying profile
         [BindProperty(SupportsGet = true)]
-        public int? id { get; set; }
-
-        public Users? user;
+        public int Id { get; set; }
 
         //for EditProfile
         [BindProperty]
-        public IFormFile? NewPfp { get; set; }
+        public IFormFile NewPfp { get; set; }
+
         [BindProperty]
-        public string? NewColor { get; set; }
+        public string NewColor { get; set; }
+
         [BindProperty]
-        public string? NewNickname { get; set; }
+        public string NewNickname { get; set; }
+
+        public Users user = new Users();
         //methods
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetInt32("LoggedIn") ==1)
+            if (HttpContext.Session.GetInt32("LoggedIn") == 1)
             {
-                if (id != 0)
+                if (Id != 0)
                 {
-                    user = userMethod.GetUserByID((int)id);
+                    user = userMethod.GetUserByID((int)Id);
                     return Page();
                 }
                 else
@@ -45,31 +48,37 @@ namespace Trackify.Pages.User
 
             //make artist application now and then songs
         }
+
         public IActionResult OnPostEditProfile()
         {
-            id = HttpContext.Session.GetInt32("Id");
-            Users newUser = userMethod.GetUserByID((int)id);
+            user = userMethod.GetUserByID((int)Id);
 
             if (NewPfp != null)
             {
-                string imagePath = "";
-                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/Users/{id}{Path.GetExtension(NewPfp.FileName)}";
+                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/Users/{Id}{Path.GetExtension(NewPfp.FileName)}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 NewPfp.CopyTo(filestream);
 
-                imagePath = $"/ImagesAndSongs/Albums/{id}{Path.GetExtension(NewPfp.FileName)}";
-                newUser.pfp = imagePath;
+                string imagePath = $"\\ImagesAndSongs\\Users\\{user.userId}{Path.GetExtension(NewPfp.FileName)}";
+                user.pfp = imagePath;
+
+                HttpContext.Session.SetString("pfp", imagePath);
             }
+
             if (NewColor != null)
             {
-                newUser.color = NewColor;
+                user.color = NewColor;
             }
+
             if (NewNickname != null)
             {
-                newUser.nickname = NewNickname;
+                user.nickname = NewNickname;
             }
-            userMethod.UpdateProfile(newUser);
-            return Redirect($"/User/Profile/{newUser.userId}");
+
+            Console.WriteLine(HttpContext.Session.GetString("pfp"));
+
+            userMethod.UpdateProfile(user);
+            return Redirect($"/User/Profile/{user.userId}");
         }
     }
 }
