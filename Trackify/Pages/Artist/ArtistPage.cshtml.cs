@@ -1,22 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Drawing;
 using Trackify.Domain.Models;
 using Trackify.Service;
 
-namespace Trackify.Pages.User
+namespace Trackify.Pages.Artist
 {
-    public class ProfileModel : PageModel
+    public class ArtistPageModel : PageModel
     {
         private readonly IUser userMethod;
-        public ProfileModel(IUser user)
+        private readonly IMusic musicMethod;
+        public ArtistPageModel(IUser user,IMusic music)
         {
             userMethod = user;
+            musicMethod = music;
         }
 
-        //for displaying profile
         [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+        public int ArtistId { get; set; }
+        public Artists Artist {  get; set; }
+        public Users user = new Users();
 
         //for EditProfile
         [BindProperty]
@@ -28,34 +30,24 @@ namespace Trackify.Pages.User
         [BindProperty]
         public string NewNickname { get; set; }
 
-        public Users user = new Users();
-        //methods
-        public IActionResult OnGet()
+
+        public void OnGet()
         {
-            if (HttpContext.Session.GetInt32("LoggedIn") == 1)
+            if (ArtistId > 0)
             {
-                if (Id != 0)
-                {
-                    user = userMethod.GetUserByID((int)Id);
-                    return Page();
-                }
-                else
-                {
-                    return RedirectToPage("/Index");
-                }
+                Artist = userMethod.ShowArtistByID(ArtistId);
+                user = Artist.user;
+                //remove artist constructor, remove it from the rest too while you're at it
             }
-            else { return RedirectToPage("/Index"); }
-
-            //make artist application now and then songs
         }
-
         public IActionResult OnPostEditProfile()
         {
-            user = userMethod.GetUserByID((int)Id);
+
+            user = userMethod.GetUserByID((int)HttpContext.Session.GetInt32("Id"));
 
             if (NewPfp != null)
             {
-                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/Users/{Id}{Path.GetExtension(NewPfp.FileName)}";
+                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/Users/{user.userId}{Path.GetExtension(NewPfp.FileName)}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 NewPfp.CopyTo(filestream);
 

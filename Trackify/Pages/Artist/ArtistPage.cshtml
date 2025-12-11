@@ -1,11 +1,8 @@
-﻿@page "{Id:int}"
-@using Trackify.Domain.Models;
-@model Trackify.Pages.User.ProfileModel
+﻿@page "{ArtistId:int}"
+@using Trackify.Domain.Models
+@model Trackify.Pages.Artist.ArtistPageModel
 @{
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-
+    Artists Artist = Model.Artist;
 }
 
 
@@ -27,15 +24,21 @@
                     }
                     else
                     {
-                        <div class="p-0 me-5" style="height: 200px; width: 200px;">
+                        <div  class="p-0 me-5" style="height: 200px; width: 200px;">
                             <img src="@Model.user.pfp" style="height: 200px; width: 200px;" class="roundbutton" />
                         </div>
                     }
                 }
-
                 <div class="col-6 p-0">
                     <br />
-                    <span class="small">Profile</span>
+                    @{
+                        if (Artist.verified == true)
+                        {
+                            <span class="small">Verified </span>
+                        }
+                    }
+
+                    <span class="small">Artist</span>
                     <br />
                     @{
                         if (HttpContext.Session.GetInt32("Id") == Model.user.userId)
@@ -49,6 +52,8 @@
                             <h1 class="fw-bold" style="font-size: 6em;">@Model.user.nickname</h1>
                         }
                     }
+
+
                     <span class="small">{WIP} public playlists • </span>
                 </div>
             </div>

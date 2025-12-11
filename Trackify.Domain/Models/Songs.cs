@@ -11,7 +11,7 @@ namespace Trackify.Domain.Models
         public int songId { get; set; }
         public TimeSpan length {  get; set; }
         public string title { get; set; }
-        public int albumID { get; set; }
+        public int albumID { get; set; } //maybe make sql image to just get albumcover for the song
         public int artistID { get; set; }
         public int timesPlayed { get; set; }
         public string filepath { get; set; }
