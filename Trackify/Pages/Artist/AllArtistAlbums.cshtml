@@ -26,35 +26,32 @@
                 @{ 
                     foreach (Albums album in AllArtistAlbums)
                     {
-                        if(album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
-                        {
-                        <div class="card p-2">
-                            <div class="row m-0">
-                                <div class="col-3 p-4" style="height: 220px; width: 220px;">
-                                    <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
-                                </div>
-                                <div class=" p-4 ms-5" style="height: 220px; width: 650px;">
-                                    <br />
-                                    <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId" >@album.albumTitle</a>
-                                    <br />
-                                    <h1 class="fw-bold" style="font-size: 6em;">
-                                    </h1>
-                                    <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
-                                    <div class="border-top overflow-auto">
-                                        @{ 
-                                            foreach(Songs song in album.songs)
-                                            {
-                                                <div class="border-top border-bottom row">
+                    <div class="card p-2">
+                        <div class="row m-0">
+                            <div class="col-3 p-4" style="height: 220px; width: 220px;">
+                                <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
+                            </div>
+                            <div class=" p-4 ms-5" style="height: 220px; width: 650px;">
+                                <br />
+                                <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId" >@album.albumTitle</a>
+                                <br />
+                                <h1 class="fw-bold" style="font-size: 6em;">
+                                </h1>
+                                <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
+                                <div class="border-top overflow-auto">
+                                    @{ 
+                                        foreach(Songs song in album.songs)
+                                        {
+                                            <div class="border-top border-bottom row">
 
-                                                </div>
-                                            }
+                                            </div>
                                         }
+                                    }
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        }
+                    </div>
                     }
                 }
             </div>

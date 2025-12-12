@@ -379,12 +379,12 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        list.Add(new Applications(
-                            reader.GetInt32("ApplicationID"),
-                            GetUserByID(reader.GetInt32("UserID")),
-                            DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
-                            (AStatus)reader.GetInt32("ApplicationStatus")
-                            ));
+                        list.Add(new Applications {
+                            Id = reader.GetInt32("ApplicationID"),
+                            User = GetUserByID(reader.GetInt32("UserID")),
+                            ApplicationDate = DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
+                            Status = (AStatus)reader.GetInt32("ApplicationStatus")
+                        });
                     }
                 }
             }
@@ -408,12 +408,12 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        return new Applications(
-                            reader.GetInt32("ApplicationID"),
-                            GetUserByID(reader.GetInt32("UserID")),
-                            DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
-                            (AStatus)reader.GetInt32("ApplicationStatus")
-                            );
+                        return new Applications {
+                            Id = reader.GetInt32("ApplicationID"),
+                            User = GetUserByID(reader.GetInt32("UserID")),
+                            ApplicationDate = DateOnly.FromDateTime(reader.GetDateTime("ApplicationDate")),
+                            Status = (AStatus)reader.GetInt32("ApplicationStatus")
+                            };
                     }
                 }
             }
@@ -477,11 +477,11 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        return new Artists(
-                            reader.GetInt32("ArtistID"),
-                            GetUserByID(UserID),
-                            reader.GetBoolean("Verification")
-                        );
+                        return new Artists {
+                            artistID = reader.GetInt32("ArtistID"),
+                            user = GetUserByID(UserID),
+                            verified = reader.GetBoolean("Verification")
+                        };
                     }
                 }
             }
@@ -525,11 +525,11 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        return new Artists(
-                            reader.GetInt32("ArtistID"),
-                            GetUserByID(reader.GetInt32("UserID")),
-                            reader.GetBoolean("Verification")
-                            );
+                        return new Artists {
+                            artistID = reader.GetInt32("ArtistID"),
+                            user = GetUserByID(reader.GetInt32("UserID")),
+                            verified = reader.GetBoolean("Verification")
+                            };
                     }
                 }
             }
@@ -553,11 +553,11 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                         allArtists.Add(new Artists(
-                            reader.GetInt32("ArtistID"),
-                            GetUserByID(reader.GetInt32("UserID")),
-                            reader.GetBoolean("Verification")
-                            ));
+                         allArtists.Add(new Artists {
+                            artistID = reader.GetInt32("ArtistID"),
+                            user = GetUserByID(reader.GetInt32("UserID")),
+                            verified = reader.GetBoolean("Verification")
+                            });
                     }
                 }
             }
@@ -629,16 +629,16 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        return new Albums(
-                           reader.GetInt32("AlbumID"),
-                           reader.GetString("AlbumTitle"),
-                           (AlbumType)reader.GetInt32("AlbumType"),
-                           ShowArtistByID(reader.GetInt32("Artist")),
-                           reader.GetString("AlbumImage"),
-                           reader.GetBoolean("MadePrivate"),
-                           reader.GetString("Color"),
-                           []
-                           );
+                        return new Albums {
+                           albumId = reader.GetInt32("AlbumID"),
+                           albumTitle = reader.GetString("AlbumTitle"),
+                           albumType = (AlbumType)reader.GetInt32("AlbumType"),
+                           artist = ShowArtistByID(reader.GetInt32("Artist")),
+                           albumImage = reader.GetString("AlbumImage"),
+                           madePrivate = reader.GetBoolean("MadePrivate"),
+                           color = reader.GetString("Color"),
+                           songs = []
+                           };
                     }
                 }
             }
@@ -661,16 +661,16 @@ namespace Trackify.Domain
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                         allAlbums.Add(new Albums(
-                           reader.GetInt32("AlbumID"),
-                           reader.GetString("AlbumTitle"),
-                           (AlbumType)reader.GetInt32("AlbumType"),
-                           ShowArtistByID(reader.GetInt32("Artist")),
-                           reader.GetString("AlbumImage"),
-                           reader.GetBoolean("MadePrivate"),
-                           reader.GetString("Color"),
-                           []
-                           ));
+                         allAlbums.Add(new Albums {
+                             albumId = reader.GetInt32("AlbumID"),
+                             albumTitle = reader.GetString("AlbumTitle"),
+                             albumType = (AlbumType)reader.GetInt32("AlbumType"),
+                             artist = ShowArtistByID(reader.GetInt32("Artist")),
+                             albumImage = reader.GetString("AlbumImage"),
+                             madePrivate = reader.GetBoolean("MadePrivate"),
+                             color = reader.GetString("Color"),
+                             songs = []
+                         });
                     }
                 }
                 return allAlbums;
@@ -689,21 +689,22 @@ namespace Trackify.Domain
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("ShowAllAlbumsSP", conn);
+                    SqlCommand cmd = new SqlCommand("GetAllAlbumsByArtistSP", conn);
+                    cmd.Parameters.AddWithValue("@Artist", artistID);
                     cmd.CommandType = CommandType.StoredProcedure;
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        allAlbums.Add(new Albums(
-                          reader.GetInt32("AlbumID"),
-                          reader.GetString("AlbumTitle"),
-                          (AlbumType)reader.GetInt32("AlbumType"),
-                          ShowArtistByID(reader.GetInt32("Artist")),
-                          reader.GetString("AlbumImage"),
-                          reader.GetBoolean("MadePrivate"),
-                          reader.GetString("Color"),
-                          []
-                          ));
+                        allAlbums.Add(new Albums {
+                            albumId = reader.GetInt32("AlbumID"),
+                            albumTitle = reader.GetString("AlbumTitle"),
+                            albumType = (AlbumType)reader.GetInt32("AlbumType"),
+                            artist = ShowArtistByID(reader.GetInt32("Artist")),
+                            albumImage = reader.GetString("AlbumImage"),
+                            madePrivate = reader.GetBoolean("MadePrivate"),
+                            color = reader.GetString("Color"),
+                            songs = []
+                        });
                     }
                 }
                 return allAlbums;

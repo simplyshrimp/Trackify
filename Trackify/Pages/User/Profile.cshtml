@@ -2,10 +2,6 @@
 @using Trackify.Domain.Models;
 @model Trackify.Pages.User.ProfileModel
 @{
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-
 }
 
 
@@ -41,12 +37,12 @@
                         if (HttpContext.Session.GetInt32("Id") == Model.user.userId)
                         {
                             <div type="button" data-bs-toggle="modal" data-bs-target="#EditProfileModal">
-                                <h1 class="fw-bold" style="font-size: 6em;">@Model.user.nickname</h1>
+                                <h1 class="fw-bold" style="font-size: 6em; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 1000px">@Model.user.nickname</h1>
                             </div>
                         }
                         else
                         {
-                            <h1 class="fw-bold" style="font-size: 6em;">@Model.user.nickname</h1>
+                            <h1 class="fw-bold" style="font-size: 6em; text-overflow: ellipsis; white-space: nowrap ;overflow: hidden; width: 1000px;">@Model.user.nickname</h1>
                         }
                     }
                     <span class="small">{WIP} public playlists • </span>

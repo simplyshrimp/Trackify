@@ -64,9 +64,9 @@ SongTitle nvarchar(255),
 Artist int,
 AlbumID int null,
 SongLength decimal(18,2),
-TimesListened int,
+TimesListened int default 0,
 SoundFile nvarchar(255),
-ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
+--ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
 MadePrivate bit default 1,
 GenreID int,
 foreign key (GenreID) references Genre(GenreID),
@@ -98,7 +98,7 @@ SubscriptionEnd date,
 foreign key (UserID) references Users(UserID)
 )
 GO
-----------------------------------------------------------Procedures-----------------------------------------------------
+----------------------------------------------------------Procedures--------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateAdminUserSP
 AS
 	SET NOCOUNT ON;
@@ -108,7 +108,7 @@ AS
 VALUES ('Admin','Admin', HASHBYTES('SHA2_512','12345'+CAST(@Salt AS NVARCHAR(36))), @Salt,'Admin','Admin','admin@mail.com',CAST(getdate() AS date),1,'/ImagesAndSongs/Users/Empty-User-pfp.png',1)
 
 GO
--------------------------Users---------------------------------
+-------------------------Users---------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateUserSP 	
 	@Username nvarchar(50),
 	@Password nvarchar(50),
@@ -207,7 +207,7 @@ AS
 	SET NOCOUNT ON
 	SELECT * FROM Users
 GO
------------------Applications-----------------
+-----------------Applications---------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateApplicationSP
 	@UserID int
 AS
@@ -229,7 +229,7 @@ CREATE OR ALTER PROCEDURE ShowApplicationByIDSP
 AS
 	SET NOCOUNT ON
 
-	SELECT * FROM ArtistApplication WHERE UserID=@UserID AND ApplicationStatus NOT LIKE 4
+	SELECT * FROM ArtistApplication WHERE UserID=@UserID
 GO
 
 CREATE OR ALTER PROCEDURE ChangeApplicationStatusSP
@@ -242,7 +242,7 @@ AS
 	SET ApplicationStatus=@Status
 	WHERE UserID=@UserID
 GO
---------------------Artist------------------
+--------------------Artist----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateArtistSP
 	@UserID int
 AS
@@ -279,7 +279,7 @@ AS
 	SET NOCOUNT ON
 	SELECT * FROM Artists
 GO
---------------------Album-------------------
+--------------------Album-----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateAlbumSP
 	@Artist int,
 	@AlbumTitle nvarchar(255),
@@ -319,15 +319,28 @@ AS
 	SELECT * FROM Album
 GO
 
-CREATE OR ALTER PROCEDURE GetAllAlbumsByArtist
+CREATE OR ALTER PROCEDURE GetAllAlbumsByArtistSP
 	@Artist int
 AS
 	SET NOCOUNT ON
 	SELECT * FROM Album WHERE Artist=@Artist
 GO
 
---------------------Songs-------------------
---------------------Playlist----------------
---------------------Genre-------------------
---------------------Subcriptions------------
---------------------Customer Support--------
+--------------------Songs-----------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER PROCEDURE CreateSongSP
+	@SongTitle int,
+	@ArtistID int,
+	@AlbumID int,
+	@SongLength decimal(18,2),
+	@SoundFile nvarchar(255),
+	@MadePrivate bit,
+	@GenreID int
+AS
+	SET NOCOUNT ON
+	INSERT INTO Songs(SongTitle,Artist,AlbumID,SongLength,SoundFile,MadePrivate,GenreID)
+	VALUES (@SongTitle,@ArtistID,@AlbumID,@SongLength,@SoundFile,@MadePrivate,@GenreID)
+GO
+--------------------Playlist--------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------Subcriptions----------------------------------------------------------------------------------------------------------------------------------------------------
+--------------------?Customer Support?------------------------------------------------------------------------------------------------------------------------------------------------

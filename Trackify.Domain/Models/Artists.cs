@@ -11,12 +11,5 @@ namespace Trackify.Domain.Models
         public int artistID {  get; set; }
         public Users user { get; set; }
         public bool verified { get; set; }
-
-        public Artists(int artistID, Users user, bool verified)
-        {
-            this.artistID = artistID;
-            this.user = user;
-            this.verified = verified;
-        }
     }
 }

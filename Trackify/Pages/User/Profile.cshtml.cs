@@ -55,11 +55,19 @@ namespace Trackify.Pages.User
 
             if (NewPfp != null)
             {
-                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/ImagesAndSongs/Users/{Id}{Path.GetExtension(NewPfp.FileName)}";
+                if (user.pfp != null && user.pfp != "/ImagesAndSongs/Users/Empty-User-pfp.png")
+                {
+                    FileInfo file = new FileInfo($"{Directory.GetCurrentDirectory()}\\wwwroot{user.pfp}");
+                    if (file.Exists)
+                        { file.Delete(); }
+                }
+
+                string imagePath = $"/ImagesAndSongs/Users/{user.userId}{Guid.NewGuid().ToString()}{Path.GetExtension(NewPfp.FileName)}";
+
+                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{imagePath}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 NewPfp.CopyTo(filestream);
 
-                string imagePath = $"\\ImagesAndSongs\\Users\\{user.userId}{Path.GetExtension(NewPfp.FileName)}";
                 user.pfp = imagePath;
 
                 HttpContext.Session.SetString("pfp", imagePath);

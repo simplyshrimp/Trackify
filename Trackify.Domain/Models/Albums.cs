@@ -17,17 +17,5 @@ namespace Trackify.Domain.Models
         public bool madePrivate { get; set; }
         public string color { get; set; }
         public List<Songs> songs { get; set; }
-
-        public Albums(int albumId, string albumTitle, AlbumType albumType, Artists artist, string albumImage, bool madePrivate, string color, List<Songs> songs)
-        {
-            this.albumId = albumId;
-            this.albumTitle = albumTitle;
-            this.albumType = albumType;
-            this.artist = artist;
-            this.albumImage = albumImage;
-            this.madePrivate = madePrivate;
-            this.color = color;
-            this.songs = songs;
-        }
     }
 }

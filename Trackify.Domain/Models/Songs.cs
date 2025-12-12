@@ -16,17 +16,5 @@ namespace Trackify.Domain.Models
         public int timesPlayed { get; set; }
         public string filepath { get; set; }
         public bool isPrivate { get; set; }
-
-        public Songs(int songID, TimeSpan length, string title, int albumID, int artistID, int timesPlayed, string filepath, bool isPrivate)
-        {
-            this.songId = songID;
-            this.length = length;
-            this.title = title;
-            this.albumID = albumID;
-            this.artistID = artistID;
-            this.timesPlayed = timesPlayed;
-            this.filepath = filepath;
-            this.isPrivate = isPrivate;
-        }
     }
 }

@@ -20,7 +20,7 @@
     <!-- album pic and info + songs -->
     <div class="col-9 flex-grow-1 p-0">
         <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @album.color 0%, #121212 25%);">
-            <div class="row p-0 m-0">
+            <div class="row p-0 m-0" style="height: 200px;">
                 <div class=" p-0 me-5" style="height: 200px; width: 200px;">
                     <img src="@album.albumImage" style="height: 200px; width: 200px;" />
                 </div>
@@ -29,22 +29,16 @@
                     <span class="small">@albumPrivacyStatus @album.albumType</span>
                     <br />
                     <h1 class="fw-bold" style="font-size: 6em;">@album.albumTitle</h1>
-                    <div class="row p-0">
-                        <div style="max-width: 150px;">
-                            <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="width: 100px;">
-                                <div class="row" >
-                                    <div style="height: 30px; width: 30px;" class="me-3">
-                                        <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
-                                    </div>
-                                    <div class="p-0 align-content-center" style="min-width: 20px; max-width: 100px;">
-                                        <span style="min-width: 20px; max-width: 100px;"class="fw-bold">@album.artist.user.nickname</span>
-                                    </div>
-                                </div>
+                    <div class="row p-0 d-flex" style="height: 30px;">
+
+                            <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="max-width:fit-content">
+                                    <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
+                                    <span class="ms-1 fw-bold align-content-center">@album.artist.user.nickname</span>
                             </a>
-                        </div>
-                        <div class="align-content-center p-0" style="width: 100px;">
-                            <span class="small"> • @album.songs.Count() songs,</span>
-                        </div>
+                            <div class="d-flex align-content-center p-0" style="width: 100px;">
+                                <span class="align-content-center small"> • @album.songs.Count() songs,</span>
+                            </div>
+
                     </div>
                 </div>
             </div>

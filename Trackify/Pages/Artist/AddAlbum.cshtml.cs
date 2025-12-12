@@ -46,7 +46,7 @@ namespace Trackify.Pages.Artist
 
                 imagePath = $"/ImagesAndSongs/Albums/{id}{Path.GetExtension(AlbumCover.FileName)}";
 
-                Albums updatedAlbum = new(id, Title, AlbumTypeInput, userMethod.ShowArtistByID((int)HttpContext.Session.GetInt32("ArtistID")), imagePath, true, Color, []);
+                Albums updatedAlbum = new Albums{albumId = id, albumTitle = Title, albumType = AlbumTypeInput, artist = userMethod.ShowArtistByID((int)HttpContext.Session.GetInt32("ArtistID")), albumImage = imagePath, madePrivate = true, color = Color, songs= [] };
                 musicMethod.UpdateAlbum(updatedAlbum);
                 return RedirectToAlbumPage(id);
             }
