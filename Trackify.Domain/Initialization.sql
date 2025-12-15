@@ -65,7 +65,7 @@ Artist int,
 AlbumID int null,
 SongLength decimal(18,2),
 TimesListened int default 0,
-SoundFile nvarchar(255),
+SoundFile nvarchar(255) null,
 --ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
 MadePrivate bit default 1,
 GenreID int,
@@ -78,6 +78,7 @@ CREATE TABLE Playlist(
 PlaylistID int identity (1,1) primary key,
 UserID int,
 PlaylistName nvarchar(50),
+PlaylistImage nvarchar(255) null,
 MadePrivate bit default 1,
 foreign key (UserID) references Users(UserID)
 )
@@ -85,7 +86,6 @@ foreign key (UserID) references Users(UserID)
 CREATE TABLE PlaylistSongs(
 SongID int,
 PlaylistID int,
-PlaylistImage nvarchar(255) null,
 foreign key (SongID) references Songs(SongID),
 foreign key (PlaylistID) references Playlist(PlaylistID)
 )
@@ -339,6 +339,36 @@ AS
 	SET NOCOUNT ON
 	INSERT INTO Songs(SongTitle,Artist,AlbumID,SongLength,SoundFile,MadePrivate,GenreID)
 	VALUES (@SongTitle,@ArtistID,@AlbumID,@SongLength,@SoundFile,@MadePrivate,@GenreID)
+GO
+
+CREATE OR ALTER PROCEDURE UpdateSongSP
+	@SongID int,
+	@SongTitle int,
+	@ArtistID int,
+	@AlbumID int,
+	@SongLength decimal(18,2),
+	@SoundFile nvarchar(255),
+	@MadePrivate bit,
+	@GenreID int
+AS
+	SET NOCOUNT ON
+	UPDATE Songs
+	SET SongTitle=@SongTitle, Artist=@ArtistID, AlbumID=@AlbumID, SongLength=@SongLength, SoundFile=@SoundFile, MadePrivate=@MadePrivate, GenreID=@GenreID
+	WHERE SongID=@SongID
+GO
+
+CREATE OR ALTER PROCEDURE GetSongsByAlbumSP
+	@AlbumID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Songs WHERE AlbumID=@AlbumID
+GO
+
+CREATE OR ALTER PROCEDURE GetSongsByArtistSP
+	@ArtistID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Songs WHERE Artist=@ArtistID
 GO
 --------------------Playlist--------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------

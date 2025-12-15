@@ -28,20 +28,105 @@
                     <br />
                     <span class="small">@albumPrivacyStatus @album.albumType</span>
                     <br />
-                    <h1 class="fw-bold" style="font-size: 6em;">@album.albumTitle</h1>
+                    <div class="row">
+                        <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@album.albumTitle</h1>
+                        @{
+                            if (album.albumId == HttpContext.Session.GetInt32("ArtistID"))
+                            {
+                                <div class="align-content-center" style="max-width: fit-content;">
+                                    <div style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditAlbumModal"><svg bootstrap-icon="Pencil" height="50px" width="50px"></svg></div>
+                                </div>
+                                <div class="align-content-center" style="max-width: fit-content;">
+                                    <div style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#UploadSongModal"><svg bootstrap-icon="PlusLg" height="50px" width="50px"></svg></div>
+                                </div>
+                            }
+                        }
+                    </div>
                     <div class="row p-0 d-flex" style="height: 30px;">
 
-                            <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="max-width:fit-content">
-                                    <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
-                                    <span class="ms-1 fw-bold align-content-center">@album.artist.user.nickname</span>
-                            </a>
-                            <div class="d-flex align-content-center p-0" style="width: 100px;">
-                                <span class="align-content-center small"> • @album.songs.Count() songs,</span>
-                            </div>
+                        <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="max-width:fit-content">
+                            <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
+                            <span class="ms-1 fw-bold align-content-center">@album.artist.user.nickname</span>
+                        </a>
+                        <div class="d-flex align-content-center p-0" style="width: 100px;">
+                            <span class="align-content-center small"> • @album.songs.Count() songs,</span>
+                        </div>
 
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for editing album -->
+<div class="modal fade" id="EditAlbumModal" tabindex="-1" aria-labelledby="EditAlbumModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="EditAlbumModalLabel">Album details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSong">
+                    <div class="row">
+                        <div class="col-7">
+                            <input type="file" asp-for="NewCover" />
+                        </div>
+                        <div class="col-2 ms-3">
+                            <input type="color" value="@album.color" asp-for="NewColor" />
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
+                    </div>
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-end mb-3">
+
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal for uploading songs -->
+<div class="modal fade" id="UploadSongModal" tabindex="-1" aria-labelledby="UploadSongsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="UploadSongModalLabel">Upload Song</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSong">
+                    <div class="row">
+                        <div class="col-7">
+                            <input type="file" asp-for="NewSong" />
+                        </div>
+                        <div class="col-2 ms-3">
+                            <input type="color" value="@album.color" asp-for="NewColor" />
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
+                    </div>
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-end mb-3">
+
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
+                    </div>
+                </form>
+
+            </div>
+
+
         </div>
     </div>
 </div>

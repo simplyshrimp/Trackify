@@ -78,7 +78,7 @@
                             </div>
                             <div class=" p-4 ms-3" style="height: 220px; width: 650px;">
                                 <br />
-                                <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId">@album.albumTitle</a>
+                                <div style="max-width: fit-content; max-height: fit-content;"><a id="clickable-link" class="fw-bold h1 p-0" asp-page="/Artist/Album" asp-route-id="@album.albumId">@album.albumTitle</a></div>
                                 <br />
                                 <h1 class="fw-bold" style="font-size: 6em;">
                                 </h1>
@@ -88,7 +88,7 @@
                                         foreach (Songs song in album.songs)
                                         {
                                             <div class="border-top border-bottom row">
-
+                                                <!--add songs here!-->
                                             </div>
                                         }
                                     }
@@ -128,7 +128,7 @@
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
 
-                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Close" />
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
                     </div>
                 </form>
 
@@ -163,7 +163,7 @@
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
 
-                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Close" />
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
                     </div>
                 </form>
 
