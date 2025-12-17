@@ -61,16 +61,17 @@ GenreName nvarchar(50)
 CREATE TABLE Songs(
 SongID int identity (1,1) primary key,
 SongTitle nvarchar(255),
-Artist int,
+ArtistID int,
 AlbumID int null,
-SongLength decimal(18,2),
+SongLength int,
 TimesListened int default 0,
 SoundFile nvarchar(255) null,
 --ThumbnailPath nvarchar(255) default '/ImagesAndSongs/Songs/Trackify-Song-Placeholder.png',
 MadePrivate bit default 1,
-GenreID int,
+AlbumTrackNumber int default 0,
+GenreID int null,
 foreign key (GenreID) references Genre(GenreID),
-foreign key (Artist) references Artists(ArtistID),
+foreign key (ArtistID) references Artists(ArtistID),
 foreign key (AlbumID) references Album(AlbumID)
 )
 
@@ -328,32 +329,32 @@ GO
 
 --------------------Songs-----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateSongSP
-	@SongTitle int,
+	@SongTitle nvarchar(255),
 	@ArtistID int,
 	@AlbumID int,
-	@SongLength decimal(18,2),
+	@SongLength int,
 	@SoundFile nvarchar(255),
 	@MadePrivate bit,
 	@GenreID int
 AS
 	SET NOCOUNT ON
-	INSERT INTO Songs(SongTitle,Artist,AlbumID,SongLength,SoundFile,MadePrivate,GenreID)
+	INSERT INTO Songs(SongTitle,ArtistID,AlbumID,SongLength,SoundFile,MadePrivate,GenreID)
 	VALUES (@SongTitle,@ArtistID,@AlbumID,@SongLength,@SoundFile,@MadePrivate,@GenreID)
 GO
 
 CREATE OR ALTER PROCEDURE UpdateSongSP
 	@SongID int,
-	@SongTitle int,
+	@SongTitle nvarchar,
 	@ArtistID int,
 	@AlbumID int,
-	@SongLength decimal(18,2),
+	@SongLength int,
 	@SoundFile nvarchar(255),
 	@MadePrivate bit,
 	@GenreID int
 AS
 	SET NOCOUNT ON
 	UPDATE Songs
-	SET SongTitle=@SongTitle, Artist=@ArtistID, AlbumID=@AlbumID, SongLength=@SongLength, SoundFile=@SoundFile, MadePrivate=@MadePrivate, GenreID=@GenreID
+	SET SongTitle=@SongTitle, ArtistID=@ArtistID, AlbumID=@AlbumID, SongLength=@SongLength, SoundFile=@SoundFile, MadePrivate=@MadePrivate, GenreID=@GenreID
 	WHERE SongID=@SongID
 GO
 
@@ -368,9 +369,36 @@ CREATE OR ALTER PROCEDURE GetSongsByArtistSP
 	@ArtistID int
 AS
 	SET NOCOUNT ON
-	SELECT * FROM Songs WHERE Artist=@ArtistID
+	SELECT * FROM Songs WHERE ArtistID=@ArtistID
+GO
+
+CREATE OR ALTER PROCEDURE GetSongByIDSP
+	@SongID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Songs WHERE SongID=@SongID
 GO
 --------------------Playlist--------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER PROCEDURE CreateGenreSP
+	@GenreName nvarchar(50)
+AS
+	SET NOCOUNT ON
+	INSERT INTO Genre(GenreName)
+	VALUES (@GenreName) SELECT SCOPE_IDENTITY() AS GenreID
+GO
+
+CREATE OR ALTER PROCEDURE GetAllGenresSP
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Genre
+GO
+
+CREATE OR ALTER PROCEDURE GetGenreByIDSP
+	@GenreID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Genre WHERE GenreID=@Genreid
+GO
 --------------------Subcriptions----------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------?Customer Support?------------------------------------------------------------------------------------------------------------------------------------------------

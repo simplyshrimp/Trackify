@@ -637,7 +637,7 @@ namespace Trackify.Domain
                            albumImage = reader.GetString("AlbumImage"),
                            madePrivate = reader.GetBoolean("MadePrivate"),
                            color = reader.GetString("Color"),
-                           songs = []
+                           songs = GetSongsByAlbum(albumID)
                            };
                     }
                 }
@@ -669,7 +669,7 @@ namespace Trackify.Domain
                              albumImage = reader.GetString("AlbumImage"),
                              madePrivate = reader.GetBoolean("MadePrivate"),
                              color = reader.GetString("Color"),
-                             songs = []
+                             songs = GetSongsByAlbum(reader.GetInt32("AlbumID"))
                          });
                     }
                 }
@@ -703,7 +703,7 @@ namespace Trackify.Domain
                             albumImage = reader.GetString("AlbumImage"),
                             madePrivate = reader.GetBoolean("MadePrivate"),
                             color = reader.GetString("Color"),
-                            songs = []
+                            songs = GetSongsByArtist(artistID),
                         });
                     }
                 }
@@ -716,9 +716,239 @@ namespace Trackify.Domain
             return null;
         }
         /*------------------------------------------Songs--------------------------------------------------*/
-        //public Songs CreateSong(string songTitle, int Artist, int AlbumID 
+        public void CreateSong(Songs song)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateSongSP", conn);
+                    cmd.Parameters.AddWithValue("@SongTitle", song.title);
+                    cmd.Parameters.AddWithValue("@ArtistID", song.artistId);
+                    cmd.Parameters.AddWithValue("@AlbumID", song.albumId);
+                    cmd.Parameters.AddWithValue("@SongLength", song.length.TotalSeconds);
+                    cmd.Parameters.AddWithValue("@SoundFile", song.filepath);
+                    cmd.Parameters.AddWithValue("@MadePrivate", song.isPrivate);
+                    cmd.Parameters.AddWithValue("@GenreID", song.genre.GenreId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        public void UpdateSong(Songs updatedSong)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("UpdateSongSP", conn);
+                    cmd.Parameters.AddWithValue("@SongID", updatedSong.songId);
+                    cmd.Parameters.AddWithValue("@SongTitle", updatedSong.title);
+                    cmd.Parameters.AddWithValue("@ArtistID", updatedSong.artistId);
+                    cmd.Parameters.AddWithValue("@AlbumID", updatedSong.albumId);
+                    cmd.Parameters.AddWithValue("@SongLength", updatedSong.length);
+                    cmd.Parameters.AddWithValue("@SoundFile", updatedSong.filepath);
+                    cmd.Parameters.AddWithValue("@MadePrivate", updatedSong.isPrivate);
+                    cmd.Parameters.AddWithValue("@GenreID", updatedSong.genre);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public List<Songs> GetSongsByAlbum(int albumID)
+        {
+            try
+            {
+                List<Songs> albumSongs = new List<Songs>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetSongsByAlbumSP", conn);
+                    cmd.Parameters.AddWithValue("@AlbumID", albumID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        albumSongs.Add(new Songs {
+                            songId = reader.GetInt32("SongID"),
+                            title = reader.GetString("SongTitle"),
+                            length = TimeSpan.FromSeconds(reader.GetInt32("SongLength")),
+                            albumId = reader.GetInt32("AlbumID"),
+                            artistId = reader.GetInt32("ArtistID"),
+                            timesPlayed = reader.GetInt32("TimesListened"),
+                            filepath = reader.GetString("SoundFile"),
+                            albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
+                            isPrivate = reader.GetBoolean("MadePrivate"),
+                            genre = GetGenreByID(reader.GetInt32("Genre")),
+                        });
+                    }
+                }
+                return albumSongs;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
+        public List<Songs> GetSongsByArtist(int artistID)
+        {
+            try
+            {
+                List<Songs> artistSongs = new List<Songs>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetSongsByArtistSP", conn);
+                    cmd.Parameters.AddWithValue("@ArtistID", artistID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        artistSongs.Add(new Songs {
+                            songId = reader.GetInt32("SongID"),
+                            title = reader.GetString("SongTitle"),
+                            length = TimeSpan.FromSeconds(reader.GetInt32("SongLength")),
+                            albumId = reader.GetInt32("AlbumID"),
+                            artistId = reader.GetInt32("ArtistID"),
+                            timesPlayed = reader.GetInt32("TimesListened"),
+                            filepath = reader.GetString("SoundFile"),
+                            albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
+                            isPrivate = reader.GetBoolean("MadePrivate"),
+                            genre = GetGenreByID(reader.GetInt32("Genre"))
+                        });
+                    }
+                }
+                return artistSongs;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
+        public Songs GetSongByID(int songID)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetSongByIDSP", conn);
+                    cmd.Parameters.AddWithValue("@SongID", songID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Songs {
+                            songId = reader.GetInt32("SongID"),
+                            title = reader.GetString("SongTitle"),
+                            length = TimeSpan.FromSeconds(reader.GetInt32("SongLength")),
+                            albumId = reader.GetInt32("AlbumID"),
+                            artistId = reader.GetInt32("ArtistID"),
+                            timesPlayed = reader.GetInt32("TimesListened"),
+                            filepath = reader.GetString("SoundFile"),
+                            albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
+                            isPrivate = reader.GetBoolean("MadePrivate"),
+                            genre = GetGenreByID(reader.GetInt32("Genre"))
+                        };
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
         /*------------------------------------------Playlist--------------------------------------------------*/
         /*------------------------------------------Genre--------------------------------------------------*/
+        public int CreateGenre(string genreName)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreateGenreSP", conn);
+                    cmd.Parameters.AddWithValue("@GenreName", genreName);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    return (int)cmd.ExecuteScalar();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            return 0;
+        }
+        public List<Genres> GetAllGenres()
+        {
+            List<Genres> allGenres = new List<Genres>();
+
+            using (SqlConnection conn = new SqlConnection( connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetAllGenresSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        allGenres.Add(new Genres
+                        {
+                            GenreId = reader.GetInt32("GenreID"),
+                            GenreName = reader.GetString("GenreName")
+                        });
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                        return allGenres;
+            }
+        }
+        public Genres GetGenreByID(int genreID)
+        {
+            using (SqlConnection conn = new SqlConnection( connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetGenreByIDSP", conn);
+                    cmd.Parameters.AddWithValue("@GenreID", genreID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        return new Genres {
+                            GenreId = reader.GetInt32("GenreID"),
+                            GenreName = reader.GetString("GenreName")
+                        };
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return null;
+        }
         /*------------------------------------------Subscriptions--------------------------------------------------*/
     }
 }

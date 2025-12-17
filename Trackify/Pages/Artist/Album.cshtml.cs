@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection.Metadata;
 using Trackify.Domain.Models;
 using Trackify.Service;
 
@@ -23,6 +24,10 @@ namespace Trackify.Pages.Artist
 
         [BindProperty]
         public IFormFile? NewSong { get; set; }
+        [BindProperty]
+        public int genre { get; set; }
+
+        public List<Genres> allGenres = new List<Genres>();
 
         //for EditAlbum
 
@@ -36,27 +41,35 @@ namespace Trackify.Pages.Artist
         public void OnGet()
         {
             album = musicMethod.GetAlbumByID(id);
+            allGenres = musicMethod.GetAllGenres();
         }
 
-        public void OnPostUploadSong()
+        public IActionResult OnPostUploadSong()
         {
-            string useString = $" (SPOTISAVER){Path.GetExtension(NewSong.FileName)}";
+            Songs song = new Songs();
+            album = musicMethod.GetAlbumByID(id);
 
-            Console.WriteLine(NewSong.Name);
-            Console.WriteLine($"{NewSong.FileName.Replace($" (SPOTISAVER){Path.GetExtension(NewSong.FileName)}","")}");
-            Console.WriteLine(NewSong.Length);
-            /*string soundPath = $"/ImagesAndSongs/Users/{Guid.NewGuid().ToString()}{Path.GetExtension(NewSong.FileName)}";
+            string songPath = $"/ImagesAndSongs/Songs/{Guid.NewGuid().ToString()}{Path.GetExtension(NewSong.FileName)}";
+            string testFilePath = $"{Directory.GetCurrentDirectory()}/wwwroot{songPath}";
+        
+            string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{songPath}";
+            using var filestream = new FileStream(testFilePath, FileMode.Create);
+            NewSong.CopyTo(filestream);
+            filestream.Close();
 
-            string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{soundPath}";
-            using var filestream = new FileStream(filePath, FileMode.Create);
-            NewCover.CopyTo(filestream);
+            TagLib.File tagLibFile = TagLib.File.Create(filePath);
 
-            //album.albumImage = soundPath;*/
-            
+            song.length = tagLibFile.Properties.Duration;
+            song.title = tagLibFile.Tag.Title;
+            song.albumId = album.albumId;
+            song.artistId = album.artist.artistID;
+            song.filepath = songPath;
+            song.albumTrackNr = (int)tagLibFile.Tag.Track;
+            song.genre = musicMethod.GetGenreByID(genre);
 
-            //HttpContext.Session.SetString("pfp", soundPath);
+            musicMethod.CreateSong(song);
+            return RedirectToPage($"/Artist/Album/{id}");
         }
-
         public IActionResult OnPostEditAlbum()
         {
 
@@ -76,8 +89,6 @@ namespace Trackify.Pages.Artist
                 NewCover.CopyTo(filestream);
 
                 album.albumImage = imagePath;
-
-                HttpContext.Session.SetString("pfp", imagePath);
             }
 
             if (NewColor != null)

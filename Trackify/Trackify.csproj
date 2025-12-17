@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.13.0" />
+    <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

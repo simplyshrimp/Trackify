@@ -55,6 +55,22 @@
                     </div>
                 </div>
             </div>
+            <!--songs-->
+            <div class="mt-2 border-top">
+                @{ 
+                    foreach(Songs song in album.songs)
+            {
+                <div class="row border-bottom">
+                    <div style="width:fit-content">@song.title</div>
+                    <div style="width:fit-content">@artist.user.nickname</div>
+                    <div style="width:fit-content">@song.length.Minutes:@song.length.Seconds</div>
+                    <div style="width:fit-content">@song.timesPlayed</div>
+                </div>
+                <!--won't work till i add it to db, also remove the songs.add in cs-->
+            }
+                }
+
+            </div>
         </div>
     </div>
 </div>
@@ -110,12 +126,18 @@
                         <div class="col-7">
                             <input type="file" asp-for="NewSong" />
                         </div>
-                        <div class="col-2 ms-3">
-                            <input type="color" value="@album.color" asp-for="NewColor" />
-                        </div>
+                        <!--<div class="col-2 ms-3">
+        <input type="color" value="@album.color" asp-for="NewColor" />
+    </div>-->
                     </div>
                     <div class="pt-5">
-                        <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
+                        <select asp-for="genre">
+                            <option selected>Select a genre</option>
+                            @foreach (Genres genre in Model.allGenres)
+                            {
+                                <option value="@genre.GenreId">@genre.GenreName</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">

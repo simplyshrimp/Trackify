@@ -15,5 +15,17 @@ namespace Trackify.Service
         public Albums GetAlbumByID(int albumID);
         public List<Albums> ShowAllAlbums();
         public List<Albums> ShowAllAlbumsByArtist(int artistID);
+
+        public void CreateSong(Songs song);
+        public void UpdateSong(Songs updatedSong);
+        public List<Songs> GetSongsByAlbum(int albumID);
+        public List<Songs> getSongsByArtist(int artistID);
+        public Songs GetSongByID(int songID);
+
+        public int CreateGenre(string genreName);
+        public List<Genres> GetAllGenres();
+        public Genres GetGenreByID(int genreID);
+
+        public TimeSpan GetTotalDuration(List<Songs> songList);
     }
 }
