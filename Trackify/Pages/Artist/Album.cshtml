@@ -48,26 +48,30 @@
                             <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
                             <span class="ms-1 fw-bold align-content-center">@album.artist.user.nickname</span>
                         </a>
-                        <div class="d-flex align-content-center p-0" style="width: 100px;">
+                        <div class="d-flex align-content-center p-0" style="width: fit-content;">
                             <span class="align-content-center small"> • @album.songs.Count() songs,</span>
+                        </div>
+                        <div class=" align-content-center p-0" style="width: fit-content;">
+                            <span class="align-content-center small"> @Model.totalTime</span>
                         </div>
 
                     </div>
                 </div>
             </div>
             <!--songs-->
-            <div class="mt-2 border-top">
+            <div class="mt-2 border-top p-0 overflow-auto" style="">
                 @{ 
                     foreach(Songs song in album.songs)
-            {
-                <div class="row border-bottom">
-                    <div style="width:fit-content">@song.title</div>
-                    <div style="width:fit-content">@artist.user.nickname</div>
-                    <div style="width:fit-content">@song.length.Minutes:@song.length.Seconds</div>
-                    <div style="width:fit-content">@song.timesPlayed</div>
-                </div>
-                <!--won't work till i add it to db, also remove the songs.add in cs-->
-            }
+                    {
+                        <div class="border-bottom m-0 d-flex align-items-center">
+                            <div class="col-8 ps-1" style="">@song.title</div>
+                            <div class="col-3 opacity-50" style="">@song.timesPlayed</div>
+                            <div class="col-1 d-flex justify-content-end pe-2 align-items-center" style="">
+                                @song.length.Minutes:@if (song.length.Seconds < 10) {<span>0</span> }@song.length.Seconds
+                  <div class=" d-flex justify-content-end btn"><svg bootstrap-icon="ThreeDots" height="20px" width="20px"></svg></div>
+                            </div>
+                        </div>
+                    }
                 }
 
             </div>

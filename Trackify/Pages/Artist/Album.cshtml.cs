@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Reflection.Metadata;
+using TagLib;
 using Trackify.Domain.Models;
 using Trackify.Service;
 
@@ -19,6 +20,7 @@ namespace Trackify.Pages.Artist
         public Artists artist {  get; set; }
         [BindProperty(SupportsGet = true)]
         public int id { get; set; }
+        public TimeSpan totalTime { get; set; }
 
         //UploadSong
 
@@ -27,7 +29,7 @@ namespace Trackify.Pages.Artist
         [BindProperty]
         public int genre { get; set; }
 
-        public List<Genres> allGenres = new List<Genres>();
+        public List<Domain.Models.Genres> allGenres = new List<Domain.Models.Genres>();
 
         //for EditAlbum
 
@@ -42,6 +44,7 @@ namespace Trackify.Pages.Artist
         {
             album = musicMethod.GetAlbumByID(id);
             allGenres = musicMethod.GetAllGenres();
+            totalTime = musicMethod.GetTotalDuration(id);
         }
 
         public IActionResult OnPostUploadSong()
@@ -67,8 +70,9 @@ namespace Trackify.Pages.Artist
             song.albumTrackNr = (int)tagLibFile.Tag.Track;
             song.genre = musicMethod.GetGenreByID(genre);
 
+
             musicMethod.CreateSong(song);
-            return RedirectToPage($"/Artist/Album/{id}");
+            return Redirect($"/Artist/Album/{id}");
         }
         public IActionResult OnPostEditAlbum()
         {

@@ -8,6 +8,7 @@ using Trackify.Domain;
 using Trackify.Domain.Models;
 using Trackify.Domain.Models.Enums;
 
+
 namespace Trackify.Service
 {
     public class Music : IMusic
@@ -31,6 +32,24 @@ namespace Trackify.Service
         public List<Genres> GetAllGenres() => connection.GetAllGenres();
         public Genres GetGenreByID(int genreID) => connection.GetGenreByID(genreID);
 
-        public TimeSpan GetTotalDuration(List<Songs> songList) => conn.GetTotalDuration(songList);
+
+
+
+
+
+
+
+
+        public TimeSpan GetTotalDuration(int albumID)
+        {
+            Albums album = GetAlbumByID(albumID);
+            TimeSpan totalDuration = TimeSpan.Zero;
+            foreach (Songs song in album.songs)
+            {
+                //totalDuration.Add(song.length);
+                totalDuration += song.length;
+            }
+            return totalDuration;
+        }
     }
 }

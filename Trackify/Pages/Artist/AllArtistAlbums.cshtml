@@ -26,9 +26,9 @@
                 @{ 
                     foreach (Albums album in AllArtistAlbums)
                     {
-                    <div class="card p-2" style="height: fit-content">
+                    <div class="card p-2" style="height: 240px">
                         <div class="row m-0">
-                            <div class="col-3 p-4" style="height: 220px; width: 220px;">
+                            <div class="col-3 p-0" style="height: 220px; width: 220px;">
                                 <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
                             </div>
                             <div class=" p-4 ms-5" style="height: 220px; width: 650px;">
@@ -38,12 +38,14 @@
                                 <h1 class="fw-bold" style="font-size: 6em;">
                                 </h1>
                                 <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
-                                <div class="border-top overflow-auto">
-                                    @{ 
-                                        foreach(Songs song in album.songs)
+                                <div class="border-top overflow-hidden overflow-y-scroll" style="height: 100px">
+                                    @{
+                                        foreach (Songs song in album.songs)
                                         {
-                                            <div class="border-top border-bottom row">
 
+                                            <div class="border-bottom m-0 d-flex">
+                                                <div class="col-11 ps-1" style="">@song.title</div>
+                                                <div class="col-1 d-flex justify-content-end pe-3" style="">@song.length.Minutes:@song.length.Seconds</div>
                                             </div>
                                         }
                                     }

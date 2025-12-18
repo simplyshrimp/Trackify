@@ -789,7 +789,7 @@ namespace Trackify.Domain
                             filepath = reader.GetString("SoundFile"),
                             albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
                             isPrivate = reader.GetBoolean("MadePrivate"),
-                            genre = GetGenreByID(reader.GetInt32("Genre")),
+                            genre = GetGenreByID(reader.GetInt32("GenreID")),
                         });
                     }
                 }
@@ -825,7 +825,7 @@ namespace Trackify.Domain
                             filepath = reader.GetString("SoundFile"),
                             albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
                             isPrivate = reader.GetBoolean("MadePrivate"),
-                            genre = GetGenreByID(reader.GetInt32("Genre"))
+                            genre = GetGenreByID(reader.GetInt32("GenreID"))
                         });
                     }
                 }
@@ -860,7 +860,7 @@ namespace Trackify.Domain
                             filepath = reader.GetString("SoundFile"),
                             albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
                             isPrivate = reader.GetBoolean("MadePrivate"),
-                            genre = GetGenreByID(reader.GetInt32("Genre"))
+                            genre = GetGenreByID(reader.GetInt32("GenreID"))
                         };
                     }
                 }
@@ -936,7 +936,7 @@ namespace Trackify.Domain
                     while (reader.Read())
                     {
                         return new Genres {
-                            GenreId = reader.GetInt32("GenreID"),
+                            GenreId = genreID,
                             GenreName = reader.GetString("GenreName")
                         };
                     }

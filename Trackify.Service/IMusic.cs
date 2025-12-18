@@ -26,6 +26,6 @@ namespace Trackify.Service
         public List<Genres> GetAllGenres();
         public Genres GetGenreByID(int genreID);
 
-        public TimeSpan GetTotalDuration(List<Songs> songList);
+        public TimeSpan GetTotalDuration(int albumID);
     }
 }
