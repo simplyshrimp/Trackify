@@ -379,6 +379,18 @@ AS
 	SELECT * FROM Songs WHERE SongID=@SongID
 GO
 --------------------Playlist--------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE OR ALTER PROCEDURE CreatePlaylistSP
+	@UserID int,
+	@PlaylistName nvarchar(50),
+	@PlaylistImage nvarchar(50)
+AS
+	INSERT INTO Playlist (UserID, PlaylistName, PlaylistImage)
+	VALUES (@UserID, @PlaylistName, @PlaylistImage)
+GO
+--CREATE OR ALTER PROCEDURE EditPlaylistSP
+--CREATE OR ALTER PROCEDURE DeletePlaylistByID
+---------------
+--CREATE OR ALTER PROCEDURE AddSongToPlaylistByIDSP
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateGenreSP
 	@GenreName nvarchar(50)

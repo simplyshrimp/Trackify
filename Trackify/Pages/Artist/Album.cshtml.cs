@@ -27,9 +27,9 @@ namespace Trackify.Pages.Artist
         [BindProperty]
         public IFormFile? NewSong { get; set; }
         [BindProperty]
-        public int genre { get; set; }
+        public int? genre { get; set; }
 
-        public List<Domain.Models.Genres> allGenres = new List<Domain.Models.Genres>();
+        public List<Domain.Models.Genres>? allGenres = new List<Domain.Models.Genres>();
 
         //for EditAlbum
 
@@ -68,7 +68,7 @@ namespace Trackify.Pages.Artist
             song.artistId = album.artist.artistID;
             song.filepath = songPath;
             song.albumTrackNr = (int)tagLibFile.Tag.Track;
-            song.genre = musicMethod.GetGenreByID(genre);
+            song.genre = musicMethod.GetGenreByID((int)genre);
 
 
             musicMethod.CreateSong(song);
@@ -76,7 +76,7 @@ namespace Trackify.Pages.Artist
         }
         public IActionResult OnPostEditAlbum()
         {
-
+            album = musicMethod.GetAlbumByID(id);
             if (NewCover != null)
             {
                 if (album.albumImage != null && album.albumImage != "/ImagesAndSongs/Users/Empty-User-pfp.png")
@@ -106,7 +106,7 @@ namespace Trackify.Pages.Artist
             }
 
             musicMethod.UpdateAlbum(album);
-            return Redirect($"/User/Profile/{album.albumId}");
+            return Redirect($"/Artist/Album/{album.albumId}");
         }
     }
 }

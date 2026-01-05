@@ -46,7 +46,6 @@ namespace Trackify.Service
             TimeSpan totalDuration = TimeSpan.Zero;
             foreach (Songs song in album.songs)
             {
-                //totalDuration.Add(song.length);
                 totalDuration += song.length;
             }
             return totalDuration;
