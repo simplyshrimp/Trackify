@@ -1,10 +1,14 @@
 ﻿<!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
+    <base href="~/" />
+    <component type="typeof(Microsoft.AspNetCore.Components.Web.HeadOutlet)"
+               render-mode="ServerPrerendered" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Trackify</title>
     <link rel="icon" type="image/x-icon" href="/ImagesAndSongs/favicon2.ico">
+    <script src="_framework/blazor.server.js"></script>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -25,11 +29,22 @@
                     </ul>
                     <ul class="navbar-nav flex-grow-1 d-flex justify-content-center">
                         <li>
-                            <a asp-page="/HomePage">
-                                <button class="roundbutton me-2">
-                                    <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
-                                </button>
-                            </a>
+                            @if (Context.Session.GetInt32("LoggedIn") == 1)
+                            {
+                                <a asp-page="/HomePage">
+                                    <button class="roundbutton me-2">
+                                        <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
+                                    </button>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-page="/Index">
+                                    <button class="roundbutton me-2">
+                                        <svg bootstrap-icon="HouseDoorFill" height="24px" width="24px"></svg>
+                                    </button>
+                                </a>
+                            }
                         </li>
                         <li>
                             <div class="search-bar">
@@ -296,13 +311,16 @@
     </header>
     <div class="container-fluid main-content">
         <main role="main" class="pb-3 h-100">
-            @RenderBody()
+            <div class="row gap-2 h-100">
+                <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="ServerPrerendered" />
+                @RenderBody()
+            </div>
         </main>
     </div>
 
     <footer class="border-top-0 footer text-muted" style="height:81px;">
         <div class="container-fluid h-100">
-            &copy; 2025 - Trackify - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered"/>
         </div>
     </footer>
 

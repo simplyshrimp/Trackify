@@ -12,7 +12,8 @@ namespace Trackify
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
-            
+            builder.Services.AddServerSideBlazor();
+
             //add interfaces
             builder.Services.AddSingleton<IUser, User>();
             builder.Services.AddSingleton<IMusic, Music>();
@@ -37,6 +38,7 @@ namespace Trackify
             app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+            app.MapBlazorHub();
 
             app.Run();
         }

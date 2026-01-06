@@ -390,7 +390,9 @@ GO
 --CREATE OR ALTER PROCEDURE EditPlaylistSP
 --CREATE OR ALTER PROCEDURE DeletePlaylistByID
 ---------------
---CREATE OR ALTER PROCEDURE AddSongToPlaylistByIDSP
+--CREATE OR ALTER PROCEDURE AddSongToPlaylistSP
+--CREATE OR ALTER PROCEDURE RemoveSongFromPlaylistSP
+
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateGenreSP
 	@GenreName nvarchar(50)

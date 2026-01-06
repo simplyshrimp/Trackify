@@ -5,11 +5,7 @@
 }
 
 
-<div class="row h-100 gap-2">
-    <!-- sidebar with playlists -->
-    <div class="col-2 p-0">
-        <div class="card h-100"></div>
-    </div>
+
     <!-- profile pic and info -->
     <div class="col-9 flex-grow-1 p-0">
         <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
@@ -50,7 +46,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="EditProfileModal" tabindex="-1" aria-labelledby="EditProfileModalLabel" aria-hidden="true">
@@ -80,14 +75,7 @@
                         <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
                     </div>
                 </form>
-
             </div>
-
-
         </div>
     </div>
 </div>
-
-<!-- footer 'playing now' -->
-<footer class="border fixed-bottom" style="height: 72px;">
-</footer>

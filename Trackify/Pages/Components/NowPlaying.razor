@@ -1,0 +1,21 @@
+﻿@using Trackify.Domain.Models
+@using Trackify.Service
+<h3>NowPlaying</h3>
+
+@code {
+    [Inject]
+    private IMusic music { get; set; }
+    public Songs? currentSong { get; set; }
+    public Albums? currentAlbum { get; set; }
+}
+<!-- footer 'playing now' -->
+<footer class="fixed-bottom" style="height: 72px;">
+    @{
+        if (currentSong != null && currentAlbum != null)
+        {
+            <img src="@currentAlbum.albumImage" height="20px" width="20px" />
+            <p>@currentSong.title</p>
+        }
+    }
+
+</footer>

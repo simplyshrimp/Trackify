@@ -16,11 +16,6 @@
 }
 
 
-<div class="row h-100 gap-2">
-    <!-- sidebar with playlists -->
-    <div class="col-2 p-0">
-        <div class="card h-100"></div>
-    </div>
     <!-- profile pic and info -->
     <div class="col-9 flex-grow-1 p-0">
         <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
@@ -68,40 +63,46 @@
                 </div>
             </div>
 
-            @{
-                foreach (Albums album in ArtistAlbums)
-                {
-                    <div class="card p-2">
-                        <div class="row m-0">
-                            <div class="col-3 p-0" style="height: 220px; width: 220px;">
-                                <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
-                            </div>
-                            <div class=" p-4 ms-3" style="height: 220px; width: 650px;">
-                                <br />
-                                <div style="max-width: fit-content; max-height: fit-content;"><a id="clickable-link" class="fw-bold h1 p-0" asp-page="/Artist/Album" asp-route-id="@album.albumId">@album.albumTitle</a></div>
-                                <br />
-                                <h1 class="fw-bold" style="font-size: 6em;">
-                                </h1>
-                                <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
-                                <div class="border-top overflow-auto">
-                                    @{
-                                        foreach (Songs song in album.songs)
-                                        {
-                                            <div class="border-top border-bottom row">
-                                                <!--add songs here!-->
-                                            </div>
-                                        }
-                                    }
+            <div class="row p-0 m-0 overflow-auto gap-2" style="height: 651px">
+                @{
+                    foreach (Albums album in ArtistAlbums)
+                    {
+                        if (CheckPrivacyStatus(album) != "private")
+                        {
+                            <div class="card p-2" style="height: 240px">
+                                <div class="row m-0">
+                                    <div class="col-3 p-0" style="height: 220px; width: 220px;">
+                                        <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
+                                    </div>
+                                    <div class=" p-4 ms-5" style="height: 220px; width: 650px;">
+                                        <br />
+                                        <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId">@album.albumTitle</a>
+                                        <br />
+                                        <h1 class="fw-bold" style="font-size: 6em;">
+                                        </h1>
+                                        <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
+                                        <div class="border-top overflow-hidden overflow-y-scroll" style="height: 100px">
+                                            @{
+                                                foreach (Songs song in album.songs)
+                                                {
 
+                                                    <div class="border-bottom m-0 d-flex">
+                                                        <div class="col-11 ps-1" style="">@song.title</div>
+                                                        <div class="col-1 d-flex justify-content-end pe-3" style="">@song.length.Minutes:@song.length.Seconds</div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+                    }
                 }
-            }
+            </div>
+
         </div>
     </div>
-</div>
 
 <!-- Modal for editing profile -->
 <div class="modal fade" id="EditProfileModal" tabindex="-1" aria-labelledby="EditProfileModalLabel" aria-hidden="true">
@@ -173,7 +174,3 @@
         </div>
     </div>
 </div>
-
-<!-- footer 'playing now' -->
-<footer class="border fixed-bottom" style="height: 72px;">
-</footer>

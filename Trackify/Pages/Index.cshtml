@@ -1,26 +1,41 @@
 ﻿@page
+@using Trackify.Pages.Shared
+@using Trackify.Domain.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    List<Albums> allAlbums = Model.allAlbums;
+    List<Artists> allArtists = Model.allArtists;
 }
 
-<div class="row h-100 gap-2">
-    <!-- sidebar with playlists -->
-    <div class="col-2 p-0">
-        <div class="card h-100">
-
-        </div>
-    </div>
     <!-- profile pic and info -->
     <div class="col-9 flex-grow-1 p-0">
         <div class="card h-100 p-5">
+            <h1>Albums</h1>
             <div class="row p-0 m-0">
-                index
+                @foreach (Albums album in allAlbums)
+                {
+                    <a class="text-reset" asp-page="/Artist/Album/@album.albumId">
+                        <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                            <div>
+                                <img src="@album.albumImage" height="155" width="155" />
+                                <span class="h3">@album.albumTitle</span> <br />
+                                <span class="small">@album.artist.user.nickname</span>
+                            </div>
+                        </div>
+                    </a>
+                }
+                @foreach (Artists artist in allArtists)
+                {
+                    <a class="text-reset"">
+                        <div class="card d-flex justify-content-center " style="height:200px; width:180px">
+                            <div>
+                                <img src="@artist.user.pfp" height="155" width="155" />
+                                <span class="h3">@artist.user.nickname </span> <br />
+                            </div>
+                        </div>
+                    </a>
+                }
             </div>
         </div>
     </div>
-</div>
-<!--bottom line-->
-<div>
-
-</div>
