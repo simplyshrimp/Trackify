@@ -40,6 +40,8 @@ namespace Trackify.Pages.Artist
 
         [BindProperty]
         public string? NewTitle { get; set; }
+        [BindProperty]
+        public bool? NewPrivacy { get; set; }
         public void OnGet()
         {
             album = musicMethod.GetAlbumByID(id);

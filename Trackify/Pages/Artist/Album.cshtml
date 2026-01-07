@@ -95,7 +95,13 @@
                     </div>
                     <div class="pt-5">
                         <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
-                    </div>
+                    </div> <br />
+                    <label>current: @album.madePrivate</label>
+                    <select asp-for="NewPrivacy">
+                        <option selected>change privacy</option>
+                        <option value="true">Private</option>
+                        <option value="false">Public</option>
+                    </select>
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
 
