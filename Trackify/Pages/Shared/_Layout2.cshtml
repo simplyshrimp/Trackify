@@ -97,17 +97,17 @@
                                             </li>
                                             @if (Context.Session.GetInt32("ArtistID") != null)
                                             {
-                                            <li><hr class="dropdown-divider"></li> <!--Artist-->
-                                            <li>
-                                                <a class="dditem" asp-page="/Artist/AddAlbum">
-                                                    <button class="dditem btn w-100 text-start">Add Albums</button>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dditem" asp-page="/Artist/AllArtistAlbums">
-                                                    <button class="dditem btn w-100 text-start">See all your albums</button>
-                                                </a>
-                                            </li>
+                                                <li><hr class="dropdown-divider"></li> <!--Artist-->
+                                                <li>
+                                                    <a class="dditem" asp-page="/Artist/AddAlbum">
+                                                        <button class="dditem btn w-100 text-start">Add Albums</button>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="dditem" asp-page="/Artist/AllArtistAlbums">
+                                                        <button class="dditem btn w-100 text-start">See all your albums</button>
+                                                    </a>
+                                                </li>
                                             }
                                             @if (Context.Session.GetInt32("Admin") == 1)
                                             {
@@ -161,20 +161,17 @@
                 </div>
             </div>
         </nav>
-        
+
     </header>
     <div class="container-fluid main-content">
         <main role="main" class="pb-3 h-100">
-            <div class="row gap-2 h-100">
-                <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="ServerPrerendered" />
                 @RenderBody()
-            </div>
         </main>
     </div>
 
     <footer class="border-top-0 footer text-muted" style="height:81px;">
         <div class="container-fluid h-100">
-            <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered"/>
+            <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered" />
         </div>
     </footer>
 
