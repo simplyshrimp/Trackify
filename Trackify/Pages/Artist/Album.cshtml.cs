@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Reflection.Metadata;
+using System.Text;
 using TagLib;
 using Trackify.Domain.Models;
 using Trackify.Service;
@@ -16,11 +17,13 @@ namespace Trackify.Pages.Artist
             musicMethod = music;
             userMethod = user;
         }
+        [BindProperty]
         public Albums album {  get; set; }
         public Artists artist {  get; set; }
         [BindProperty(SupportsGet = true)]
         public int id { get; set; }
         public TimeSpan totalTime { get; set; }
+        public string PrivacyStatus { get; set; }
 
         //UploadSong
 
@@ -42,11 +45,42 @@ namespace Trackify.Pages.Artist
         public string? NewTitle { get; set; }
         [BindProperty]
         public bool? NewPrivacy { get; set; }
-        public void OnGet()
+
+        [BindProperty]
+        public int Song { get; set; }
+        public void OnGetAsync()
         {
             album = musicMethod.GetAlbumByID(id);
             allGenres = musicMethod.GetAllGenres();
             totalTime = musicMethod.GetTotalDuration(id);
+            PrivacyStatus = "";
+            if (album.madePrivate)
+                PrivacyStatus = "private";
+            else
+                PrivacyStatus = "public";
+        }
+
+        public IActionResult OnPostSongPress()
+        {
+            Songs pressedSong = musicMethod.GetSongByID(Song);
+            Albums fromAlbum = musicMethod.GetAlbumByID(pressedSong.albumId);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(pressedSong.songId.ToString());
+            Console.WriteLine(fromAlbum.songs.IndexOf(pressedSong));
+            foreach (Songs song in fromAlbum.songs)
+            {
+                Console.WriteLine(fromAlbum.songs.IndexOf(pressedSong));
+                Console.WriteLine(fromAlbum.songs.IndexOf(song));
+                if (fromAlbum.songs.IndexOf(song) > fromAlbum.songs.IndexOf(pressedSong))
+                {
+
+                    sb.Append(",");
+                    sb.Append(song.songId);
+                }
+            }
+            HttpContext.Session.SetString("Queue", sb.ToString());
+            Console.WriteLine(Song);
+            return Redirect($"/Artist/Album/{pressedSong.albumId}");
         }
 
         public IActionResult OnPostUploadSong()
@@ -105,6 +139,11 @@ namespace Trackify.Pages.Artist
             if (NewTitle != null)
             {
                 album.albumTitle = NewTitle;
+            }
+
+            if (NewPrivacy != null)
+            {
+                album.madePrivate = (bool)NewPrivacy;
             }
 
             musicMethod.UpdateAlbum(album);

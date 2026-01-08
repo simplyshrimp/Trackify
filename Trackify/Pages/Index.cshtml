@@ -29,20 +29,18 @@
                         </div>
                     }
                 }
-                <div class="row p-0">
+                <div class="row">
                     <h1>Artists</h1>
                     @foreach (Artists artist in Model.allArtists)
                     {
-                        <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@artist.artistID">
-
-                            <div class="card d-flex justify-content-center " style="height:200px; width:180px">
+                        <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                            <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@artist.artistID">
                                 <div>
                                     <img src="@artist.user.pfp" height="155" width="155" />
                                     <span class="h3">@artist.user.nickname </span> <br />
                                 </div>
-
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     }
                 </div>
             </div>

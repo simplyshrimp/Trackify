@@ -1,17 +1,46 @@
 ﻿@page
+@using Trackify.Domain.Models
 @model Trackify.Pages.HomePageModel
 @{
 }
 
 
-    <!-- profile pic and info -->
-    <div class="col-9 flex-grow-1 p-0">
-        <div class="card h-100 p-5">
-            <div class="row p-0 m-0">
-                <p>@HttpContext.Session.GetInt32("LoggedIn")</p> <br />
-                <p>@HttpContext.Session.GetInt32("Id")</p> <br />
-                <p>@HttpContext.Session.GetString("pfp")</p> <br />
-                <p>@HttpContext.Session.GetInt32("ArtistID")</p>
+<div class="col-9 flex-grow-1 p-0">
+    <div class="card h-100 p-5">
+        <h1>Albums</h1>
+        <div class="row p-0 m-0 row-gap-5">
+            @foreach (Albums album in Model.allAlbums)
+            {
+                if (album.madePrivate == false)
+                {
+                    <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                        <div>
+                            <a class="text-reset" id="clickable-link" asp-page="/Artist/Album" asp-route-id="@album.albumId">
+                                <img src="@album.albumImage" height="155" width="155" />
+                                <span class="h3">@album.albumTitle</span> <br />
+                            </a>
+                            <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID">
+                                <span class="small">@album.artist.user.nickname</span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="row">
+                <h1>Artists</h1>
+                @foreach (Artists artist in Model.allArtists)
+                {
+
+                    <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                        <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@artist.artistID">
+                            <div>
+                                <img src="@artist.user.pfp" height="155" width="155" />
+                                <span class="h3">@artist.user.nickname </span> <br />
+                            </div>
+                        </a>
+
+                    </div>
+                }
             </div>
         </div>
     </div>

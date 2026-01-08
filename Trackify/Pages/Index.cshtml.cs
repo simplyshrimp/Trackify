@@ -23,20 +23,21 @@ namespace Trackify.Pages
         public List<Artists>? allArtists = new List<Artists>();
         public void OnGetAsync()
         {
+            allUsers = userMethod.GetAllUsers();
+
             if(HttpContext.Session.GetInt32("LoggedIn") != 1)
             {
-                allUsers = userMethod.GetAllUsers();
                 if (userMethod.GetAllUsers() == null)
                 {
                     userMethod.CreateAdmin();
                 }
-                allAlbums = musicMethod.ShowAllAlbums();
-                foreach (Users user in allUsers)
-                { 
-                     if (userMethod.ShowArtistByUserID(user.userId) != null)
-                    {
-                        allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
-                    }
+            }
+            allAlbums = musicMethod.ShowAllAlbums();
+            foreach (Users user in allUsers)
+            { 
+                    if (userMethod.ShowArtistByUserID(user.userId) != null)
+                {
+                    allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
                 }
             }
         }

@@ -3,12 +3,7 @@
 @model Trackify.Pages.Artist.AlbumModel
 @{
     Albums album = Model.album;
-    Artists artist = Model.artist;
-    string albumPrivacyStatus = "";
-    if (album.madePrivate)
-        albumPrivacyStatus = "private";
-    else
-        albumPrivacyStatus = "public";
+
 
 }
 
@@ -21,12 +16,12 @@
                 </div>
                 <div class="col-6 p-0">
                     <br />
-                    <span class="small">@albumPrivacyStatus @album.albumType</span>
+                    <span class="small">@Model.PrivacyStatus @album.albumType</span>
                     <br />
                     <div class="row">
                         <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@album.albumTitle</h1>
                         @{
-                            if (album.albumId == HttpContext.Session.GetInt32("ArtistID"))
+                            if (album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
                             {
                                 <div class="align-content-center" style="max-width: fit-content;">
                                     <div style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditAlbumModal"><svg bootstrap-icon="Pencil" height="50px" width="50px"></svg></div>
@@ -59,7 +54,16 @@
                     foreach(Songs song in album.songs)
                     {
                         <div class="border-bottom m-0 d-flex align-items-center">
-                                <div class="d-flex justify-content-start btn"><svg bootstrap-icon="Play" height="20px" width="20px"></svg></div>
+                            <form method="post" asp-page-handler="SongPress">
+                                <div class="d-flex justify-content-start btn">
+                                    <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                <label>
+                                    <svg class="align-middle" bootstrap-icon="Play" height="20px" width="20px"></svg>
+                                    <input hidden type="submit" value=""/>
+                                </label>
+                                </div>
+
+                            </form>
                             <div class="col-8 ps-1 me-5" style="">@song.title</div>
                             <div class="col-2 opacity-50" style="">@song.timesPlayed</div>
                             <div class="col-1 d-flex justify-content-end pe-2 align-items-center" style="">
@@ -96,7 +100,7 @@
                     <div class="pt-5">
                         <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
                     </div> <br />
-                    <label>current: @album.madePrivate</label>
+                    <label>current: @Model.PrivacyStatus</label> <br />
                     <select asp-for="NewPrivacy">
                         <option selected>change privacy</option>
                         <option value="true">Private</option>
