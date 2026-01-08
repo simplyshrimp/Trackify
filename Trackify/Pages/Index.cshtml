@@ -4,8 +4,7 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
-    List<Albums> allAlbums = Model.allAlbums;
-    List<Artists> allArtists = Model.allArtists;
+
 }
 
     <!-- profile pic and info -->
@@ -13,7 +12,7 @@
         <div class="card h-100 p-5">
             <h1>Albums</h1>
             <div class="row p-0 m-0 row-gap-5">
-                @foreach (Albums album in allAlbums)
+                @foreach (Albums album in Model.allAlbums)
                 {
                     if (album.madePrivate == false)
                     {
@@ -32,7 +31,7 @@
                 }
                 <div class="row p-0">
                     <h1>Artists</h1>
-                    @foreach (Artists artist in allArtists)
+                    @foreach (Artists artist in Model.allArtists)
                     {
                         <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@artist.artistID">
 
