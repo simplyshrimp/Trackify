@@ -62,8 +62,10 @@ namespace Trackify.Pages.Artist
 
         public IActionResult OnPostSongPress()
         {
+            string queue = musicMethod.MakeQueueStart(Song);
+
             Songs pressedSong = musicMethod.GetSongByID(Song);
-            Albums fromAlbum = musicMethod.GetAlbumByID(pressedSong.albumId);
+            /*Albums fromAlbum = musicMethod.GetAlbumByID(pressedSong.albumId);
             StringBuilder sb = new StringBuilder();
             sb.Append(pressedSong.songId.ToString());
             Console.WriteLine(fromAlbum.songs.IndexOf(pressedSong));
@@ -77,9 +79,17 @@ namespace Trackify.Pages.Artist
                     sb.Append(",");
                     sb.Append(song.songId);
                 }
-            }
-            HttpContext.Session.SetString("Queue", sb.ToString());
-            Console.WriteLine(Song);
+            }*/
+            HttpContext.Session.SetString("Queue", queue);
+            //Console.WriteLine(Song);
+            return Redirect($"/Artist/Album/{pressedSong.albumId}");
+        }
+        public IActionResult OnPostAddToQueue()
+        {
+            Songs pressedSong = musicMethod.GetSongByID(Song);
+            string queue = musicMethod.AddToQueue(HttpContext.Session.GetString("Queue"), Song);
+            HttpContext.Session.SetString("Queue", queue);
+
             return Redirect($"/Artist/Album/{pressedSong.albumId}");
         }
 

@@ -27,5 +27,7 @@ namespace Trackify.Service
         public Genres GetGenreByID(int genreID);
 
         public TimeSpan GetTotalDuration(int albumID);
+        public string MakeQueueStart(int songId);
+        public string AddToQueue(string? queue, int songId);
     }
 }

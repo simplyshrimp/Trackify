@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Trackify.Domain;
@@ -14,7 +15,6 @@ namespace Trackify.Service
     public class Music : IMusic
     {
         SQL connection;
-        Other conn;
         public Music(IConfiguration configuration) => connection = new SQL(configuration);
         public int CreateAlbum(int artistID, string albumTitle, AlbumType albumType, string color) => connection.CreateAlbum(artistID, albumTitle, albumType, color);
         public void UpdateAlbum(Albums updatedAlbum) => connection.UpdateAlbum(updatedAlbum);
@@ -49,6 +49,43 @@ namespace Trackify.Service
                 totalDuration += song.length;
             }
             return totalDuration;
+        }
+        public string MakeQueueStart(int songId)
+        {
+            Songs pressedSong = GetSongByID(songId);
+            Albums fromAlbum = GetAlbumByID(pressedSong.albumId);
+            StringBuilder sb = new StringBuilder();
+            sb.Append(pressedSong.songId.ToString());
+            /*Console.WriteLine(fromAlbum.songs.IndexOf(pressedSong));
+            foreach (Songs song in fromAlbum.songs)
+            {
+                Console.WriteLine(fromAlbum.songs.IndexOf(pressedSong));
+                Console.WriteLine(fromAlbum.songs.IndexOf(song));
+                if (fromAlbum.songs.IndexOf(song) > fromAlbum.songs.IndexOf(pressedSong))
+                {
+
+                    sb.Append(",");
+                    sb.Append(song.songId);
+                }
+            }*/
+            return sb.ToString();
+            //Console.WriteLine(Song);
+        }
+        public string AddToQueue(string? queue, int songId)
+        {
+            StringBuilder sb = new();
+
+            if (queue != null)
+            {
+                sb.Append(queue.ToString());
+                sb.Append(",");
+                sb.Append(songId.ToString());
+            }
+            else
+            {
+                sb.Append(songId.ToString());
+            }
+            return sb.ToString();
         }
     }
 }
