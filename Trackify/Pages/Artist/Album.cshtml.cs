@@ -99,10 +99,9 @@ namespace Trackify.Pages.Artist
             album = musicMethod.GetAlbumByID(id);
 
             string songPath = $"/ImagesAndSongs/Songs/{Guid.NewGuid().ToString()}{Path.GetExtension(NewSong.FileName)}";
-            string testFilePath = $"{Directory.GetCurrentDirectory()}/wwwroot{songPath}";
+            string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot{songPath}";
         
-            string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{songPath}";
-            using var filestream = new FileStream(testFilePath, FileMode.Create);
+            using var filestream = new FileStream(filePath, FileMode.Create);
             NewSong.CopyTo(filestream);
             filestream.Close();
 
@@ -134,7 +133,7 @@ namespace Trackify.Pages.Artist
 
                 string imagePath = $"/ImagesAndSongs/Users/{album.albumId}{Guid.NewGuid().ToString()}{Path.GetExtension(NewCover.FileName)}";
 
-                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{imagePath}";
+                string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/{imagePath}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 NewCover.CopyTo(filestream);
 

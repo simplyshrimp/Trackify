@@ -77,16 +77,16 @@
                                 <div class="btn-group">
                                     <div class=" d-flex justify-content-end btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <svg bootstrap-icon="ThreeDots" height="20px" width="20px"></svg>
-                                        </div>
-                                        <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
-                                            <li>
-                                                <form method="post" asp-page-handler="AddToQueue">
-                                                    <input type="number" asp-for="Song" hidden value="@song.songId" />
-                                                    <button type="submit" class="dditem btn w-100 text-start">Add To Queue</button>
-                                                </form>
-                                            </li>
-                                        </ul>
                                     </div>
+                                    <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
+                                        <li>
+                                            <form method="post" asp-page-handler="AddToQueue">
+                                                <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                                <button type="submit" class="dditem btn w-100 text-start">Add To Queue</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     }
