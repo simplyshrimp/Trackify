@@ -16,8 +16,8 @@
 
     <!-- profile pic and info -->
     <div class="col-9 flex-grow-1 p-0">
-        <div class="card p-5">
-            <div class="row p-0 m-0 overflow-auto gap-2" style="height: 651px">
+        <div class="card p-5 h-100">
+            <div class="row p-0 m-0 overflow-auto gap-2" style="">
                 @{ 
                     foreach (Albums album in AllArtistAlbums)
                     {
@@ -32,8 +32,8 @@
                                 <br />
                                 <h1 class="fw-bold" style="font-size: 6em;">
                                 </h1>
-                                <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
-                                <div class="border-top overflow-hidden overflow-y-scroll" style="height: 100px">
+                                <span class="small fw-semibold">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
+                                <div class="border-top overflow-hidden overflow-y-auto" style="height: 100px">
                                     @{
                                         foreach (Songs song in album.songs)
                                         {

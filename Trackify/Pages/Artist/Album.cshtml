@@ -14,29 +14,24 @@
                 <div class=" p-0 me-5" style="height: 200px; width: 200px;">
                     <img src="@album.albumImage" style="height: 200px; width: 200px;" />
                 </div>
-                <div class="col-6 p-0">
+                <div class="col-8 p-0">
                     <br />
                     <span class="small">@Model.PrivacyStatus @album.albumType</span>
                     <br />
                     <div class="row">
-                        <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@album.albumTitle</h1>
-                        @{
-                            if (album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
-                            {
-                                <div class="align-content-center" style="max-width: fit-content;">
-                                    <div style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditAlbumModal"><svg bootstrap-icon="Pencil" height="50px" width="50px"></svg></div>
-                                </div>
-                                <div class="align-content-center" style="max-width: fit-content;">
-                                    <div style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#UploadSongModal"><svg bootstrap-icon="PlusLg" height="50px" width="50px"></svg></div>
-                                </div>
-                            }
-                        }
+                    <div class="p-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                            <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@album.albumTitle</h1>
+                        </div>
+                        
+
                     </div>
                     <div class="row p-0 d-flex" style="height: 30px;">
 
                         <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="max-width:fit-content">
                             <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
-                            <span class="ms-1 fw-bold align-content-center">@album.artist.user.nickname</span>
+                        <p class="m-0 align-content-center" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+                                <span class="ms-1 fw-bold ">@album.artist.user.nickname</span>
+                            </p>
                         </a>
                         <div class="d-flex align-content-center p-0" style="width: fit-content;">
                             <span class="align-content-center small"> • @album.songs.Count() songs,</span>
@@ -44,7 +39,15 @@
                         <div class=" align-content-center p-0" style="width: fit-content;">
                             <span class="align-content-center small"> @Model.totalTime</span>
                         </div>
-
+                    @{
+                        if (album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
+                        {
+                            <span class="align-content-center" style="max-width: fit-content;">
+                                <span style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditAlbumModal"><svg bootstrap-icon="Pencil" height="25px" width="25px"></svg></span>
+                                <span style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#UploadSongModal"><svg bootstrap-icon="PlusLg" height="25px" width="25px"></svg></span>
+                            </span>
+                        }
+                    }
                     </div>
                 </div>
             </div>

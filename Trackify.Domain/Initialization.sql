@@ -387,11 +387,46 @@ AS
 	INSERT INTO Playlist (UserID, PlaylistName, PlaylistImage)
 	VALUES (@UserID, @PlaylistName, @PlaylistImage)
 GO
---CREATE OR ALTER PROCEDURE EditPlaylistSP
---CREATE OR ALTER PROCEDURE DeletePlaylistByID
+
+CREATE OR ALTER PROCEDURE EditPlaylistSP
+	@PlaylistID int,
+	@PlaylistName nvarchar(50),
+	@PlaylistImage nvarchar(50),
+	@MadePrivate bit
+AS
+	UPDATE Playlist
+	SET PlaylistName=@PlaylistName, PlaylistImage=@PlaylistImage, MadePrivate=@MadePrivate
+	WHERE PlaylistID=@PlaylistID
+GO
+
+CREATE OR ALTER PROCEDURE DeletePlaylistByID
+	@PlaylistID int
+AS
+	DELETE Playlist WHERE PlaylistID=@PlaylistID
+GO
 ---------------
---CREATE OR ALTER PROCEDURE AddSongToPlaylistSP
---CREATE OR ALTER PROCEDURE RemoveSongFromPlaylistSP
+CREATE OR ALTER PROCEDURE AddSongToPlaylistSP
+	@SongID int,
+	@PlaylistID int
+AS
+	INSERT INTO PlaylistSongs (SongID, PlaylistID)
+	VALUES (@SongID, @PlaylistID)
+GO
+
+CREATE OR ALTER PROCEDURE RemoveSongFromPlaylistSP
+	@SongID int,
+	@PlaylistID int
+AS
+	DELETE PlaylistSongs WHERE PlaylistID=@PlaylistID and SongID=@SongID
+GO
+
+CREATE OR ALTER PROCEDURE GetPlaylistSongsSP
+	@PlaylistID int
+AS
+	SELECT *
+	FROM PlaylistSongs
+	INNER JOIN Songs ON PlaylistSongs.SongID = Songs.SongID
+GO
 
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreateGenreSP

@@ -44,9 +44,13 @@
                             <span class="ps-2" style="width: fit-content; height: 21px; color: white">@currentSong.title</span>
                             <span class="ps-2" style="width: fit-content; height: 21px; text-decoration-color: white">@music.GetAlbumByID(currentSong.albumId).artist.user.nickname</span>
                     </div>
-                    <audio controls autoplay loop class="col-8">
+
+
+                    <audio id="audio" controls class="col-8">
                         <source src="@currentSong.filepath" type="audio/mp3" />
+                        the browser doesn't support the audio element
                     </audio>
+                    <script src="JavaScript/jsmusic.js"></script>
                 </div>
 
         }

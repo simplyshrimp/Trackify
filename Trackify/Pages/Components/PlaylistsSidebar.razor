@@ -1,10 +1,19 @@
-﻿
+﻿@using Trackify.Domain.Models
+@using Trackify.Service
+@using Microsoft.AspNetCore.Http
+
+@code {
+
+    [Inject]
+    IHttpContextAccessor HttpContextAccessor { get; set; }
+    [Inject]
+    IMusic music { get; set; }
+
+    
+}
 <!-- sidebar with playlists -->
 <div class="col-2 p-0">
     <div class="card h-100">
         <h3>PlaylistsSidebar</h3>
     </div>
 </div>
-@code {
-
-}

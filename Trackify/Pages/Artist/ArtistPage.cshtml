@@ -59,11 +59,11 @@
                     }
 
 
-                    <span class="small">{WIP} public playlists • </span>
+                    <span class="small">@ArtistAlbums.Count albums • </span>
                 </div>
             </div>
 
-            <div class="row p-0 m-0 overflow-auto gap-2" style="height: 651px">
+            <div class="row p-0 m-0 overflow-auto gap-2">
                 @{
                     foreach (Albums album in ArtistAlbums)
                     {
@@ -80,8 +80,8 @@
                                         <br />
                                         <h1 class="fw-bold" style="font-size: 6em;">
                                         </h1>
-                                        <span class="small">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
-                                        <div class="border-top overflow-hidden overflow-y-scroll" style="height: 100px">
+                                        <span class="small fw-semibold">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
+                                        <div class="border-top overflow-hidden overflow-y-auto" style="height: 100px">
                                             @{
                                                 foreach (Songs song in album.songs)
                                                 {

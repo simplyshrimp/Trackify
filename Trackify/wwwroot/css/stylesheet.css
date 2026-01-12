@@ -179,3 +179,8 @@ div.card.account.btn:hover {
 #clickable-link:hover {
     text-decoration-line: underline !important;
 }
+
+#audio {
+    width: 1000px;
+    margin: 20px;
+}
