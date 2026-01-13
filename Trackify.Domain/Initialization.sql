@@ -81,14 +81,15 @@ UserID int,
 PlaylistName nvarchar(50),
 PlaylistImage nvarchar(255) null,
 MadePrivate bit default 1,
-foreign key (UserID) references Users(UserID)
+foreign key (UserID) references Users(UserID) on delete cascade
 )
 
 CREATE TABLE PlaylistSongs(
+PlaylistSongID int identity (1,1),
 SongID int,
 PlaylistID int,
-foreign key (SongID) references Songs(SongID),
-foreign key (PlaylistID) references Playlist(PlaylistID)
+foreign key (SongID) references Songs(SongID) on delete cascade, 
+foreign key (PlaylistID) references Playlist(PlaylistID) on delete cascade
 )
 
 CREATE TABLE Subscriptions(
@@ -382,16 +383,16 @@ GO
 CREATE OR ALTER PROCEDURE CreatePlaylistSP
 	@UserID int,
 	@PlaylistName nvarchar(50),
-	@PlaylistImage nvarchar(50)
+	@PlaylistImage nvarchar(255)
 AS
 	INSERT INTO Playlist (UserID, PlaylistName, PlaylistImage)
-	VALUES (@UserID, @PlaylistName, @PlaylistImage)
+	VALUES (@UserID, @PlaylistName, @PlaylistImage) SELECT SCOPE_IDENTITY() AS PlaylistID
 GO
 
 CREATE OR ALTER PROCEDURE EditPlaylistSP
 	@PlaylistID int,
 	@PlaylistName nvarchar(50),
-	@PlaylistImage nvarchar(50),
+	@PlaylistImage nvarchar(255),
 	@MadePrivate bit
 AS
 	UPDATE Playlist
@@ -399,12 +400,19 @@ AS
 	WHERE PlaylistID=@PlaylistID
 GO
 
-CREATE OR ALTER PROCEDURE DeletePlaylistByID
+CREATE OR ALTER PROCEDURE DeletePlaylistByIDSP
 	@PlaylistID int
 AS
 	DELETE Playlist WHERE PlaylistID=@PlaylistID
 GO
----------------
+
+CREATE OR ALTER PROCEDURE GetAllUserPlaylists
+	@UserID int
+AS
+	SET NOCOUNT ON
+	SELECT * FROM Playlist WHERE UserID = @UserID
+GO
+------------------------------------------------------
 CREATE OR ALTER PROCEDURE AddSongToPlaylistSP
 	@SongID int,
 	@PlaylistID int
@@ -414,10 +422,10 @@ AS
 GO
 
 CREATE OR ALTER PROCEDURE RemoveSongFromPlaylistSP
-	@SongID int,
-	@PlaylistID int
+	@PlaylistID int,
+	@PlaylistSongID int
 AS
-	DELETE PlaylistSongs WHERE PlaylistID=@PlaylistID and SongID=@SongID
+	DELETE PlaylistSongs WHERE PlaylistID=@PlaylistID and PlaylistSongID = @PlaylistSongID
 GO
 
 CREATE OR ALTER PROCEDURE GetPlaylistSongsSP

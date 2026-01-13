@@ -872,6 +872,141 @@ namespace Trackify.Domain
             return null;
         }
         /*------------------------------------------Playlist--------------------------------------------------*/
+        public int CreatePlaylist(int userID, string playlistName, string playlistImage)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("CreatePlaylistSP", conn);
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.Parameters.AddWithValue("@PlaylistName", playlistName);
+                    cmd.Parameters.AddWithValue("@PlaylistImage", playlistImage);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    int id = (int)cmd.ExecuteScalar();
+                    return id;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+        public void EditPlaylist(Playlists editedPlaylist)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("EditPlaylistSP", conn);
+                    cmd.Parameters.AddWithValue("@PlaylistID", editedPlaylist.PlaylistId);
+                    cmd.Parameters.AddWithValue("@PlaylistName", editedPlaylist.PlaylistName);
+                    cmd.Parameters.AddWithValue("@PlaylistImage", editedPlaylist.PlaylistImage);
+                    cmd.Parameters.AddWithValue("@MadePrivate", editedPlaylist.MadePrivate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+        public void DeletePlaylist(int playlistId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("DeletePlaylistByIDSP", conn);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistId);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public List<Playlists> GetAllUserPlaylists(int userId)
+        {
+            List<Playlists> allUserPlaylists = new List<Playlists>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("GetAllUserPlaylists", conn);
+                cmd.Parameters.AddWithValue("@UserID", userId);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    allUserPlaylists.Add(new Playlists
+                    {
+                        PlaylistId = reader.GetInt32("PlaylistID"),
+                        PlaylistName = reader.GetString("PlaylistName"),
+                        PlaylistImage = reader.GetString("PlaylistImage"),
+                        MadePrivate = reader.GetBoolean("MadePrivate"),
+                        UserId = userId,
+                        Songs = GetPlaylistSongs(reader.GetInt32("PlaylistID"))
+
+                    });
+                }
+            }
+            return allUserPlaylists;
+        }
+        public void AddSongToPlaylist(int songId, int playlistId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("AddSongToPlaylistSP", conn);
+                cmd.Parameters.AddWithValue("@SongID", songId);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistId);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public void RemoveSongFromPlaylist(int playlistSongId, int playlistId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("RemoveSongFromPlaylistSP", conn);
+                cmd.Parameters.AddWithValue("@SongID", playlistSongId);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistId);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+            }
+        }
+        public List<Songs> GetPlaylistSongs(int playlistID)
+        {
+            List<Songs> playlistSongs = new List<Songs>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("GetPlaylistSongsSP", conn);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    playlistSongs.Add(new Songs
+                    {
+                        songId = reader.GetInt32("SongID"),
+                        title = reader.GetString("SongTitle"),
+                        length = TimeSpan.FromSeconds(reader.GetInt32("SongLength")),
+                        albumId = reader.GetInt32("AlbumID"),
+                        artistId = reader.GetInt32("ArtistID"),
+                        timesPlayed = reader.GetInt32("TimesListened"),
+                        filepath = reader.GetString("SoundFile"),
+                        albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
+                        isPrivate = reader.GetBoolean("MadePrivate"),
+                        genre = GetGenreByID(reader.GetInt32("GenreID")),
+                        playlistSongId = reader.GetInt32("PlaylistSongID")
+                    });
+                }
+            }
+            return playlistSongs;
+        }
         /*------------------------------------------Genre--------------------------------------------------*/
         public int CreateGenre(string genreName)
         {

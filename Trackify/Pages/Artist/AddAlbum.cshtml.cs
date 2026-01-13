@@ -40,7 +40,7 @@ namespace Trackify.Pages.Artist
                 string imagePath = "";
                 int id = musicMethod.CreateAlbum((int)HttpContext.Session.GetInt32("ArtistID"), Title, AlbumTypeInput, Color);
             //if artist get ArtistID as session?
-                string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/ImagesAndSongs/Albums/{Guid.NewGuid().ToString()}{Path.GetExtension(AlbumCover.FileName)}";
+                string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/ImagesAndSongs/Albums/{id.ToString()}{Path.GetExtension(AlbumCover.FileName)}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 AlbumCover.CopyTo(filestream);
 

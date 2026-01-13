@@ -10,22 +10,34 @@ namespace Trackify.Service
 {
     public interface IMusic
     {
+        /*albums*/
         public int CreateAlbum(int artistID, string albumtitle, AlbumType albumType, string color);
         public void UpdateAlbum(Albums updatedAlbum);
         public Albums GetAlbumByID(int albumID);
         public List<Albums> ShowAllAlbums();
         public List<Albums> ShowAllAlbumsByArtist(int artistID);
 
+        /*songs*/
         public void CreateSong(Songs song);
         public void UpdateSong(Songs updatedSong);
         public List<Songs> GetSongsByAlbum(int albumID);
         public List<Songs> getSongsByArtist(int artistID);
         public Songs GetSongByID(int songID);
 
+        /*playlists*/
+        public int CreatePlaylist(int userID, string playlistName, string playlistImage);
+        public void EditPlaylist(Playlists editedPlaylist);
+        public void DeletePlaylist(int playlistId);
+        public void AddSongToPlaylist(int songId, int playlistId);
+        public void RemoveSongFromPlaylist(int playlistSongId, int playlistId);
+        public List<Songs> GetPlaylistSongs(int playlistID);
+
+        /*genres*/
         public int CreateGenre(string genreName);
         public List<Genres> GetAllGenres();
         public Genres GetGenreByID(int genreID);
 
+        /*extra*/
         public TimeSpan GetTotalDuration(int albumID);
         public string MakeQueueStart(int songId);
         public string AddToQueue(string? queue, int songId);

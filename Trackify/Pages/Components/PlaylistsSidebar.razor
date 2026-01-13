@@ -8,12 +8,32 @@
     IHttpContextAccessor HttpContextAccessor { get; set; }
     [Inject]
     IMusic music { get; set; }
+    public List<Playlists> userPlaylists = new();
 
-    
+    public void AllPlaylists()
+    {
+        // userPlaylists = 
+        //List<Playlists> allPlaylists = music.pla
+    }
+
 }
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
 <!-- sidebar with playlists -->
-<div class="col-2 p-0">
+<div class="col-2">
     <div class="card h-100">
-        <h3>PlaylistsSidebar</h3>
+        <div class="d-flex">
+            <h3>Playlists</h3>
+            <span class="justify-content-end">
+                <button></button>
+            </span>
+
+        </div>
     </div>
 </div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+@code{
+
+}

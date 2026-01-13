@@ -28,6 +28,14 @@ namespace Trackify.Service
         public List<Songs> getSongsByArtist(int artistID) => connection.GetSongsByArtist(artistID);
         public Songs GetSongByID(int songID) => connection.GetSongByID(songID);
 
+        public int CreatePlaylist(int userID, string playlistName, string playlistImage) => connection.CreatePlaylist(userID, playlistName, playlistImage);
+        public void EditPlaylist(Playlists editedPlaylist) => connection.EditPlaylist(editedPlaylist);
+        public void DeletePlaylist(int playlistId) => connection.DeletePlaylist(playlistId);
+        public void AddSongToPlaylist(int songId, int playlistId) => connection.AddSongToPlaylist(songId, playlistId);
+        public void RemoveSongFromPlaylist(int playlistSongId, int playlistId) => connection.RemoveSongFromPlaylist(playlistSongId, playlistId);
+        public List<Songs> GetPlaylistSongs(int playlistID) => connection.GetPlaylistSongs(playlistID);
+
+
         public int CreateGenre(string genreName) => connection.CreateGenre(genreName);
         public List<Genres> GetAllGenres() => connection.GetAllGenres();
         public Genres GetGenreByID(int genreID) => connection.GetGenreByID(genreID);
