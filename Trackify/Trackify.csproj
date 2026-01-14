@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Trackify.Service\Trackify.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ImagesAndSongs\Playlists\" />
+  </ItemGroup>
+
 </Project>

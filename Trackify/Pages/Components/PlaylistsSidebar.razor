@@ -8,12 +8,16 @@
     IHttpContextAccessor HttpContextAccessor { get; set; }
     [Inject]
     IMusic music { get; set; }
-    public List<Playlists> userPlaylists = new();
+    public List<Playlists>? userPlaylists = new();
 
     public void AllPlaylists()
     {
         // userPlaylists = 
-        //List<Playlists> allPlaylists = music.pla
+        int? id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");
+        if (id != null)
+        {
+            List<Playlists>? userPlaylists = music.GetAllUserPlaylists((int)id);   
+        }
     }
 
 }
@@ -23,11 +27,20 @@
 <!-- sidebar with playlists -->
 <div class="col-2">
     <div class="card h-100">
-        <div class="d-flex">
+        <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
-            <span class="justify-content-end">
-                <button></button>
-            </span>
+            <div class="p-0">
+                <button class="h1 fw-bold roundbutton pb-3 pt-2" type="button" data-bs-toggle="modal" data-bs-target="#CreatePlaylistModal">+</button>
+            </div>
+@{
+                AllPlaylists();
+                foreach (Playlists playlist in userPlaylists)
+                {
+                    <div>
+                        <img src="@playlist.PlaylistImage" height="50" width="50"/>
+                    </div>
+                }
+            }
 
         </div>
     </div>
@@ -37,3 +50,45 @@
 @code{
 
 }
+
+<!-- Modal for editing album -->
+<div class="modal fade" id="CreatePlaylistModal" tabindex="-1" aria-labelledby="CreatePlaylistModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="CreatePlaylistModalLabel">Create Playlist</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-page-handler="EditAlbum">
+                    <div class="row">
+                        <div class="col-7">
+                            <input type="file" asp-for="NewCover" />
+                        </div>
+                        <div class="col-2 ms-3">
+                            <input type="color" value="color" asp-for="NewColor" />
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <input maxlength="255" class="form-control" placeholder="albumTitle" asp-for="NewTitle" />
+                    </div> <br />
+                    <label>current: PrivacyStatus</label> <br />
+                    <select asp-for="NewPrivacy">
+                        <option selected>change privacy</option>
+                        <option value="true">Private</option>
+                        <option value="false">Public</option>
+                    </select>
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-end mb-3">
+
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
