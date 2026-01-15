@@ -872,7 +872,7 @@ namespace Trackify.Domain
             return null;
         }
         /*------------------------------------------Playlist--------------------------------------------------*/
-        public int CreatePlaylist(int userID, string playlistName, string playlistImage)
+        public int CreatePlaylist(int userID, string playlistName, string playlistImage, string playlistColor, bool madePrivate)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -883,6 +883,8 @@ namespace Trackify.Domain
                     cmd.Parameters.AddWithValue("@UserID", userID);
                     cmd.Parameters.AddWithValue("@PlaylistName", playlistName);
                     cmd.Parameters.AddWithValue("@PlaylistImage", playlistImage);
+                    cmd.Parameters.AddWithValue("@PlaylistColor", playlistColor);
+                    cmd.Parameters.AddWithValue("@MadePrivate", madePrivate);
                     cmd.CommandType = CommandType.StoredProcedure;
                     int id = (int)cmd.ExecuteScalar();
                     return id;
@@ -905,6 +907,7 @@ namespace Trackify.Domain
                     cmd.Parameters.AddWithValue("@PlaylistID", editedPlaylist.PlaylistId);
                     cmd.Parameters.AddWithValue("@PlaylistName", editedPlaylist.PlaylistName);
                     cmd.Parameters.AddWithValue("@PlaylistImage", editedPlaylist.PlaylistImage);
+                    cmd.Parameters.AddWithValue("@PlaylistColor", editedPlaylist.PlaylistsColor);
                     cmd.Parameters.AddWithValue("@MadePrivate", editedPlaylist.MadePrivate);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();

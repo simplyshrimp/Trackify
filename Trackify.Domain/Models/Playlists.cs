@@ -14,6 +14,7 @@ namespace Trackify.Domain.Models
         public string PlaylistName { get; set; }
         public string PlaylistImage { get; set; }
         public bool MadePrivate { get; set; }
+        public string PlaylistsColor { get; set; }
         public List<Songs> Songs { get; set; }
     }
 }

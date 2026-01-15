@@ -1,6 +1,7 @@
 ﻿@using Trackify.Domain.Models
 @using Trackify.Service
 @using Microsoft.AspNetCore.Http
+@using FormData_Class
 
 @code {
 
@@ -9,14 +10,19 @@
     [Inject]
     IMusic music { get; set; }
     public List<Playlists>? userPlaylists = new();
+    public int? id { get; set; }
 
+    public void GetId()
+    {
+        id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");        
+    }
     public void AllPlaylists()
     {
         // userPlaylists = 
-        int? id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");
         if (id != null)
         {
-            List<Playlists>? userPlaylists = music.GetAllUserPlaylists((int)id);   
+            userPlaylists = music.GetAllUserPlaylists((int)id);
+
         }
     }
 
@@ -25,6 +31,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
 <!-- sidebar with playlists -->
+@{
+    GetId();
+}
 <div class="col-2">
     <div class="card h-100">
         <div class="d-flex justify-content-between m-0 p-2">
@@ -46,11 +55,6 @@
     </div>
 </div>
 
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-@code{
-
-}
-
 <!-- Modal for editing album -->
 <div class="modal fade" id="CreatePlaylistModal" tabindex="-1" aria-labelledby="CreatePlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -61,20 +65,21 @@
             </div>
 
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" asp-page-handler="EditAlbum">
+                <EditForm Model="@cPlaylistModel" OnValidSubmit="@CreatePlaylist" FormName="CPlaylistForm" >
                     <div class="row">
+                        <!--<input type="number" value />-->
                         <div class="col-7">
-                            <input type="file" asp-for="NewCover" />
+                            <InputFile @bind="cPlaylistModel.PlaylistImage" class="form-control" />
                         </div>
                         <div class="col-2 ms-3">
-                            <input type="color" value="color" asp-for="NewColor" />
+                            <input type="color" @bind="cPlaylistModel.PlaylistColor" />
                         </div>
                     </div>
                     <div class="pt-5">
-                        <input maxlength="255" class="form-control" placeholder="albumTitle" asp-for="NewTitle" />
+                        <input maxlength="255" class="form-control" placeholder="albumTitle" @bind="cPlaylistModel.PlaylistName"/>
                     </div> <br />
                     <label>current: PrivacyStatus</label> <br />
-                    <select asp-for="NewPrivacy">
+                    <select class="form-control" @bind="cPlaylistModel.MadePrivate">
                         <option selected>change privacy</option>
                         <option value="true">Private</option>
                         <option value="false">Public</option>
@@ -82,9 +87,9 @@
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
 
-                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
+                        <button type="button" class="btn btn-success border-success col-3" @onclick="CreatePlaylist" data-bs-dismiss="modal">Confirm</button>
                     </div>
-                </form>
+                </EditForm>
 
             </div>
 
@@ -92,3 +97,20 @@
         </div>
     </div>
 </div>
+
+@code{
+    [SupplyParameterFromForm]
+    private CPlaylistModel cPlaylistModel { get; set; } = new();
+
+    private void CreatePlaylist()
+    {
+        string imagePath = $"/ImagesAndSongs/Playlists/{Guid.NewGuid().ToString()}{Path.GetExtension(cPlaylistModel.PlaylistImage.FileName)}";
+        string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot{imagePath}";
+
+        using var filestream = new FileStream(filePath, FileMode.Create);
+        filestream.CopyTo(filestream);
+        filestream.Close();
+
+        music.CreatePlaylist((int)id, cPlaylistModel.PlaylistName, imagePath, cPlaylistModel.PlaylistColor, cPlaylistModel.MadePrivate);
+    }
+}
