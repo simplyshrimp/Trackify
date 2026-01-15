@@ -80,6 +80,7 @@ PlaylistID int identity (1,1) primary key,
 UserID int,
 PlaylistName nvarchar(50),
 PlaylistImage nvarchar(255) null,
+PlaylistColor nvarchar(50),
 MadePrivate bit default 1,
 foreign key (UserID) references Users(UserID) on delete cascade
 )
@@ -383,20 +384,23 @@ GO
 CREATE OR ALTER PROCEDURE CreatePlaylistSP
 	@UserID int,
 	@PlaylistName nvarchar(50),
-	@PlaylistImage nvarchar(255)
+	@PlaylistImage nvarchar(255),
+	@PlaylistColor nvarchar(50),
+	@MadePrivate bit
 AS
-	INSERT INTO Playlist (UserID, PlaylistName, PlaylistImage)
-	VALUES (@UserID, @PlaylistName, @PlaylistImage) SELECT SCOPE_IDENTITY() AS PlaylistID
+	INSERT INTO Playlist (UserID, PlaylistName, PlaylistImage, PlaylistColor, MadePrivate)
+	VALUES (@UserID, @PlaylistName, @PlaylistImage, @PlaylistColor, @MadePrivate) SELECT SCOPE_IDENTITY() AS PlaylistID
 GO
 
 CREATE OR ALTER PROCEDURE EditPlaylistSP
 	@PlaylistID int,
 	@PlaylistName nvarchar(50),
 	@PlaylistImage nvarchar(255),
+	@PlaylistColor nvarchar(50),
 	@MadePrivate bit
 AS
 	UPDATE Playlist
-	SET PlaylistName=@PlaylistName, PlaylistImage=@PlaylistImage, MadePrivate=@MadePrivate
+	SET PlaylistName=@PlaylistName, PlaylistImage=@PlaylistImage, PlaylistColor=@PlaylistColor, MadePrivate=@MadePrivate
 	WHERE PlaylistID=@PlaylistID
 GO
 
