@@ -3,30 +3,6 @@
 @using Microsoft.AspNetCore.Http
 @using FormData_Class
 
-@code {
-
-    [Inject]
-    IHttpContextAccessor HttpContextAccessor { get; set; }
-    [Inject]
-    IMusic music { get; set; }
-    public List<Playlists>? userPlaylists = new();
-    public int? id { get; set; }
-
-    public void GetId()
-    {
-        id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");        
-    }
-    public void AllPlaylists()
-    {
-        // userPlaylists = 
-        if (id != null)
-        {
-            userPlaylists = music.GetAllUserPlaylists((int)id);
-
-        }
-    }
-
-}
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 </head>
@@ -65,7 +41,7 @@
             </div>
 
             <div class="modal-body">
-                <EditForm Model="@cPlaylistModel" OnValidSubmit="@CreatePlaylist" FormName="CPlaylistForm" >
+                <EditForm Model="@cPlaylistModel" FormName="CPlaylistForm" >
                     <div class="row">
                         <!--<input type="number" value />-->
                         <div class="col-7">
@@ -76,7 +52,7 @@
                         </div>
                     </div>
                     <div class="pt-5">
-                        <input maxlength="255" class="form-control" placeholder="albumTitle" @bind="cPlaylistModel.PlaylistName"/>
+                        <input maxlength="255" class="form-control" placeholder="Playlist Title" @bind="cPlaylistModel.PlaylistName"/>
                     </div> <br />
                     <label>current: PrivacyStatus</label> <br />
                     <select class="form-control" @bind="cPlaylistModel.MadePrivate">
@@ -86,8 +62,7 @@
                     </select>
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
-
-                        <button type="button" class="btn btn-success border-success col-3" @onclick="CreatePlaylist" data-bs-dismiss="modal">Confirm</button>
+                        <input type="submit" class="btn btn-success border-success col-3" @onclick="@CreatePlaylist" value="Submit" data-bs-dismiss="modal"/>
                     </div>
                 </EditForm>
 
@@ -99,10 +74,30 @@
 </div>
 
 @code{
+    [Inject]
+    IHttpContextAccessor HttpContextAccessor { get; set; }
+    [Inject]
+    IMusic music { get; set; }
+    public List<Playlists>? userPlaylists = new();
+    public int? id { get; set; }
+
+    public void GetId()
+    {
+        id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");
+    }
+    public void AllPlaylists()
+    {
+        // userPlaylists =
+        if (id != null)
+        {
+            userPlaylists = music.GetAllUserPlaylists((int)id);
+
+        }
+    }
     [SupplyParameterFromForm]
     private CPlaylistModel cPlaylistModel { get; set; } = new();
 
-    private void CreatePlaylist()
+    protected void CreatePlaylist()
     {
         string imagePath = $"/ImagesAndSongs/Playlists/{Guid.NewGuid().ToString()}{Path.GetExtension(cPlaylistModel.PlaylistImage.FileName)}";
         string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot{imagePath}";
