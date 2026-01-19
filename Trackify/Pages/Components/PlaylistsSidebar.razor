@@ -15,19 +15,24 @@
         <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
             <div class="p-0">
-                <button class="h1 fw-bold roundbutton pb-3 pt-2" type="button" data-bs-toggle="modal" data-bs-target="#CreatePlaylistModal">+</button>
+                <input class="h1 fw-bold roundbutton pb-3 pt-2" type="button" onclick="@CreateBlankPlaylist" value="+"/>
             </div>
-@{
-                AllPlaylists();
-                foreach (Playlists playlist in userPlaylists)
+        </div>
+            <br />
+            <div>
+            @{
+                if (AllPlaylists())
                 {
-                    <div>
-                        <img src="@playlist.PlaylistImage" height="50" width="50"/>
-                    </div>
+                    foreach (Playlists playlist in userPlaylists)
+                    {
+                        <div>
+                            <img src="@playlist.PlaylistImage" height="50" width="50" />
+                            <span>@playlist.PlaylistName</span>
+                        </div>
+                    }
                 }
             }
-
-        </div>
+            </div>
     </div>
 </div>
 
@@ -62,7 +67,7 @@
                     </select>
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
-                        <input type="submit" class="btn btn-success border-success col-3" @onclick="@CreatePlaylist" value="Submit" data-bs-dismiss="modal"/>
+                        <input type="submit" class="btn btn-success border-success col-3" onclick="@CreatePlaylist" value="Submit" data-bs-dismiss="modal"/>
                     </div>
                 </EditForm>
 
@@ -85,19 +90,28 @@
     {
         id = HttpContextAccessor.HttpContext.Session.GetInt32("Id");
     }
-    public void AllPlaylists()
+    public bool AllPlaylists()
     {
         // userPlaylists =
         if (id != null)
         {
             userPlaylists = music.GetAllUserPlaylists((int)id);
-
+            if (userPlaylists.Count > 0)
+                return true;
         }
+        return false;
     }
+    public void CreateBlankPlaylist()
+    {
+        string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder";
+        music.CreatePlaylist((int)id, "New Playlisy", imagePath, "#00000", true);
+
+    }
+
     [SupplyParameterFromForm]
     private CPlaylistModel cPlaylistModel { get; set; } = new();
 
-    protected void CreatePlaylist()
+    public void CreatePlaylist()
     {
         string imagePath = $"/ImagesAndSongs/Playlists/{Guid.NewGuid().ToString()}{Path.GetExtension(cPlaylistModel.PlaylistImage.FileName)}";
         string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot{imagePath}";
