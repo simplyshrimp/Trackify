@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\ImagesAndSongs\Albums\" />
-    <Folder Include="wwwroot\ImagesAndSongs\Playlists\" />
   </ItemGroup>
 
 </Project>

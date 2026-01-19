@@ -15,19 +15,23 @@
         <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
             <div class="p-0">
-                <input class="h1 fw-bold roundbutton pb-3 pt-2" type="button" onclick="@CreateBlankPlaylist" value="+"/>
+                <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => this.CreateBlankPlaylist()">+</div>
             </div>
         </div>
-            <br />
             <div>
             @{
                 if (AllPlaylists())
                 {
                     foreach (Playlists playlist in userPlaylists)
                     {
-                        <div>
-                            <img src="@playlist.PlaylistImage" height="50" width="50" />
-                            <span>@playlist.PlaylistName</span>
+                        <div class="p-2 row" style="height: 66px;">
+                            <img style="width: fit-content" src="@playlist.PlaylistImage" height="50" width="50" />
+                            <div class="ps-1" style ="width: fit-content">
+                                <span style="width: fit-content">@playlist.PlaylistName</span>
+                                <br />
+                                <span style="width: fit-content">songs: @playlist.Songs.Count</span>
+                            </div>
+
                         </div>
                     }
                 }
@@ -37,7 +41,7 @@
 </div>
 
 <!-- Modal for editing album -->
-<div class="modal fade" id="CreatePlaylistModal" tabindex="-1" aria-labelledby="CreatePlaylistModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="CreatePlaylistModal" tabindex="-1" aria-labelledby="CreatePlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -48,7 +52,7 @@
             <div class="modal-body">
                 <EditForm Model="@cPlaylistModel" FormName="CPlaylistForm" >
                     <div class="row">
-                        <!--<input type="number" value />-->
+                        <input type="number" value />
                         <div class="col-7">
                             <InputFile @bind="cPlaylistModel.PlaylistImage" class="form-control" />
                         </div>
@@ -71,12 +75,13 @@
                     </div>
                 </EditForm>
 
-            </div>
+    </div> 
 
 
         </div>
     </div>
 </div>
+    -->
 
 @code{
     [Inject]
@@ -101,17 +106,14 @@
         }
         return false;
     }
-    public void CreateBlankPlaylist()
+    async Task<int> CreateBlankPlaylist()
     {
-        string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder";
-        music.CreatePlaylist((int)id, "New Playlisy", imagePath, "#00000", true);
-
+        string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder.png";
+        int playlistId = music.CreatePlaylist((int)id, "New Playlist", imagePath, "#00000", true);
+        return playlistId;
     }
 
-    [SupplyParameterFromForm]
-    private CPlaylistModel cPlaylistModel { get; set; } = new();
-
-    public void CreatePlaylist()
+    /*public void CreatePlaylist()
     {
         string imagePath = $"/ImagesAndSongs/Playlists/{Guid.NewGuid().ToString()}{Path.GetExtension(cPlaylistModel.PlaylistImage.FileName)}";
         string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot{imagePath}";
@@ -121,5 +123,5 @@
         filestream.Close();
 
         music.CreatePlaylist((int)id, cPlaylistModel.PlaylistName, imagePath, cPlaylistModel.PlaylistColor, cPlaylistModel.MadePrivate);
-    }
+    }*/
 }
