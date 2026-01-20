@@ -8,7 +8,7 @@
 
     <!-- profile pic and info -->
     <div class="col-9 flex-grow-1 p-0">
-        <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
+        <div class="card  p-5" style="background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
             <div class="row p-0 m-0">
                 @{
                     if (HttpContext.Session.GetInt32("Id") == Model.user.userId)

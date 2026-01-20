@@ -12,14 +12,12 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
+html, .main-content {
   position: relative;
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
+
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);

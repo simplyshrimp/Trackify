@@ -12,7 +12,9 @@ namespace Trackify
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
-            builder.Services.AddServerSideBlazor();
+            //builder.Services.AddServerSideBlazor();
+            builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents();
 
             //add interfaces
             builder.Services.AddSingleton<IUser, User>();
@@ -39,7 +41,11 @@ namespace Trackify
             app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
-            app.MapBlazorHub();
+
+            //app.MapBlazorHub();
+            app.UseAntiforgery();
+            app.MapRazorComponents<Trackify._Imports>()
+                .AddInteractiveServerRenderMode();
 
             app.Run();
         }

@@ -1,49 +1,48 @@
 ﻿@page "{id:int}"
 @using Trackify.Domain.Models;
-@model Trackify.Pages.Artist.AlbumModel
+@model Trackify.Pages.User.PlaylistModel
 @{
-    Albums album = Model.album;
-
-
+    Playlists playlist = Model.Playlist;
+    Users user = Model.playlistUser;
 }
 
     <!-- album pic and info + songs -->
-    <div class="col-9 flex-grow-1 p-0 flex-column main-content">
-        <div class="card main-content p-5" style="background: linear-gradient(to bottom, @album.color 0%, #121212 25%);">
+    <div class="col-9 flex-grow-1 p-0">
+        <div class="card p-5" style="background: linear-gradient(to bottom, @playlist.PlaylistsColor 0%, #121212 25%);">
             <div class="row p-0 m-0" style="height: 200px;">
                 <div class=" p-0 me-5" style="height: 200px; width: 200px;">
-                    <img src="@album.albumImage" style="height: 200px; width: 200px;" />
+                    <img src="@playlist.PlaylistImage" style="height: 200px; width: 200px;" />
                 </div>
                 <div class="col-8 p-0">
                     <br />
-                    <span class="small">@Model.PrivacyStatus @album.albumType</span>
+                    <span class="small">@Model.PrivacyStatus Playlist</span>
                     <br />
                     <div class="row">
                     <div class="p-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-                            <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@album.albumTitle</h1>
+                            <h1 class="fw-bold" style="font-size: 6em; max-width: fit-content;">@playlist.PlaylistName</h1>
                         </div>
                         
 
                     </div>
                     <div class="row p-0 d-flex" style="height: 30px;">
 
-                        <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID" style="max-width:fit-content">
-                            <img src="@album.artist.user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
+                        <a class="d-flex text-reset pe-1" id="clickable-link" asp-page="/User/Profile" asp-route-Id="@playlist.UserId" style="max-width:fit-content">
+                            <img src="@user.pfp" style="height: 30px; width: 30px;" class="roundbutton" />
                         <p class="m-0 align-content-center" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-                                <span class="ms-1 fw-bold ">@album.artist.user.nickname</span>
+                                <span class="ms-1 fw-bold ">@user.nickname</span>
                             </p>
                         </a>
                         <div class="d-flex align-content-center p-0" style="width: fit-content;">
-                            <span class="align-content-center small"> • @album.songs.Count() songs,</span>
+                            <span class="align-content-center small"> • @playlist.Songs.Count() songs,</span>
                         </div>
                         <div class=" align-content-center p-0" style="width: fit-content;">
                             <span class="align-content-center small"> @Model.totalTime</span>
                         </div>
                     @{
-                        if (album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
+                        if (playlist.UserId == HttpContext.Session.GetInt32("Id"))
                         {
                             <span class="align-content-center" style="max-width: fit-content;">
-                                <span style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditAlbumModal"><svg bootstrap-icon="Pencil" height="25px" width="25px"></svg></span>
+                                <span style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#EditPlaylistModal"><svg bootstrap-icon="Pencil" height="25px" width="25px"></svg></span>
                                 <span style="max-width: fit-content; max-height: fit-content;" type="button" data-bs-toggle="modal" data-bs-target="#UploadSongModal"><svg bootstrap-icon="PlusLg" height="25px" width="25px"></svg></span>
                             </span>
                         }
@@ -54,7 +53,7 @@
             <!--songs-->
             <div class="mt-2 border-top p-0 overflow-auto" style="">
                 @{ 
-                    foreach(Songs song in album.songs)
+                    foreach(Songs song in playlist.Songs)
                     {
                         <div class="border-bottom m-0 d-flex align-items-center">
                             <form method="post" asp-page-handler="SongPress">
@@ -91,32 +90,31 @@
                         </div>
                     }
                 }
-
             </div>
         </div>
     </div>
 
-<!-- Modal for editing album -->
-<div class="modal fade" id="EditAlbumModal" tabindex="-1" aria-labelledby="EditAlbumModalLabel" aria-hidden="true">
+<!-- Modal for editing Playlist -->
+<div class="modal fade" id="EditPlaylistModal" tabindex="-1" aria-labelledby="EditPlaylistModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="EditAlbumModalLabel">Album details</h1>
+                <h1 class="modal-title fs-5" id="EditPlaylistModalLabel">Playlist details</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" asp-page-handler="EditAlbum">
+                <form method="post" enctype="multipart/form-data" asp-page-handler="EditPlaylist">
                     <div class="row">
                         <div class="col-7">
                             <input type="file" asp-for="NewCover" />
                         </div>
                         <div class="col-2 ms-3">
-                            <input type="color" value="@album.color" asp-for="NewColor" />
+                            <input type="color" value="@playlist.PlaylistsColor" asp-for="NewColor" />
                         </div>
                     </div>
                     <div class="pt-5">
-                        <input maxlength="255" class="form-control" placeholder="@album.albumTitle" asp-for="NewTitle" />
+                        <input maxlength="255" class="form-control" placeholder="@playlist.PlaylistName" asp-for="NewTitle" />
                     </div> <br />
                     <label>current: @Model.PrivacyStatus</label> <br />
                     <select asp-for="NewPrivacy">
@@ -124,45 +122,6 @@
                         <option value="true">Private</option>
                         <option value="false">Public</option>
                     </select>
-                    <div class="form-control invisible"> </div><br />
-                    <div class="d-flex justify-content-end mb-3">
-
-                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
-                    </div>
-                </form>
-
-            </div>
-
-
-        </div>
-    </div>
-</div>
-
-<!-- Modal for uploading songs -->
-<div class="modal fade" id="UploadSongModal" tabindex="-1" aria-labelledby="UploadSongsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="UploadSongModalLabel">Upload Song</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSong">
-                    <div class="row">
-                        <div class="col-7">
-                            <input type="file" asp-for="NewSong" />
-                        </div>
-                    </div>
-                    <div class="pt-5">
-                        <select asp-for="genre">
-                            <option selected>Select a genre</option>
-                            @foreach (Genres genre in Model.allGenres)
-                            {
-                                <option value="@genre.GenreId">@genre.GenreName</option>
-                            }
-                        </select>
-                    </div>
                     <div class="form-control invisible"> </div><br />
                     <div class="d-flex justify-content-end mb-3">
 

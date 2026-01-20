@@ -124,14 +124,14 @@ namespace Trackify.Pages.Artist
             album = musicMethod.GetAlbumByID(id);
             if (NewCover != null)
             {
-                if (album.albumImage != null && album.albumImage != "/ImagesAndSongs/Users/Empty-User-pfp.png")
+                if (album.albumImage != null && album.albumImage != "/ImagesAndSongs/Albums/Trackify-Song-Placeholder.png")
                 {
                     FileInfo file = new FileInfo($"{Directory.GetCurrentDirectory()}\\wwwroot{album.albumImage}");
                     if (file.Exists)
                     { file.Delete(); }
                 }
 
-                string imagePath = $"/ImagesAndSongs/Users/{album.albumId}{Guid.NewGuid().ToString()}{Path.GetExtension(NewCover.FileName)}";
+                string imagePath = $"/ImagesAndSongs/Album/{album.albumId}{Guid.NewGuid().ToString()}{Path.GetExtension(NewCover.FileName)}";
 
                 string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/{imagePath}";
                 using var filestream = new FileStream(filePath, FileMode.Create);

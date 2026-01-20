@@ -28,6 +28,7 @@ namespace Trackify.Service
         public int CreatePlaylist(int userID, string playlistName, string playlistImage, string playlistColor, bool madePrivate);
         public void EditPlaylist(Playlists editedPlaylist);
         public void DeletePlaylist(int playlistId);
+        public Playlists GetPlaylistByID(int playlistID);
         public List<Playlists> GetAllUserPlaylists(int userId);
         public void AddSongToPlaylist(int songId, int playlistId);
         public void RemoveSongFromPlaylist(int playlistSongId, int playlistId);

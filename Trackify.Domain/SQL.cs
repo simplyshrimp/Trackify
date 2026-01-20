@@ -1010,6 +1010,31 @@ namespace Trackify.Domain
             }
             return playlistSongs;
         }
+        public Playlists GetPlaylistByID(int playlistID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("GetPlaylistByIDSP", conn);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistID);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    return new Playlists
+                    {
+                        PlaylistId = playlistID,
+                        UserId = reader.GetInt32("UserID"),
+                        PlaylistName = reader.GetString("PlaylistName"),
+                        PlaylistImage = reader.GetString("PlaylistImage"),
+                        PlaylistsColor = reader.GetString("PlaylistColor"),
+                        MadePrivate = reader.GetBoolean("MadePrivate"),
+                        Songs = GetPlaylistSongs(playlistID)
+                    };
+                }
+            }
+            return null;
+        }
         /*------------------------------------------Genre--------------------------------------------------*/
         public int CreateGenre(string genreName)
         {

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Trackify</title>
     <link rel="icon" type="image/x-icon" href="/ImagesAndSongs/favicon2.ico">
-    <script src="_framework/blazor.server.js"></script>
+    <script src="_framework/blazor.web.js"></script>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -164,16 +164,16 @@
         
     </header>
     <div class="container-fluid main-content">
-        <main role="main" class="pb-3 h-100">
-            <div class="row gap-2 h-100">
-                <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="WebAssemblyPrerendered" />
+        <main role="main" class="pb-3">
+            <div class="row gap-2">
+                <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="ServerPrerendered" />
                 @RenderBody()
             </div>
         </main>
     </div>
 
-    <footer class="border-top-0 footer text-muted" style="height:81px;">
-        <div class="container-fluid h-100">
+    <footer class="border-top-0  text-muted" style="height:81px;">
+        <div class="container-fluid">
             <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered"/>
         </div>
     </footer>

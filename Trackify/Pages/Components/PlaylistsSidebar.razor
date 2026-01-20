@@ -10,15 +10,16 @@
 @{
     GetId();
 }
-<div class="col-2">
-    <div class="card h-100">
+
+<div class="col-2" >
+    <div class="card main-content">
         <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
             <div class="p-0">
-                <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => this.CreateBlankPlaylist()">+</div>
+                <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => CreateBlankPlaylist()">+</div>
             </div>
         </div>
-            <div>
+        <div class="overflow-y-auto overflow-x-hidden">
             @{
                 if (AllPlaylists())
                 {
@@ -27,7 +28,7 @@
                         <div class="p-2 row" style="height: 66px;">
                             <img style="width: fit-content" src="@playlist.PlaylistImage" height="50" width="50" />
                             <div class="ps-1" style ="width: fit-content">
-                                <span style="width: fit-content">@playlist.PlaylistName</span>
+                                <span class="clickable-link" style="width: fit-content">@playlist.PlaylistName</span>
                                 <br />
                                 <span style="width: fit-content">songs: @playlist.Songs.Count</span>
                             </div>
@@ -74,10 +75,7 @@
                         <input type="submit" class="btn btn-success border-success col-3" onclick="@CreatePlaylist" value="Submit" data-bs-dismiss="modal"/>
                     </div>
                 </EditForm>
-
-    </div> 
-
-
+    </div>
         </div>
     </div>
 </div>
