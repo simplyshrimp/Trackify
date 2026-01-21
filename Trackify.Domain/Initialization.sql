@@ -416,6 +416,12 @@ AS
 	SET NOCOUNT ON
 	SELECT * FROM Playlist WHERE UserID = @UserID
 GO
+
+CREATE OR ALTER PROCEDURE GetPlaylistByIDSP
+	@PlaylistID int
+AS
+	SELECT * FROM Playlist WHERE PlaylistID=@PlaylistID
+GO
 ------------------------------------------------------
 CREATE OR ALTER PROCEDURE AddSongToPlaylistSP
 	@SongID int,

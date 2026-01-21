@@ -79,8 +79,6 @@ a.Login {
         background: #2a2a2a
     }
 
-
-
 .search-bar {
     --size: 48px;
     --padding: 8px;
@@ -159,6 +157,10 @@ div.card {
     background-color: #121212;
 
 }
+.main-card {
+    min-height: 45rem;
+    max-height: 100rem;
+}
 
 div.card.account {
     background-color: #2a2a2a;
@@ -178,6 +180,6 @@ div.card.account.btn:hover {
 }
 
 #audio {
-    width: 1000px;
+    width: 100rem;
     margin: 20px;
 }
