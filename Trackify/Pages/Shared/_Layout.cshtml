@@ -163,9 +163,9 @@
         </nav>
         
     </header>
-    <div class="container-fluid main-content h-100">
-        <main role="main" class="pb-3">
-            <div class="row gap-2">
+    <div class="container-fluid main-content d-flex flex-column">
+        <main role="main" class=" h-100">
+            <div class="row flex-grow-1 d-flex">
                 <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="ServerPrerendered" />
                 @RenderBody()
             </div>

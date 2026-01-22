@@ -158,8 +158,14 @@ div.card {
 
 }
 .main-card {
-    min-height: 45rem;
-    max-height: 100rem;
+    min-height: 80dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.song-list {
+    overflow-y: auto;
+    flex-grow: 1
 }
 
 div.card.account {
