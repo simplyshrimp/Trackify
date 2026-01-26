@@ -29,13 +29,13 @@
     }
 }
 <!-- footer 'playing now' -->
-
+<footer class="fixed-bottom" style=" height: 81px;">
     @{
         GetCurrentSong();
         if (currentSong != null)
         {
 
-                <div class="row m-0 p-0 position-absolute bottom-0 start-0">
+                <div class="row m-0 p-0">
                     <div class="ps-2" style="width: fit-content;">
                         <img src="@music.GetAlbumByID(currentSong.albumId).albumImage" style="height:70px; width:70px;" />
                     </div>
@@ -55,4 +55,4 @@
 
         }
     }
-
+</footer>
