@@ -31,16 +31,14 @@ namespace Trackify.Pages
                 {
                     userMethod.CreateAdmin();
                 }
+
             }
-            else
-            {
-                allAlbums = musicMethod.ShowAllAlbums();
-                foreach (Users user in allUsers)
-                { 
-                        if (userMethod.ShowArtistByUserID(user.userId) != null)
-                    {
-                        allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
-                    }
+            allAlbums = musicMethod.ShowAllAlbums();
+            foreach (Users user in allUsers)
+            { 
+                    if (userMethod.ShowArtistByUserID(user.userId) != null)
+                {
+                    allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
                 }
             }
         }

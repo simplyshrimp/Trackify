@@ -165,18 +165,19 @@
     </header>
     <div class="container-fluid main-content">
         <main role="main" class="pb-3 h-100">
-            <div class="row gap-2 h-100">
+            <div class="row gap-2 h-100" style="height: 696px;">
                 <component type="typeof(Trackify.Pages.Components.PlaylistsSidebar)" render-mode="ServerPrerendered" />
                 @RenderBody()
             </div>
+                <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered"/>
         </main>
     </div>
-
-    <footer class="border-top-0 footer text-muted" style=" height: 81px;">
+    <!--
+    <footer class="border-top-0 fixed-bottom footer text-muted" style=" height: 81px;">
         <div class="container-fluid h-100">
-            <component type="typeof(Trackify.Pages.Components.NowPlaying)" render-mode="ServerPrerendered"/>
         </div>
     </footer>
+    -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

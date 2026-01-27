@@ -139,38 +139,3 @@
         </div>
     </div>
 </div>
-<!-- Modal for editing album -->
-<div class="modal fade" id="EditAlbumModal" tabindex="-1" aria-labelledby="EditAlbumModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="EditAlbumModalLabel">Profile details</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" asp-page-handler="EditAlbum">
-                    <div class="row">
-                        <div class="col-7">
-                            <input type="file" asp-for="NewPfp" />
-                        </div>
-                        <div class="col-2 ms-3">
-                            <input type="color" value="@Model.user.color" asp-for="NewColor" />
-                        </div>
-                    </div>
-                    <div class="pt-5">
-                        <input maxlength="50" class="form-control" placeholder="@Model.user.nickname" asp-for="NewNickname" />
-                    </div>
-                    <div class="form-control invisible"> </div><br />
-                    <div class="d-flex justify-content-end mb-3">
-
-                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
-                    </div>
-                </form>
-
-            </div>
-
-
-        </div>
-    </div>
-</div>

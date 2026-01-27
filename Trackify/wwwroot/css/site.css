@@ -16,8 +16,10 @@ html, body {
   position: relative;
   min-height: 100%
 }
-body {
-    margin-bottom;
+
+.main-content {
+    display: flex;
+    flex-direction: column;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
