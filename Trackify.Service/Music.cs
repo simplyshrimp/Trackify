@@ -60,6 +60,16 @@ namespace Trackify.Service
             }
             return totalDuration;
         }
+        public TimeSpan GetTotalPlaylistTime(int playlistID)
+        {
+            Playlists playlist = GetPlaylistByID(playlistID);
+            TimeSpan totalPlaylistTime = TimeSpan.Zero;
+            foreach (Songs song in playlist.Songs)
+            {
+                totalPlaylistTime += song.length;
+            }
+            return totalPlaylistTime;
+        }
         public string MakeQueueStart(int songId)
         {
             Songs pressedSong = GetSongByID(songId);

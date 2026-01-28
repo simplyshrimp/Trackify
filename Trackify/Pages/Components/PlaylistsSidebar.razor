@@ -2,6 +2,7 @@
 @using Trackify.Service
 @using Microsoft.AspNetCore.Http
 @using FormData_Class
+@inject NavigationManager Navigation
 
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -26,13 +27,13 @@
                     foreach (Playlists playlist in userPlaylists)
                     {
                         <div class="p-2 row" style="height: 66px;">
-                            <img style="width: fit-content" src="@playlist.PlaylistImage" height="50" width="50" />
+                            <img style="width: 74px;" src="@playlist.PlaylistImage" height="50" width="50" />
                             <div class="ps-1" style ="width: fit-content">
-                                <span class="clickable-link" style="width: fit-content">@playlist.PlaylistName</span>
+                                <span class="text-reset clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
                                 <br />
                                 <span style="width: fit-content">songs: @playlist.Songs.Count</span>
                             </div>
-
+                            
                         </div>
                     }
                 }
@@ -109,6 +110,12 @@
         string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder.png";
         int playlistId = music.CreatePlaylist((int)id, "New Playlist", imagePath, "#00000", true);
         return playlistId;
+    }
+    public async Task RedirectToPlaylist(int playlistId)
+    {
+        string ReturnUrl = "/User/Playlist/" + playlistId.ToString();
+        Navigation.NavigateTo(ReturnUrl, true);
+        await base.OnInitializedAsync();
     }
 
     /*public void CreatePlaylist()

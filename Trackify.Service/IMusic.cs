@@ -41,6 +41,7 @@ namespace Trackify.Service
 
         /*extra*/
         public TimeSpan GetTotalDuration(int albumID);
+        public TimeSpan GetTotalPlaylistTime(int playlistID);
         public string MakeQueueStart(int songId);
         public string AddToQueue(string? queue, int songId);
     }

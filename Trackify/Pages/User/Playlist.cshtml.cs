@@ -44,9 +44,9 @@ namespace Trackify.Pages.User
             }
             else
             {
-                musicMethod.GetPlaylistByID(Id);
+                Playlist = musicMethod.GetPlaylistByID(Id);
                 playlistUser = userMethod.GetUserByID(Playlist.UserId);
-                totalTime = musicMethod.GetTotalDuration(Id);
+                totalTime = musicMethod.GetTotalPlaylistTime(Id);
                 PrivacyStatus = "";
                 if (Playlist.MadePrivate)
                     PrivacyStatus = "private";
@@ -56,7 +56,7 @@ namespace Trackify.Pages.User
             }
             
         }
-
+        
         public IActionResult OnPostSongPress()
         {
             string queue = musicMethod.MakeQueueStart(Song);
