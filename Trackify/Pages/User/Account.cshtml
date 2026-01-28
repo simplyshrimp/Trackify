@@ -1,0 +1,125 @@
+﻿@page
+@using Trackify.Domain.Models
+@model Trackify.Pages.User.AccountModel
+@{
+    Layout = "_Layout2";
+}
+<div class="d-flex justify-content-center">
+    <div class="col-5 row row-gap-4">
+        <div class="p-0">
+            <a class="text-decoration-none text-reset" asp-page="https://localhost:7082/User/Subscription">
+                <div class="card account btn p-0 form-control pb-3" asp-page="/User/Subscription">
+                    <div class="row m-0 row-gap-3">
+                        <div class="card-header-pills account small fw-bold card col-2 m-0 p-0" style=" background-color: #404040;">Your current subscription</div>
+                        <div class="text-start row m-0 p-0 row-gap-2">
+                            <span class="text-white small fw-bold"><img src="~/ImagesAndSongs/Logo/Transparent white.png" style="height: 24px; width: 24px;" /> Premium</span>
+                            <br />
+                            <span class="h2 fw-bold">Premium</span>
+                            <div class="p-0 m-0 row">
+                                <span>you have a x subcription plan</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="card account"> <!--try just margin/padding end on the first one-->
+            <div class="row">
+                <div class=" col">
+                    @{
+                        if (Model.application == null || Model.application.Status == Domain.Models.Enums.AStatus.Cancelled)
+                        {
+                            <span class="fw-bold h3">Apply to Become Artist</span>
+                            <div class="form-control invisible"> </div>
+                            <form method="post" asp-page-handler="Application">
+                                <input type="submit" class="btn w-25" style="background-color: #404040;" value="Press to Apply">
+                            </form>
+                        }
+                        else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
+                        {   
+                            <div class="row p-0 d-flex">
+                                <div class="col-11 flex-fill">
+                                    <span class="fw-bold h3">You're already an artist</span>
+                                    <div class="form-control invisible"> </div>
+                                </div>
+                                <div class="col-1 d-flex justify-content-end p-0 m-0">
+                                    <button class="card-header-pills account small fw-bold card col-2 m-0 p-1 " style="background-color: #404040; height: 2rem; width: 2rem;">
+                                        i
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <span class="fw-bold h3">Cancel your application</span>
+                            <div class="form-control invisible"> </div>
+                            <form method="post" asp-page-handler="CancelApplication">
+                                <input type="submit" class="btn w-50" style="background-color: #D45C5C;" value="Press to Cancel">
+                            </form>
+                        }
+                    }
+
+                </div>
+                @{
+                    if (Model.application != null && Model.application.Status != Trackify.Domain.Models.Enums.AStatus.Cancelled)
+                    {
+                        if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted)
+                        {
+                            <div class="col-5">
+                                <span class="fw-bold h5">Current Application</span>
+                                <br />
+                                <span>Status: </span>
+                                <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                                <br />
+                                <span>Date Applied: @Model.application.ApplicationDate</span>
+                                <form method="post" asp-page-handler="AcceptArtist">
+                                    <input type="submit" class="form-control" value="Become Artist" style="background-color: #404040;" />
+                                </form>
+                            </div>
+                        }
+                        else if (Model.application.Status == Domain.Models.Enums.AStatus.Accepted_By_User)
+                        {
+                            if (Model.artist.verified != null && Model.artist.verified == false)
+                            {
+                                <form method="post" asp-page-handler="Verify">
+                                    <input type="submit" class="form-control" value="Get Verified" style="background-color: #404040;" />
+                                </form>
+                            }
+                            else
+                            {
+                                <div class="form-control invisible"> </div>
+                                <div class="d-flex justify-content-center p-0 m-0">
+                                    <div class="form-control fw-bold w-75 text-center" style="background-color:#2C2C2C;">Verified</div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+                            <div class="col-5">
+                                <span class="fw-bold h5">Current Application</span>
+                                <br />
+                                <span>Status: </span>
+                                <span style="color: @Model.ChangeColorByStatus(Model.application.Status)">@Model.application.Status.ToString().Replace('_', ' ')</span>
+                                <br />
+                                <span>Date Applied: @Model.application.ApplicationDate</span>
+                            </div>
+                        }
+                    }
+                    else { }
+                }
+            </div>
+        </div>
+        <div class="card account pt-1">
+            <span class="h3">Change Account Information</span>
+            <div class="form-control invisible"> </div>
+            <a class="btn form-control w-25" style="background-color: #404040;" asp-page="/User/EditInfo">Edit</a>
+        </div>
+        <div class="card account pt-1">
+            <span class="h3">Delete Account</span>
+            <div class="form-control invisible"> </div>
+            <a class="btn form-control w-25 disabled" style="background-color: #C97676;color: black;" asp-page="DeleteAccount">Delete</a>
+        </div>
+    </div>
+</div>

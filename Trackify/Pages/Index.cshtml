@@ -1,10 +1,51 @@
 ﻿@page
+@using Trackify.Pages.Shared
+@using Trackify.Domain.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <!-- profile pic and info -->
+    <div class="col-9 flex-grow-1 p-0">
+        <div class="card p-5">
+            <h1>Albums</h1>
+            <div class="row p-0 m-0 row-gap-5">
+                @foreach (Albums album in Model.allAlbums)
+                {
+                    if (album.madePrivate == false)
+                    {
+                        <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                            <a class="text-reset" style="width: 157px" id="clickable-link" asp-page="/Artist/Album" asp-route-id="@album.albumId">
+                                    <img src="@album.albumImage" height="155" width="155" />
+                                <p class="m-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 157px">
+                                    <span class="h3">@album.albumTitle</span>
+                                </p>
+                                </a>
+                                <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID">
+                                    <span class="small fw-semibold">@album.artist.user.nickname</span>
+                                </a>
+                        </div>
+                    }
+                }
+                <div class="row p-0">
+                    <h1>Artists</h1>
+                    @foreach (Artists artist in Model.allArtists)
+                    {
+                        <div class="card d-flex justify-content-center " style="height:220px; width:180px">
+                            <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@artist.artistID">
+                                <div>
+                                    <img src="@artist.user.pfp" height="155" width="155" />
+                                <p class="m-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 157px">
+                                    <span class="h3">@artist.user.nickname </span> <br />
+                                </p>
+
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

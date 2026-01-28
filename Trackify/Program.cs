@@ -12,9 +12,14 @@ namespace Trackify
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddSession();
-            
+            //builder.Services.AddServerSideBlazor();
+            builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents();
+
+            //add interfaces
             builder.Services.AddSingleton<IUser, User>();
-            //builder.Services.AddSingleton<IMusic, Music>();
+            builder.Services.AddSingleton<IMusic, Music>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             var app = builder.Build();
 
             app.UseSession();
@@ -36,6 +41,11 @@ namespace Trackify
             app.MapStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
+
+            //app.MapBlazorHub();
+            app.UseAntiforgery();
+            app.MapRazorComponents<Trackify._Imports>()
+                .AddInteractiveServerRenderMode();
 
             app.Run();
         }

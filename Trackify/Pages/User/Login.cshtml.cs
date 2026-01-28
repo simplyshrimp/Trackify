@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using Trackify.Service;
+using Trackify.Domain.Models;
 
-namespace Trackify.Pages
+namespace Trackify.Pages.User
 {
     public class LoginModel : PageModel
     {
@@ -43,8 +43,18 @@ namespace Trackify.Pages
                 }
                 else
                 {
+                    Users loggedIn = userMethod.GetUserByID(id);
                     HttpContext.Session.SetInt32("LoggedIn", 1);
                     HttpContext.Session.SetInt32("Id", id);
+                    HttpContext.Session.SetString("pfp", loggedIn.pfp);
+                    if (loggedIn.isAdmin)
+                    {
+                        HttpContext.Session.SetInt32("Admin", 1);
+                    }
+                    if (userMethod.ShowArtistByUserID(id) != null)
+                    {
+                        HttpContext.Session.SetInt32("ArtistID", userMethod.ShowArtistByUserID(id).artistID);
+                    }
                     return RedirectToPage("/HomePage");
                 }
             }

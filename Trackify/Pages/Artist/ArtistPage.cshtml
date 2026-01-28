@@ -1,0 +1,141 @@
+﻿@page "{ArtistId:int}"
+@using Trackify.Domain.Models
+@model Trackify.Pages.Artist.ArtistPageModel
+@{
+    Artists Artist = Model.Artist;
+    List<Albums> ArtistAlbums = Model.ArtistAlbums;
+
+    string albumPrivacyStatus = "";
+    String CheckPrivacyStatus(Albums album)
+    {
+        if (album.madePrivate)
+            return albumPrivacyStatus = "private";
+        else
+            return albumPrivacyStatus = "public";
+    }
+}
+
+
+    <!-- profile pic and info -->
+    <div class="col-9 flex-grow-1 p-0 h-100" style="height: 696px;">
+        <div class="card h-100 p-5" style="min-height: 696px; background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
+            <div class="row p-0 m-0 mb-5">
+                @{
+                    if (HttpContext.Session.GetInt32("Id") == Model.user.userId)
+                    {
+                        <div type="button" class="p-0 me-5" data-bs-toggle="modal" data-bs-target="#EditProfileModal" style="height: 200px; width: 200px;">
+                            <img src="@Model.user.pfp" style="height: 200px; width: 200px;" class="roundbutton" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-0 me-5" style="height: 200px; width: 200px;">
+                            <img src="@Model.user.pfp" style="height: 200px; width: 200px;" class="roundbutton" />
+                        </div>
+                    }
+                }
+                <div class="col-6 p-0">
+                    <br />
+                    @{
+                        if (Artist.verified == true)
+                        {
+                            <span class="small">Verified </span>
+                        }
+                    }
+
+                    <span class="small">Artist</span>
+                    <br />
+                    @{
+                        if (HttpContext.Session.GetInt32("Id") == Model.user.userId)
+                        {
+                            <div type="button" data-bs-toggle="modal" data-bs-target="#EditProfileModal">
+                                <h1 class="fw-bold" style="font-size: 6em;">@Model.user.nickname</h1>
+                            </div>
+                        }
+                        else
+                        {
+                            <h1 class="fw-bold" style="font-size: 6em;">@Model.user.nickname</h1>
+                        }
+                    }
+
+
+                    <span class="small">@ArtistAlbums.Count albums • </span>
+                </div>
+            </div>
+
+            <div class="row p-0 m-0 overflow-auto gap-2">
+                @{
+                    foreach (Albums album in ArtistAlbums)
+                    {
+                        if (CheckPrivacyStatus(album) != "private")
+                        {
+                            <div class="card p-2" style="height: 240px">
+                                <div class="row m-0">
+                                    <div class="col-3 p-0" style="height: 220px; width: 220px;">
+                                        <img src="@album.albumImage" style="height: 220px; width: 220px;" class="p-0" />
+                                    </div>
+                                    <div class=" p-4 ms-5" style="height: 220px; width: 650px;">
+                                        <br />
+                                        <a id="clickable-link" class="fw-bold h1" asp-page="/Artist/Album" asp-route-id="@album.albumId">@album.albumTitle</a>
+                                        <br />
+                                        <h1 class="fw-bold" style="font-size: 6em;">
+                                        </h1>
+                                        <span class="small fw-semibold">@CheckPrivacyStatus(album) @album.albumType • @album.songs.Count() songs</span>
+                                        <div class="border-top overflow-hidden overflow-y-auto" style="height: 100px">
+                                            @{
+                                                foreach (Songs song in album.songs)
+                                                {
+
+                                                    <div class="border-bottom m-0 d-flex">
+                                                        <div class="col-11 ps-1" style="">@song.title</div>
+                                                        <div class="col-1 d-flex justify-content-end pe-3" style="">@song.length.Minutes:@song.length.Seconds</div>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+
+<!-- Modal for editing profile -->
+<div class="modal fade" id="EditProfileModal" tabindex="-1" aria-labelledby="EditProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="EditProfileModalLabel">Profile details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" asp-page-handler="EditProfile">
+                    <div class="row">
+                        <div class="col-7">
+                            <input type="file" asp-for="NewPfp" />
+                        </div>
+                        <div class="col-2 ms-3">
+                            <input type="color" value="@Model.user.color" asp-for="NewColor" />
+                        </div>
+                    </div>
+                    <div class="pt-5">
+                        <input maxlength="50" class="form-control" placeholder="@Model.user.nickname" asp-for="NewNickname" />
+                    </div>
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-end mb-3">
+
+                        <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

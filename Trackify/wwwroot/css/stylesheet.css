@@ -1,4 +1,11 @@
-﻿.gradientUp {
+﻿/* Set height */
+
+ 
+html body {
+    background-color: #000000;
+}
+
+.gradientUp {
     background: linear-gradient(to bottom, #292929 0%, #020202 100%);
 }
 
@@ -57,8 +64,20 @@ a.Login {
     height: 48px;
     border: none;
 }
-
-
+.roundbuttonbig {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1f1f1f;
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
+    border: none;
+}
+    .roundbuttonbig:focus-within {
+        background: #2a2a2a
+    }
 
 .search-bar {
     --size: 48px;
@@ -119,4 +138,54 @@ a.Login {
 }
 .search-bar:hover {
     background-color: #2a2a2a;
+}
+.dd {
+    background-color: #282828;
+}
+button.dditem {
+    background-color: transparent;
+}
+button.dditem:hover {
+    background-color: #3e3e3e;
+}
+a.dditem:hover {
+    color: #f2f2f2;
+}
+
+/*--profile--*/
+div.card {
+    background-color: #121212;
+
+}
+.main-card {
+    min-height: 80dvh;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.song-list {
+    overflow-y: auto;
+    flex-grow: 1
+}
+
+div.card.account {
+    background-color: #2a2a2a;
+    border: none;
+    padding-bottom: 10px;
+}
+div.card.account.btn:hover {
+    background-color: #242424;
+    padding-bottom: 16px;
+}
+
+#clickable-link {
+    text-decoration-line: none !important;
+}
+#clickable-link:hover {
+    text-decoration-line: underline !important;
+}
+
+#audio {
+    width: 100rem;
+    margin: 20px;
 }

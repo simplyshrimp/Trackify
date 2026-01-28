@@ -1,0 +1,103 @@
+﻿@page
+@model Trackify.Pages.User.SignupModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Trackify</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/stylesheet.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Trackify.styles.css" asp-append-version="true" />
+</head>
+<body class="gradientUp">
+    <div>
+        <header>
+            <div class=" d-flex justify-content-center pt-5 mt-5" style="height:auto;">
+                <div id="LoginPage" class="card text-center pt-3" style="max-height: 600px; max-width: 668px; orphans: 2;">
+                    <div class="row gap-3">
+                        <div>
+                            <a href="/Index"><img src="~/ImagesAndSongs/Logo/White with Black.png" style="height: 90px; width: 90px;" /></a>
+                            <i class="bi bi-spotify"></i>
+                        </div>
+                        <div>
+                            <h4 class="fw-bold"> Sign up to Trackify</h4>
+                        </div>
+                        <div>
+                            <div class="border"></div>
+                        </div>
+                    </div>
+                    <form method="post" class="">
+                        <div class="d-flex justify-content-center row">
+                            <div class="col-5">
+                                <label class="fw-bold small">Username</label>
+                                <br />
+                                <input class="LoginPage" maxlength="50" placeholder="Username" asp-for="Username">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Username"></span>
+                                <br/>
+                                <label class="fw-bold small">First Name</label>
+                                <br />
+                                <input class="LoginPage" maxlength="50" placeholder="First Name" asp-for="FirstName">
+                                <br />
+                                <span class="text-danger" asp-validation-for="FirstName"></span>
+                                <br />
+                                <label class="fw-bold small">Lastname</label>
+                                <br />
+                                <input class="LoginPage" maxlength="50" placeholder="Lastname" asp-for="LastName">
+                                <br />
+                                <span class="text-danger" asp-validation-for="LastName"></span>
+                            </div>
+                            <div class="col-5">
+                                <label class="fw-bold small">Password</label>
+                                <br />
+                                <input type="password" class="LoginPage" maxlength="50" placeholder="Password" asp-for="Password">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Password"></span>
+                                <br />
+                                <label class="fw-bold small"> Confirm Password</label>
+                                <br />
+                                
+                                <input type="password" class="LoginPage" maxlength="50" placeholder="Confirm Password" asp-for="ConfirmPassword">
+                                <br />
+                                <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                <br />
+                                <label class="fw-bold small">Date of birth</label>
+                                <br />
+                                <input type="date" style=" width: 187px" class="LoginPage" value="@DateTime.Now.AddYears(-20).ToString("yyyy-MM-dd")" asp-for="Birthday">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Birthday"></span>
+                            </div>
+                                <br />
+                                <label class="fw-bold small">Email</label>
+                                <br />
+                                <input type="email" class="LoginPage w-50" placeholder="Email" asp-for="Email">
+                                <br />
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                                <br />
+                            <div>
+                                <input type="submit" class="btn border w-25 rounded-5">
+                                
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mt-3">
+                        <p> Already have an account? <a class="text-decoration-underline text-white" asp-page="/User/Login">Log in to Trackify</a></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <footer class="Login border-top-0 footer text-muted small align-content-center" style="height:81px;">
+            <div class="container d-flex justify-content-center">
+                &copy; 2025 - Trackify - <a class="Login" asp-area="" asp-page="/Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

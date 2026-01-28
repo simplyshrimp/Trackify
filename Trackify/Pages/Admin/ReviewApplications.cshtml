@@ -1,0 +1,87 @@
+﻿@page
+@using Trackify.Domain.Models
+@model Trackify.Pages.Admin.ReviewApplicationsModel
+@{
+    Layout = "_Layout2";
+    List<Applications> chosenList = Model.chosenList;
+}
+
+<div class="d-flex justify-content-center">
+    <div class="fw-bold h1">View Applications</div>
+</div>
+<div class="d-flex justify-content-end col-9">
+
+        <form method="get">
+            <div class="row">
+                <div class="col-2">
+                    <button class="search-submit" tabindex="0">
+                        <svg bootstrap-icon="Search" height="25px" width="25px"></svg>
+                    </button>
+                </div>
+                <div class="col-8 align-content-center">
+                    <select asp-for="filterOptions" class="rounded form-control ">
+                        <option selected>Show All</option>
+                        <option value="0">Show Pending</option>
+                        <option value="1">Show Accepted</option>
+                        <option value="2">Show Denied</option>
+                        <option value="3">Show Timed Out</option>
+                        <option value="5">Show Accepted by User</option>
+                    </select>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+<div class="d-flex justify-content-center">
+    <div class="col-9 overflow-auto row gap-2  mt-3 ">
+        @{ 
+            foreach (Applications application in chosenList)
+            {
+                <div class="card col-3 p-0 border-2 overflow-y-auto overflow-x-hidden" style="height: 220px; width: 250px;">
+                            <div class="row">
+                                <a asp-page="/User/Profile" asp-route-id="@application.User.userId" class="card-header-pills account btn card p-0 m-0 col-5 overflow-auto" style="height: 26px;">@application.User.nickname</a> <!--route? but then i need to do extra on the profile-->
+                                <div class="col-7">
+                                    <span>Status: </span> <span class="fw-bold" style="color: @Model.ChangeColorByStatus(application.Status);">@application.Status.ToString().Replace('_', ' ')</span>
+                                </div>
+                            </div>
+                    <div class="p-3">
+                        <span>Username: @@@application.User.username</span> <br />
+                        <span>Account created: @application.User.accountAge</span> <br /><br />
+
+                        <span>Date Applied: @application.ApplicationDate</span> <br />
+                    </div>
+                    @{ 
+                        if (application.Status == Domain.Models.Enums.AStatus.Pending)
+                        {
+                            <div class="row p-1">
+                                <div class="col-6">
+                                    <form method="post" asp-page-handler="Accept">
+                                        <input type="hidden" id="hiddenID" name="hiddenID" value="@application.User.userId" asp-for="hiddenID"/>
+                                        <input class="form-control bg-success border-success" type="submit" value="Accept" />
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <form method="post" asp-page-handler="Deny">
+                                        <input type="hidden" value="@application.User.userId" asp-for="hiddenID"/>
+                                        <input class="form-control bg-danger border-danger" type="submit" value="Deny" />
+                                    </form>
+                                </div>
+                            </div>
+                        }
+                        else if (application.Status != Domain.Models.Enums.AStatus.Cancelled && application.Status != Domain.Models.Enums.AStatus.Accepted_By_User)
+                        {
+                            <form method="post" asp-page-handler="Change">
+                                <input type="hidden" value="@application.User.userId" asp-for="hiddenID" />
+                                <input class="form-control" type="submit" value="Change Review" />
+                            </form>
+                        }
+                        else { }
+                    }
+
+                </div>
+            }
+        }
+
+    </div>
+</div>
