@@ -17,25 +17,41 @@
         <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
             <div class="p-0">
-                <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => CreateBlankPlaylist()">+</div>
+                @{
+                    if (HttpContextAccessor.HttpContext.Session.GetInt32("LoggedIn") != null)
+                    {
+                        <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => CreateBlankPlaylist()">+</div>
+                    }
+                }
             </div>
         </div>
         <div class="overflow-y-auto overflow-x-hidden">
             @{
-                if (AllPlaylists())
+                if (HttpContextAccessor.HttpContext.Session.GetInt32("LoggedIn") != null)
                 {
-                    foreach (Playlists playlist in userPlaylists)
+                    if (AllPlaylists())
                     {
-                        <div class="p-2 row" style="height: 66px;">
-                            <img style="width: 74px;" src="@playlist.PlaylistImage" height="50" width="50" />
-                            <div class="ps-1" style ="width: fit-content">
-                                <span class="text-reset clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
-                                <br />
-                                <span style="width: fit-content">songs: @playlist.Songs.Count</span>
-                            </div>
+                        foreach (Playlists playlist in userPlaylists)
+                        {
+                            <div class="p-2 row" style="height: 66px;">
+                                <img style="width: 74px;" src="@playlist.PlaylistImage" height="50" width="50" />
+                                <div class="ps-1" style ="width: fit-content">
+                                    <span class="p-0 clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
+                                    <br />
+                                    <span style="width: fit-content">songs: @playlist.Songs.Count</span>
+                                </div>
                             
-                        </div>
+                            </div>
+                        }
                     }
+                    else
+                    {
+                        <span>Create a playlist to have it displayed here</span>
+                    }
+                }
+                else
+                {
+                    <span>Log in to create playlists</span>
                 }
             }
             </div>

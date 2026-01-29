@@ -64,7 +64,7 @@ namespace Trackify.Pages.User
 
                 string imagePath = $"/ImagesAndSongs/Users/{user.userId}{Guid.NewGuid().ToString()}{Path.GetExtension(NewPfp.FileName)}";
 
-                string filePath = $"C:/Users/cecby0001/source/repos/Trackify/Trackify/wwwroot/{imagePath}";
+                string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/{imagePath}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
                 NewPfp.CopyTo(filestream);
 

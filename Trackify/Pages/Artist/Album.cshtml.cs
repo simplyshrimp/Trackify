@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 using System.Text;
 using TagLib;
@@ -25,6 +26,7 @@ namespace Trackify.Pages.Artist
         public TimeSpan totalTime { get; set; }
         public string PrivacyStatus { get; set; }
 
+        public List<Playlists>? allUsersPlaylists = new List<Playlists>();
         //UploadSong
 
         [BindProperty]
@@ -48,6 +50,9 @@ namespace Trackify.Pages.Artist
 
         [BindProperty]
         public int Song { get; set; }
+
+        [BindProperty]
+        public int PlaylistId { get; set; }
         public void OnGetAsync()
         {
             album = musicMethod.GetAlbumByID(id);
@@ -157,6 +162,18 @@ namespace Trackify.Pages.Artist
 
             musicMethod.UpdateAlbum(album);
             return Redirect($"/Artist/Album/{album.albumId}");
+        }
+
+        public List<Playlists>? GetUserPlaylists()
+        {
+
+            allUsersPlaylists = musicMethod.GetAllUserPlaylists((int)HttpContext.Session.GetInt32("Id"));
+            return allUsersPlaylists;
+        }
+        public IActionResult OnPostAddSongToPlaylist()
+        {
+            musicMethod.AddSongToPlaylist(Song, PlaylistId);
+            return Redirect($"/Artist/Album/{id}");
         }
     }
 }
