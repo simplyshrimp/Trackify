@@ -35,7 +35,7 @@ namespace Trackify.Service
         public List<Songs> GetPlaylistSongs(int playlistID);
 
         /*genres*/
-        public int CreateGenre(string genreName);
+        public void CreateGenre(string genreName);
         public List<Genres> GetAllGenres();
         public Genres GetGenreByID(int genreID);
 

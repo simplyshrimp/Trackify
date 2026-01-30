@@ -1,0 +1,34 @@
+﻿@page
+@model Trackify.Pages.Admin.AddGenresModel
+@using Trackify.Domain.Models;
+@{
+}
+
+<div class="col-9 flex-grow-1 p-0">
+    <div class="card h-100 p-5" style="max-height: 696px;">
+        <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSong">
+            <div class="row">
+                <div class="col-7">
+                    <input type="file" asp-for="GenreFile" />
+                </div>
+            </div>
+            <div class="pt-5">
+                <textarea placeholder="write genres here, seperate by ',' no spaces between genres" asp-for="GenreText"></textarea>
+            </div>
+            <div class="form-control invisible"> </div><br />
+            <div class="d-flex justify-content-end mb-3">
+
+                <input type="submit" class="btn btn-success border-success col-3" value="Confirm" />
+            </div>
+        </form>
+        <div class="card p-2 overflow-y-auto" style="">
+            @{
+                foreach (Genres genre in Model.AllGenres)
+                {
+                    <span>@genre.GenreName</span>
+                    
+                }
+            }
+        </div>
+    </div>
+</div>

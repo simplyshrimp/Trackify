@@ -38,7 +38,7 @@ namespace Trackify.Service
         public List<Songs> GetPlaylistSongs(int playlistID) => connection.GetPlaylistSongs(playlistID);
 
 
-        public int CreateGenre(string genreName) => connection.CreateGenre(genreName);
+        public void CreateGenre(string genreName) => connection.CreateGenre(genreName);
         public List<Genres> GetAllGenres() => connection.GetAllGenres();
         public Genres GetGenreByID(int genreID) => connection.GetGenreByID(genreID);
 

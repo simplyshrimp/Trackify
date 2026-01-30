@@ -21,7 +21,7 @@ namespace Trackify.Pages
         public List<Users>? allUsers = new List<Users>();
         public List<Albums>? allAlbums = new List<Albums>();
         public List<Artists>? allArtists = new List<Artists>();
-        public void OnGetAsync()
+        public void OnGet()
         {
             allUsers = userMethod.GetAllUsers();
 

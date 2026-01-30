@@ -34,6 +34,7 @@ namespace Trackify.Pages.User
         public bool? NewPrivacy { get; set; }
 
         //for playing the songs
+        [BindProperty]
         public int Song { get; set; }
 
         public IActionResult OnGet()
@@ -63,7 +64,7 @@ namespace Trackify.Pages.User
 
             Songs pressedSong = musicMethod.GetSongByID(Song);
             HttpContext.Session.SetString("Queue", queue);
-            return Redirect($"/Artist/Album/{pressedSong.albumId}");
+            return Redirect($"/User/Playlist/{Id}");
         }
         public IActionResult OnPostAddToQueue()
         {
@@ -71,9 +72,14 @@ namespace Trackify.Pages.User
             string queue = musicMethod.AddToQueue(HttpContext.Session.GetString("Queue"), Song);
             HttpContext.Session.SetString("Queue", queue);
 
-            return Redirect($"/Artist/Album/{pressedSong.albumId}");
+            return Redirect($"/User/Playlist/{Id}");
         }
-
+        public IActionResult OnPostRemoveFromPlaylist()
+        {
+            Playlist = musicMethod.GetPlaylistByID(Id);
+            musicMethod.RemoveSongFromPlaylist(Song, Playlist.PlaylistId);
+            return Redirect($"/User/Playlist/{Playlist.PlaylistId}");
+        }
         public IActionResult OnPostEditPlaylist()
         {
             Playlist = musicMethod.GetPlaylistByID(Id);

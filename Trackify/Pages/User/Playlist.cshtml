@@ -8,7 +8,7 @@
 
     <!-- album pic and info + songs -->
     <div class="col-9 flex-grow-1 p-0">
-        <div class="card h-100 p-5" style="background: linear-gradient(to bottom, @playlist.PlaylistsColor 0%, #121212 25%);">
+        <div class="card h-100 p-5" style="max-height: 696px; background: linear-gradient(to bottom, @playlist.PlaylistsColor 0%, #121212 25%);">
             <div class="row p-0 m-0" style="height: 200px;">
                 <div class=" p-0 me-5" style="height: 200px; width: 200px;">
                     <img src="@playlist.PlaylistImage" style="height: 200px; width: 200px;" />
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <!--songs-->
-            <div class="mt-2 border-top p-0 overflow-auto" style="">
+            <div class="mt-2 border-top p-0 overflow-auto" style="height: 400px;">
                 @{ 
                     foreach(Songs song in playlist.Songs)
                     {
@@ -84,6 +84,12 @@
                                                 <button type="submit" class="dditem btn w-100 text-start">Add To Queue</button>
                                             </form>
                                         </li>
+                                    <li>
+                                        <form method="post" asp-page-handler="RemoveFromPlaylist">
+                                            <input type="number" asp-for="Song" hidden value="@song.playlistSongId" />
+                                            <button type="submit" class="dditem btn w-100 text-start">Remove from this playlist</button>
+                                        </form>
+                                    </li>
                                     </ul>
                                 </div>
                             </div>
