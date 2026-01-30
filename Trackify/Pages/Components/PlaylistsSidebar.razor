@@ -2,6 +2,7 @@
 @using Trackify.Service
 @using Microsoft.AspNetCore.Http
 @using FormData_Class
+@inject NavigationManager Navigation
 
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -16,25 +17,42 @@
         <div class="d-flex justify-content-between m-0 p-2">
             <h3>Playlists</h3>
             <div class="p-0">
-                <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => CreateBlankPlaylist()">+</div>
+                @{
+                    if (HttpContextAccessor.HttpContext.Session.GetInt32("LoggedIn") != null)
+                    {
+                        <div class="h1 fw-bold roundbutton pb-3 pt-2" type="button" @onclick="() => CreateBlankPlaylist()">+</div>
+                    }
+                }
             </div>
         </div>
         <div class="overflow-y-auto overflow-x-hidden">
             @{
-                if (AllPlaylists())
+                if (HttpContextAccessor.HttpContext.Session.GetInt32("LoggedIn") != null)
                 {
-                    foreach (Playlists playlist in userPlaylists)
+                    if (AllPlaylists())
                     {
-                        <div class="p-2 row" style="height: 66px;">
-                            <img style="width: fit-content" src="@playlist.PlaylistImage" height="50" width="50" />
-                            <div class="ps-1" style ="width: fit-content">
-                                <span class="clickable-link" style="width: fit-content">@playlist.PlaylistName</span>
-                                <br />
-                                <span style="width: fit-content">songs: @playlist.Songs.Count</span>
+                        foreach (Playlists playlist in userPlaylists)
+                        {
+                            <div class="p-2 row" style="height: 66px;">
+                                <img style="width: 74px;" src="@playlist.PlaylistImage" height="50" width="50" />
+                                <div class="ps-1" style ="width: fit-content">
+                                    <span class="p-0 clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
+                                    <br />
+                                    <span style="width: fit-content">songs: @playlist.Songs.Count</span>
+                                </div>
+                            
                             </div>
-
-                        </div>
+                        }
                     }
+                    else
+                    {
+                        <div class="p-5 h6 fw-semibold">Create a playlist to have it displayed here</div>
+                    }
+                }
+                else
+                {
+                    <div class="p-5 h3 fw-semibold">Log in to create playlists</div>
+
                 }
             }
             </div>
@@ -109,6 +127,12 @@
         string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder.png";
         int playlistId = music.CreatePlaylist((int)id, "New Playlist", imagePath, "#00000", true);
         return playlistId;
+    }
+    public async Task RedirectToPlaylist(int playlistId)
+    {
+        string ReturnUrl = "/User/Playlist/" + playlistId.ToString();
+        Navigation.NavigateTo(ReturnUrl, true);
+        await base.OnInitializedAsync();
     }
 
     /*public void CreatePlaylist()

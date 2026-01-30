@@ -974,8 +974,8 @@ namespace Trackify.Domain
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("RemoveSongFromPlaylistSP", conn);
-                cmd.Parameters.AddWithValue("@SongID", playlistSongId);
-                cmd.Parameters.AddWithValue("@PlaylistID", playlistId);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistSongId);
+                cmd.Parameters.AddWithValue("@PlaylistSongID", playlistId);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
             }
@@ -1036,7 +1036,7 @@ namespace Trackify.Domain
             return null;
         }
         /*------------------------------------------Genre--------------------------------------------------*/
-        public int CreateGenre(string genreName)
+        public void CreateGenre(string genreName)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -1047,7 +1047,7 @@ namespace Trackify.Domain
                     cmd.Parameters.AddWithValue("@GenreName", genreName);
 
                     cmd.CommandType = CommandType.StoredProcedure;
-                    return (int)cmd.ExecuteScalar();
+                    cmd.ExecuteNonQuery();
 
                 }
                 catch (Exception)
@@ -1055,7 +1055,6 @@ namespace Trackify.Domain
                     throw;
                 }
             }
-            return 0;
         }
         public List<Genres> GetAllGenres()
         {

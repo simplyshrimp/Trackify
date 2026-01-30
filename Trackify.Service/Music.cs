@@ -38,7 +38,7 @@ namespace Trackify.Service
         public List<Songs> GetPlaylistSongs(int playlistID) => connection.GetPlaylistSongs(playlistID);
 
 
-        public int CreateGenre(string genreName) => connection.CreateGenre(genreName);
+        public void CreateGenre(string genreName) => connection.CreateGenre(genreName);
         public List<Genres> GetAllGenres() => connection.GetAllGenres();
         public Genres GetGenreByID(int genreID) => connection.GetGenreByID(genreID);
 
@@ -59,6 +59,16 @@ namespace Trackify.Service
                 totalDuration += song.length;
             }
             return totalDuration;
+        }
+        public TimeSpan GetTotalPlaylistTime(int playlistID)
+        {
+            Playlists playlist = GetPlaylistByID(playlistID);
+            TimeSpan totalPlaylistTime = TimeSpan.Zero;
+            foreach (Songs song in playlist.Songs)
+            {
+                totalPlaylistTime += song.length;
+            }
+            return totalPlaylistTime;
         }
         public string MakeQueueStart(int songId)
         {

@@ -35,12 +35,13 @@ namespace Trackify.Service
         public List<Songs> GetPlaylistSongs(int playlistID);
 
         /*genres*/
-        public int CreateGenre(string genreName);
+        public void CreateGenre(string genreName);
         public List<Genres> GetAllGenres();
         public Genres GetGenreByID(int genreID);
 
         /*extra*/
         public TimeSpan GetTotalDuration(int albumID);
+        public TimeSpan GetTotalPlaylistTime(int playlistID);
         public string MakeQueueStart(int songId);
         public string AddToQueue(string? queue, int songId);
     }
