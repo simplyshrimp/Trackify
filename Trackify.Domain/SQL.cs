@@ -974,8 +974,8 @@ namespace Trackify.Domain
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("RemoveSongFromPlaylistSP", conn);
-                cmd.Parameters.AddWithValue("@PlaylistID", playlistSongId);
-                cmd.Parameters.AddWithValue("@PlaylistSongID", playlistId);
+                cmd.Parameters.AddWithValue("@PlaylistID", playlistId);
+                cmd.Parameters.AddWithValue("@PlaylistSongID", playlistSongId);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
             }

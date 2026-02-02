@@ -60,9 +60,9 @@ namespace Trackify.Pages.Artist
             totalTime = musicMethod.GetTotalDuration(id);
             PrivacyStatus = "";
             if (album.madePrivate)
-                PrivacyStatus = "private";
+                PrivacyStatus = "Private";
             else
-                PrivacyStatus = "public";
+                PrivacyStatus = "Public";
         }
 
         public IActionResult OnPostSongPress()

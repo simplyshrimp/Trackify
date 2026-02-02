@@ -363,7 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # image and song files
-/Trackify/wwwroot/ImagesAndSongs/Albums
-/Trackify/wwwroot/ImagesAndSongs/Playlists
-/Trackify/wwwroot/ImagesAndSongs/Songs
-/Trackify/wwwroot/ImagesAndSongs/Users
+/Trackify/wwwroot/ImagesAndSongs/Albums/
+/Trackify/wwwroot/ImagesAndSongs/Playlists/
+/Trackify/wwwroot/ImagesAndSongs/Songs/
+/Trackify/wwwroot/ImagesAndSongs/Users/
