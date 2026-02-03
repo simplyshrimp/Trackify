@@ -1,0 +1,21 @@
+﻿@page
+@model Trackify.Pages.Artist.AllGenresModel
+@using Trackify.Domain.Models
+@{
+    List<Genres> allGenres = Model.allGenres;
+}
+
+<div class="col-9 flex-grow-1 p-0" style="height: 696px;">
+    <div class="card h100 p-5" style="height: 696px;">
+        <div class="row gap-3 overflow-y-auto">
+            @{
+                foreach (Genres genre in allGenres)
+                {
+                    <div class="card d-flex justify-content-center align-items-center" style="height: 250px; width: 250px;">
+                        <a id="clickable-link" class="h2" asp-page="/Artist/Genre" asp-route-GenreID="@genre.GenreId">@genre.GenreName</a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
