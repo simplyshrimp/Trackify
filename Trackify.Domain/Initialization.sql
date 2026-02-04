@@ -380,6 +380,12 @@ AS
 	SET NOCOUNT ON
 	SELECT * FROM Songs WHERE SongID=@SongID
 GO
+
+CREATE OR ALTER PROCEDURE GetAllGenreSongsSP
+	@GenreID int
+AS
+	SELECT * FROM Songs WHERE GenreID=@GenreID
+GO
 --------------------Playlist--------------------------------------------------------------------------------------------------------------------------------------------------------
 CREATE OR ALTER PROCEDURE CreatePlaylistSP
 	@UserID int,

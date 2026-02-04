@@ -871,6 +871,43 @@ namespace Trackify.Domain
             }
             return null;
         }
+        public List<Songs> GetSongsByGenre(int genreID)
+        {
+            try
+            {
+                List<Songs> albumSongs = new List<Songs>();
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetSongsByGenreSP", conn);
+                    cmd.Parameters.AddWithValue("@GenreID", genreID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        albumSongs.Add(new Songs
+                        {
+                            songId = reader.GetInt32("SongID"),
+                            title = reader.GetString("SongTitle"),
+                            length = TimeSpan.FromSeconds(reader.GetInt32("SongLength")),
+                            albumId = reader.GetInt32("AlbumID"),
+                            artistId = reader.GetInt32("ArtistID"),
+                            timesPlayed = reader.GetInt32("TimesListened"),
+                            filepath = reader.GetString("SoundFile"),
+                            albumTrackNr = reader.GetInt32("AlbumTrackNumber"),
+                            isPrivate = reader.GetBoolean("MadePrivate"),
+                            genre = GetGenreByID(reader.GetInt32("GenreID")),
+                        });
+                    }
+                }
+                return albumSongs;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return null;
+        }
         /*------------------------------------------Playlist--------------------------------------------------*/
         public int CreatePlaylist(int userID, string playlistName, string playlistImage, string playlistColor, bool madePrivate)
         {

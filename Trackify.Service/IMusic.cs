@@ -23,6 +23,7 @@ namespace Trackify.Service
         public List<Songs> GetSongsByAlbum(int albumID);
         public List<Songs> getSongsByArtist(int artistID);
         public Songs GetSongByID(int songID);
+        public List<Songs> GetSongsByGenre(int genreID);
 
         /*playlists*/
         public int CreatePlaylist(int userID, string playlistName, string playlistImage, string playlistColor, bool madePrivate);
