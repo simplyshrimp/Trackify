@@ -34,11 +34,14 @@ namespace Trackify.Pages
 
             }
             allAlbums = musicMethod.ShowAllAlbums();
-            foreach (Users user in allUsers)
-            { 
-                    if (userMethod.ShowArtistByUserID(user.userId) != null)
-                {
-                    allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
+            if(userMethod.GetAllUsers() != null)
+            {
+                foreach (Users? user in allUsers)
+                { 
+                        if (userMethod.ShowArtistByUserID(user.userId) != null)
+                    {
+                        allArtists.Add(userMethod.ShowArtistByUserID(user.userId));
+                    }
                 }
             }
         }

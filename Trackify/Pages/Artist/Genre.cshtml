@@ -2,4 +2,80 @@
 @model Trackify.Pages.Artist.GenreModel
 @using Trackify.Domain.Models
 @{
+    Genres genre = Model.genre;
+    List<Songs>? songs = Model.songs;
 }
+
+<div class="col-9 flex-grow-1 p-0" style="height: 696px;">
+    <div class="card h100 p-5" style="height: 696px;">
+        <h1>@genre.GenreName</h1>
+
+        <div class="mt-2 border-top p-0 overflow-auto" style="height: 400px;">
+            @{
+                foreach (Songs song in songs)
+                {
+                    <div class="border-bottom m-0 d-flex align-items-center">
+                        <form method="post" asp-page-handler="SongPress">
+                            <div class="d-flex justify-content-start btn">
+                                <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                <label>
+                                    <svg class="align-middle" bootstrap-icon="Play" height="20px" width="20px"></svg>
+                                    <input hidden type="submit" value="" />
+                                </label>
+                            </div>
+
+                        </form>
+                        <div class="col-8 ps-1 me-5" style="">@song.title</div>
+                        <div class="col-2 opacity-50" style="">@song.timesPlayed</div>
+                        <div class="col-1 d-flex justify-content-end pe-2 align-items-center" style="">
+                            @song.length.Minutes:@if(song.length.Seconds < 10)
+                            {
+                                <span>0</span>
+                            }
+                            @song.length.Seconds
+                            <div class="btn-group">
+                                <div class=" d-flex justify-content-end btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <svg bootstrap-icon="ThreeDots" height="20px" width="20px"></svg>
+                                </div>
+                                <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
+                                    <li>
+                                        <form method="post" asp-page-handler="AddToQueue">
+                                            <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                            <button type="submit" class="dditem btn w-100 text-start">Add To Queue</button>
+                                        </form>
+                                    </li>
+                                    @{
+                                        if (HttpContext.Session.GetInt32("LoggedIn") == 1)
+                                        {
+                                            <li class="dropup">
+                                                <div class="btn-group">
+                                                    <div class=" btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to playlist</div>
+                                                    <ul class="dropdown-menu dropdown-menu-end dd overflow-y-auto" style="height: 10rem; background-color: #282828;">
+                                                        @{
+                                                            Model.fillUserPlaylists();
+                                                            List<Playlists> userPlaylists = Model.allUsersPlaylists;
+                                                            foreach (Playlists playlist in userPlaylists)
+                                                            {
+                                                                <li>
+                                                                    <form method="post" asp-page-handler="AddSongToPlaylist">
+                                                                        <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                                                        <input type="number" asp-for="PlaylistId" hidden value="@playlist.PlaylistId" />
+                                                                        <button type="submit" class="dditem btn w-100 text-start">@playlist.PlaylistName</button>
+                                                                    </form>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
