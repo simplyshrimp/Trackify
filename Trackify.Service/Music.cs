@@ -42,6 +42,7 @@ namespace Trackify.Service
         public void CreateGenre(string genreName) => connection.CreateGenre(genreName);
         public List<Genres> GetAllGenres() => connection.GetAllGenres();
         public Genres GetGenreByID(int genreID) => connection.GetGenreByID(genreID);
+        public void DeleteGenreByID(int genreID) => connection.GetGenreByID(genreID);
 
 
 

@@ -28,11 +28,12 @@
                         <div class="col-8 ps-1 me-5" style="">@song.title</div>
                         <div class="col-2 opacity-50" style="">@song.timesPlayed</div>
                         <div class="col-1 d-flex justify-content-end pe-2 align-items-center" style="">
-                            @song.length.Minutes:@if(song.length.Seconds < 10)
-                            {
-                                <span>0</span>
-                            }
-                            @song.length.Seconds
+                            <div>
+                                @song.length.Minutes:@if(song.length.Seconds < 10)
+                                {
+                                    <span>0</span>
+                                }@song.length.Seconds
+                            </div>
                             <div class="btn-group">
                                 <div class=" d-flex justify-content-end btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <svg bootstrap-icon="ThreeDots" height="20px" width="20px"></svg>

@@ -39,6 +39,7 @@ namespace Trackify.Service
         public void CreateGenre(string genreName);
         public List<Genres> GetAllGenres();
         public Genres GetGenreByID(int genreID);
+        public void DeleteGenreByID(int genreID);
 
         /*extra*/
         public TimeSpan GetTotalDuration(int albumID);

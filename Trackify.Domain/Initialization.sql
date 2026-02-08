@@ -55,7 +55,8 @@ foreign key (Artist) references Artists(ArtistID)
 
 CREATE TABLE Genre(
 GenreID int identity (1,1) primary key,
-GenreName nvarchar(50)
+GenreName nvarchar(50),
+Deleted bit null
 )
 
 CREATE TABLE Songs(
@@ -381,7 +382,7 @@ AS
 	SELECT * FROM Songs WHERE SongID=@SongID
 GO
 
-CREATE OR ALTER PROCEDURE GetAllGenreSongsSP
+CREATE OR ALTER PROCEDURE GetSongsByGenreSP
 	@GenreID int
 AS
 	SELECT * FROM Songs WHERE GenreID=@GenreID
@@ -473,5 +474,13 @@ AS
 	SET NOCOUNT ON
 	SELECT * FROM Genre WHERE GenreID=@Genreid
 GO
+
+CREATE OR ALTER PROCEDURE DeleteGenreBytIDSP
+	@GenreID int
+AS
+	SET NOCOUNT ON
+	UPDATE Genre
+	SET Deleted=1
+	WHERE GenreID=@GenreID
 --------------------Subcriptions----------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------?Customer Support?------------------------------------------------------------------------------------------------------------------------------------------------

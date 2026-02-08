@@ -17,6 +17,8 @@ namespace Trackify.Pages.Admin
         public IFormFile? GenreFile { get; set; }
         [BindProperty]
         public string? GenreText { get; set; }
+        [BindProperty]
+        public int? GenreID { get; set; }
         public void OnGet()
         {
             AllGenres = musicMethod.GetAllGenres();
@@ -47,6 +49,11 @@ namespace Trackify.Pages.Admin
                     musicMethod.CreateGenre(genre);
                 }
             }
+            return RedirectToPage("/Admin/AddGenres");
+        }
+        public  IActionResult DeleteGenre(int GenreID)
+        {
+            musicMethod.DeleteGenreByID(GenreID);
             return RedirectToPage("/Admin/AddGenres");
         }
     }

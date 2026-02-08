@@ -15,7 +15,7 @@ namespace Trackify.Domain.Models
         public int artistId { get; set; }
         public int timesPlayed { get; set; }
         public string filepath { get; set; }
-        public Genres genre { get; set; }
+        public Genres? genre { get; set; }
         public int albumTrackNr { get; set; }
         public bool isPrivate { get; set; }
         public int? playlistSongId { get; set; }

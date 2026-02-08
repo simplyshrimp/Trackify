@@ -1110,7 +1110,8 @@ namespace Trackify.Domain
                         allGenres.Add(new Genres
                         {
                             GenreId = reader.GetInt32("GenreID"),
-                            GenreName = reader.GetString("GenreName")
+                            GenreName = reader.GetString("GenreName"),
+                            Deleted = reader.GetBoolean("Deleted")
                         });
                     }
                 }
@@ -1136,7 +1137,8 @@ namespace Trackify.Domain
                     {
                         return new Genres {
                             GenreId = genreID,
-                            GenreName = reader.GetString("GenreName")
+                            GenreName = reader.GetString("GenreName"),
+                            Deleted = reader.GetBoolean("Deleted")
                         };
                     }
                 }
@@ -1147,6 +1149,24 @@ namespace Trackify.Domain
                 }
             }
             return null;
+        }
+        public void DeleteGenreByID(int genreID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("DeleteGenreByID", conn);
+                    cmd.Parameters.AddWithValue("@GenreID", genreID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
         /*------------------------------------------Subscriptions--------------------------------------------------*/
     }

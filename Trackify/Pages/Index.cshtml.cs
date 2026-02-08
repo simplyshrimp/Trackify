@@ -34,7 +34,7 @@ namespace Trackify.Pages
 
             }
             allAlbums = musicMethod.ShowAllAlbums();
-            if(userMethod.GetAllUsers() != null)
+            if(allUsers != null)
             {
                 foreach (Users? user in allUsers)
                 { 
