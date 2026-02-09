@@ -8,11 +8,11 @@
 }
 
 <!-- profile pic and info -->
-<div class="col-9 flex-grow-1 p-0">
-    <div class="card h-100 p-5">
-        <h1>Albums</h1>
+<div class="col-9 flex-grow-1 p-0" style="height: 696px;">
+    <div class="card h-100 p-5" style="height: 696px;">
         <div class="row p-0 m-0 row-gap-5">
             <div class="row p-0 m-0 row-gap-2">
+                <h1 class="p-0">Albums</h1>
                 @foreach (Albums album in Model.allAlbums)
                 {
                     if (album.madePrivate == false)
@@ -32,7 +32,7 @@
                 }
             </div>
             <div class="row p-0 m-0 row-gap-2">
-                <h1>Artists</h1>
+                <h1 class="p-0">Artists</h1>
                 @foreach (Artists artist in Model.allArtists)
                 {
                     <div class="card d-flex justify-content-center " style="height:220px; width:180px">

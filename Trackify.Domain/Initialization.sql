@@ -56,7 +56,7 @@ foreign key (Artist) references Artists(ArtistID)
 CREATE TABLE Genre(
 GenreID int identity (1,1) primary key,
 GenreName nvarchar(50),
-Deleted bit null
+Deleted bit default 0
 )
 
 CREATE TABLE Songs(
@@ -450,7 +450,7 @@ CREATE OR ALTER PROCEDURE GetPlaylistSongsSP
 AS
 	SELECT *
 	FROM PlaylistSongs
-	INNER JOIN Songs ON PlaylistSongs.SongID = Songs.SongID
+	INNER JOIN Songs ON PlaylistSongs.SongID = Songs.SongID WHERE PlaylistSongs.PlaylistID=@PlaylistID
 GO
 
 --------------------Genre-----------------------------------------------------------------------------------------------------------------------------------------------------------

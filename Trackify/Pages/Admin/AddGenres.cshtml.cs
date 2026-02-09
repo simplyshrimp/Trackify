@@ -51,7 +51,7 @@ namespace Trackify.Pages.Admin
             }
             return RedirectToPage("/Admin/AddGenres");
         }
-        public  IActionResult DeleteGenre(int GenreID)
+        public  IActionResult OnPostDeleteGenre(int GenreID)
         {
             musicMethod.DeleteGenreByID(GenreID);
             return RedirectToPage("/Admin/AddGenres");

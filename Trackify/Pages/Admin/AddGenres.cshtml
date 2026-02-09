@@ -21,19 +21,20 @@
                 <input type="submit" class="btn btn-success border-success col-3" value="Confirm" />
             </div>
         </form>
-        <div class="card p-2 overflow-y-auto row" style="">
+        <div class="card p-2 overflow-y-auto w-100 d-flex" style="height: 344px;">
             @{
                 foreach (Genres genre in Model.AllGenres)
                 {
                     if (genre.Deleted != true)
                     {
-                        <span class="align-items-center w-50" style="">
-                            <span class="align-middle ">@genre.GenreName</span>
-                            <form style="width:fit-content" method="post" asp-page-handler="DeleteGenre">
-                            <input type="number" hidden asp-for="GenreID" value="@genre.GenreId" />
-                            <button class="form-control float-end w-50" type="submit">delete @genre.GenreName</button>
-                            </form>
-                        </span>                        
+                        <div class="align-items-center p-0" style="width: 300px;">
+                            <span class="align-middle ">@genre.GenreName
+                                <form style="width:fit-content" method="post" asp-page-handler="DeleteGenre">
+                                <input type="number" hidden asp-for="GenreID" value="@genre.GenreId" />
+                                    <button class="form-control float-end" style="width: 200px; background-color: tomato;" type="submit">delete @genre.GenreName</button>
+                                </form>
+                            </span>
+                        </div>                        
                     }
                 }
             }

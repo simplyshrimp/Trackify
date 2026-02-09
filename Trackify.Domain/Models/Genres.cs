@@ -10,6 +10,6 @@ namespace Trackify.Domain.Models
     {
         public int GenreId { get; set; }
         public string GenreName { get; set; }
-        public bool? Deleted { get; set; }
+        public bool Deleted { get; set; }
     }
 }

@@ -50,9 +50,9 @@ namespace Trackify.Pages.User
                 totalTime = musicMethod.GetTotalPlaylistTime(Id);
                 PrivacyStatus = "";
                 if (Playlist.MadePrivate)
-                    PrivacyStatus = "private";
+                    PrivacyStatus = "Private";
                 else
-                    PrivacyStatus = "public";
+                    PrivacyStatus = "Public";
                 return Page();
             }
             
