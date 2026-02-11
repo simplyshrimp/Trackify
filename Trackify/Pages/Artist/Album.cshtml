@@ -90,20 +90,33 @@
                                                 <div class="btn-group">
                                                     <div class=" btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to playlist</div>
                                                     <ul class="dropdown-menu dropdown-menu-end dd overflow-y-auto" style="height: 10rem; background-color: #282828;">
-                                                    @{
-                                                        Model.GetUserPlaylists();
-                                                        List<Playlists> userPlaylists = Model.allUsersPlaylists;
-                                                        foreach (Playlists playlist in userPlaylists)
-                                                        {
-                                                            <li>
-                                                            <form method="post" asp-page-handler="AddSongToPlaylist">
-                                                                <input type="number" asp-for="Song" hidden value="@song.songId" />
-                                                                <input type="number" asp-for="PlaylistId" hidden value="@playlist.PlaylistId" />
-                                                                <button type="submit" class="dditem btn w-100 text-start">@playlist.PlaylistName</button>
-                                                            </form>
-                                                            </li>
-                                                        }                                                    
-                                                    }
+                                                        @{
+                                                            Model.GetUserPlaylists();
+                                                            List<Playlists> userPlaylists = Model.allUsersPlaylists;
+                                                            if (userPlaylists.Count > 0)
+                                                            {
+                                                                foreach (Playlists playlist in userPlaylists)
+                                                                {
+                                                                <li>
+                                                                <form method="post" asp-page-handler="AddSongToPlaylist">
+                                                                    <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                                                    <input type="number" asp-for="PlaylistId" hidden value="@playlist.PlaylistId" />
+                                                                    <button type="submit" class="dditem btn w-100 text-start">@playlist.PlaylistName</button>
+                                                                </form>
+                                                                </li>
+                                                                }
+                                                                
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>
+                                                                    <form method="post" asp-page-asp-page-handler="CreatePlaylist">
+                                                                        <input type="number" asp-for="Song" hidden value="@song.songId" />
+                                                                        <button type="submit" class="dditem btn w-100 text-start">Create new Playlist</button>
+                                                                    </form>
+                                                                </li>
+                                                            }
+                                                        }
                                                     </ul>
                                                 </div>
                                             </li>

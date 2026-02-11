@@ -56,13 +56,17 @@ namespace Trackify.Pages.Artist
         public void OnGetAsync()
         {
             album = musicMethod.GetAlbumByID(id);
-            allGenres = musicMethod.GetAllGenres();
             totalTime = musicMethod.GetTotalDuration(id);
             PrivacyStatus = "";
             if (album.madePrivate)
                 PrivacyStatus = "Private";
             else
                 PrivacyStatus = "Public";
+
+            if (album.artist.artistID == HttpContext.Session.GetInt32("ArtistID"))
+            {
+                allGenres = musicMethod.GetAllUndeletedGenres();
+            }
         }
 
         public IActionResult OnPostSongPress()

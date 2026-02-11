@@ -1122,6 +1122,35 @@ namespace Trackify.Domain
                         return allGenres;
             }
         }
+        public List<Genres> GetAllUndeletedGenres()
+        {
+            List<Genres> allGenres = new List<Genres>();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("GetAllUndeletedGenresSP", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        allGenres.Add(new Genres
+                        {
+                            GenreId = reader.GetInt32("GenreID"),
+                            GenreName = reader.GetString("GenreName"),
+                            Deleted = reader.GetBoolean("Deleted")
+                        });
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                return allGenres;
+            }
+        }
         public Genres GetGenreByID(int genreID)
         {
             using (SqlConnection conn = new SqlConnection( connectionString))
@@ -1157,7 +1186,7 @@ namespace Trackify.Domain
                 try
                 {
                     conn.Open();
-                    SqlCommand cmd = new SqlCommand("DeleteGenreByID", conn);
+                    SqlCommand cmd = new SqlCommand("DeleteGenreByIDSP", conn);
                     cmd.Parameters.AddWithValue("@GenreID", genreID);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();

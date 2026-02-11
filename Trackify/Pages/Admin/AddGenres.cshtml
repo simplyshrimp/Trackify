@@ -21,23 +21,24 @@
                 <input type="submit" class="btn btn-success border-success col-3" value="Confirm" />
             </div>
         </form>
-        <div class="card p-2 overflow-y-auto w-100 d-flex" style="height: 344px;">
-            @{
-                foreach (Genres genre in Model.AllGenres)
-                {
-                    if (genre.Deleted != true)
+        <div class="card p-2 overflow-y-auto over d-flex" style="height: 344px; max-width: 2000px;">
+            <div class="row m-0">
+                @{
+                    foreach (Genres genre in Model.AllGenres)
                     {
-                        <div class="align-items-center p-0" style="width: 300px;">
-                            <span class="align-middle ">@genre.GenreName
-                                <form style="width:fit-content" method="post" asp-page-handler="DeleteGenre">
-                                <input type="number" hidden asp-for="GenreID" value="@genre.GenreId" />
-                                    <button class="form-control float-end" style="width: 200px; background-color: tomato;" type="submit">delete @genre.GenreName</button>
-                                </form>
-                            </span>
-                        </div>                        
+                        if (genre.Deleted != true)
+                        {
+                            <div class="align-items-center p-0 row" style="width: 500px;">
+                                <span class="align-middle " style="width: 200px">@genre.GenreName</span>
+                                    <form style="width:fit-content" method="post" asp-page-handler="DeleteGenre">
+                                    <input type="number" hidden asp-for="GenreID" value="@genre.GenreId" />
+                                        <input type="submit" class="form-control float-end" style="width: 200px; background-color: gray;" value="delete @genre.GenreName" />
+                                    </form>
+                            </div>                        
+                        }
                     }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>

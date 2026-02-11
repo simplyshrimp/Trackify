@@ -38,6 +38,7 @@ namespace Trackify.Service
         /*genres*/
         public void CreateGenre(string genreName);
         public List<Genres> GetAllGenres();
+        public List<Genres> GetAllUndeletedGenres();
         public Genres GetGenreByID(int genreID);
         public void DeleteGenreByID(int genreID);
 
