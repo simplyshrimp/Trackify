@@ -53,7 +53,7 @@ namespace Trackify.Pages.Artist
 
         [BindProperty]
         public int PlaylistId { get; set; }
-        public void OnGetAsync()
+        public void OnGet()
         {
             album = musicMethod.GetAlbumByID(id);
             totalTime = musicMethod.GetTotalDuration(id);
@@ -179,9 +179,9 @@ namespace Trackify.Pages.Artist
             Songs song = musicMethod.GetSongByID(Song);
             Albums album = musicMethod.GetAlbumByID(song.albumId);
             string imagePath = album.albumImage;
-            int playlistId = musicMethod.CreatePlaylist((int)id, song.title, imagePath, album.color, true);
+            int playlistId = musicMethod.CreatePlaylist((int)HttpContext.Session.GetInt32("Id"), song.title, imagePath, album.color, true);
             musicMethod.AddSongToPlaylist(Song, playlistId);
-            return Redirect($"/Artist/Album/{id}");
+            return RedirectToPage($"/Artist/Album/{album.albumId}");
         }
         public IActionResult OnPostAddSongToPlaylist()
         {
