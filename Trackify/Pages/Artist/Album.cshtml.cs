@@ -174,6 +174,15 @@ namespace Trackify.Pages.Artist
             allUsersPlaylists = musicMethod.GetAllUserPlaylists((int)HttpContext.Session.GetInt32("Id"));
             return allUsersPlaylists;
         }
+        public IActionResult OnPostCreatePlaylist()
+        {
+            Songs song = musicMethod.GetSongByID(Song);
+            Albums album = musicMethod.GetAlbumByID(song.albumId);
+            string imagePath = album.albumImage;
+            int playlistId = musicMethod.CreatePlaylist((int)id, song.title, imagePath, album.color, true);
+            musicMethod.AddSongToPlaylist(Song, playlistId);
+            return Redirect($"/Artist/Album/{id}");
+        }
         public IActionResult OnPostAddSongToPlaylist()
         {
             musicMethod.AddSongToPlaylist(Song, PlaylistId);
