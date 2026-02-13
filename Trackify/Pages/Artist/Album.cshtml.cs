@@ -177,11 +177,11 @@ namespace Trackify.Pages.Artist
         public IActionResult OnPostCreatePlaylist()
         {
             Songs song = musicMethod.GetSongByID(Song);
-            Albums album = musicMethod.GetAlbumByID(song.albumId);
+            Albums songAlbum = musicMethod.GetAlbumByID(song.albumId);
             string imagePath = album.albumImage;
             int playlistId = musicMethod.CreatePlaylist((int)HttpContext.Session.GetInt32("Id"), song.title, imagePath, album.color, true);
             musicMethod.AddSongToPlaylist(Song, playlistId);
-            return RedirectToPage($"/Artist/Album/{album.albumId}");
+            return Redirect($"/Artist/Album/{album.albumId}");
         }
         public IActionResult OnPostAddSongToPlaylist()
         {
