@@ -150,25 +150,11 @@
             <div class="modal-body">
                 <form method="post" enctype="multipart/form-data" asp-page-handler="DeletePlaylist">
                     <div class="row">
-                        <div class="col-7">
-                            <input type="file" asp-for="NewCover" />
-                        </div>
-                        <div class="col-2 ms-3">
-                            <input type="color" value="@playlist.PlaylistsColor" asp-for="NewColor" />
-                        </div>
-                    </div>
-                    <div class="pt-5">
-                        <input maxlength="255" class="form-control" placeholder="@playlist.PlaylistName" asp-for="NewTitle" />
-                    </div> <br />
-                    <label>current: @Model.PrivacyStatus</label> <br />
-                    <select asp-for="NewPrivacy">
-                        <option selected>change privacy</option>
-                        <option value="true">Private</option>
-                        <option value="false">Public</option>
-                    </select>
-                    <div class="form-control invisible"> </div><br />
-                    <div class="d-flex justify-content-end mb-3">
 
+                    <div class="form-control invisible"> </div><br />
+                    <div class="d-flex justify-content-around mb-3">
+                        <input type="button" class="btn btn-danger col-3" data-bs-dismiss="modal" value="Cancel" />
+                            <div class="form-control invisible"> </div>
                         <input type="submit" class="btn btn-success border-success col-3" data-bs-dismiss="modal" value="Confirm" />
                     </div>
                 </form>
