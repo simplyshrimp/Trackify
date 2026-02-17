@@ -126,6 +126,7 @@
     {
         string imagePath = "/ImagesAndSongs/Playlists/Trackify-Album-Placeholder.png";
         int playlistId = music.CreatePlaylist((int)id, "New Playlist", imagePath, "#00000", true);
+        userPlaylists.Add(music.GetPlaylistByID(playlistId));
         return playlistId;
     }
     public async Task RedirectToPlaylist(int playlistId)

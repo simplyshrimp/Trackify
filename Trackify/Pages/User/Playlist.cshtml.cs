@@ -37,6 +37,10 @@ namespace Trackify.Pages.User
         [BindProperty]
         public int Song { get; set; }
 
+        //deletion
+        [BindProperty]
+        public int PlaylistID { get; set; }
+
         public IActionResult OnGet()
         {
             if (Id == 0)
@@ -118,6 +122,11 @@ namespace Trackify.Pages.User
 
             musicMethod.EditPlaylist(Playlist);
             return Redirect($"/User/Playlist/{Playlist.PlaylistId}");
+        }
+        public IActionResult OnPostDeletePlaylist()
+        {
+            musicMethod.DeletePlaylist(Id);
+            return RedirectToPage("/HomePage");
         }
     }
 }
