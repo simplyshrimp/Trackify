@@ -9,9 +9,11 @@ namespace Trackify.Pages.User
     public class ProfileModel : PageModel
     {
         private readonly IUser userMethod;
-        public ProfileModel(IUser user)
+        private readonly IMusic musicMethod;
+        public ProfileModel(IUser user, IMusic music)
         {
             userMethod = user;
+            musicMethod = music;
         }
 
         //for displaying profile
@@ -29,6 +31,7 @@ namespace Trackify.Pages.User
         public string NewNickname { get; set; }
 
         public Users user = new Users();
+        public List<Playlists> userPlaylists = new List<Playlists>();
         //methods
         public IActionResult OnGet()
         {
@@ -37,6 +40,7 @@ namespace Trackify.Pages.User
                 if (Id != 0)
                 {
                     user = userMethod.GetUserByID((int)Id);
+                    userPlaylists = musicMethod.GetAllUserPlaylists(Id); //seperate public
                     return Page();
                 }
                 else

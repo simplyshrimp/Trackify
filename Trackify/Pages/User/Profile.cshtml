@@ -41,8 +41,20 @@
                             <h1 class="fw-bold" style="font-size: 6em; text-overflow: ellipsis; white-space: nowrap ;overflow: hidden; width: 1000px;">@Model.user.nickname</h1>
                         }
                     }
-                    <span class="small">{WIP} public playlists • </span>
+                    <span class="small">@Model.userPlaylists.Count public playlists • </span>
                 </div>
+            </div>
+            <div class="">
+            @{
+                foreach (Playlists playlist in Model.userPlaylists)
+                {
+                    <div class="card">
+                        <img src="@playlist.PlaylistImage">
+                        <span>@playlist.PlaylistName</span>
+                    </div>
+                }
+                //fix image size and don't allow the thing to expand
+            } 
             </div>
         </div>
     </div>
