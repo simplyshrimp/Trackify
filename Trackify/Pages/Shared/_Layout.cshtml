@@ -78,13 +78,13 @@
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end dd" style="background-color: #282828;">
                                             <li>
-                                                <a class="dditem" asp-page="/User/Account">
-                                                    <button class="dditem btn w-100 text-start">Account</button>
+                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
+                                                    <button class="dditem btn w-100 text-start">Profile</button>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dditem" asp-route-id="@Context.Session.GetInt32("Id")" asp-page="/User/Profile">
-                                                    <button class="dditem btn w-100 text-start">Profile</button>
+                                                <a class="dditem" asp-page="/User/Account">
+                                                    <button class="dditem btn w-100 text-start">Account</button>
                                                 </a>
                                             </li>
                                             <li>

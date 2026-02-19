@@ -96,7 +96,7 @@ namespace Trackify.Pages.User
                     { file.Delete(); }
                 }
 
-                string imagePath = $"/ImagesAndSongs/Users/{Id}{Guid.NewGuid().ToString()}{Path.GetExtension(NewCover.FileName)}";
+                string imagePath = $"/ImagesAndSongs/Playlists/{Id}{Guid.NewGuid().ToString()}{Path.GetExtension(NewCover.FileName)}";
 
                 string filePath = $"{Directory.GetCurrentDirectory()}/wwwroot/{imagePath}";
                 using var filestream = new FileStream(filePath, FileMode.Create);
