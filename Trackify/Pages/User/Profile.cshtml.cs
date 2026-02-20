@@ -31,7 +31,9 @@ namespace Trackify.Pages.User
         public string NewNickname { get; set; }
 
         public Users user = new Users();
-        public List<Playlists> userPlaylists = new List<Playlists>();
+        public List<Playlists> userAllPlaylists = new List<Playlists>();
+        public List<Playlists> userPublicPlaylists = new List<Playlists>();
+
         //methods
         public IActionResult OnGet()
         {
@@ -40,7 +42,12 @@ namespace Trackify.Pages.User
                 if (Id != 0)
                 {
                     user = userMethod.GetUserByID((int)Id);
-                    userPlaylists = musicMethod.GetAllUserPlaylists(Id); //seperate public
+                    userAllPlaylists = musicMethod.GetAllUserPlaylists(Id); //seperate public
+                    foreach(Playlists playlist in userAllPlaylists)
+                    {
+                        if(playlist.MadePrivate == false)
+                            userPublicPlaylists.Add(playlist);
+                    }
                     return Page();
                 }
                 else

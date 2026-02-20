@@ -41,13 +41,13 @@
                             <h1 class="fw-bold" style="font-size: 6em; text-overflow: ellipsis; white-space: nowrap ;overflow: hidden; width: 1000px;">@Model.user.nickname</h1>
                         }
                     }
-                    <span class="small">@Model.userPlaylists.Count public playlists • </span>
+                    <span class="small">@Model.userPublicPlaylists.Count public playlists • </span>
                 </div>
             </div>
             <div class="row gap-2 pt-5">
             <span class="fw-semibold h3">Playlists</span>
             @{
-                foreach (Playlists playlist in Model.userPlaylists)
+                foreach (Playlists playlist in Model.userPublicPlaylists)
                 {
                     <div class="card pt-2" style="height:220px; width:180px">
                         <a class="text-reset" style="width: 157px" id="clickable-link" asp-page="/User/Playlist" asp-route-id="@playlist.PlaylistId">
