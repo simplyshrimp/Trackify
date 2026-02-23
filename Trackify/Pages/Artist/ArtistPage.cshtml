@@ -17,8 +17,8 @@
 
 
     <!-- profile pic and info -->
-    <div class="col-9 flex-grow-1 p-0 h-100" style="height: 696px;">
-        <div class="card h-100 p-5" style="min-height: 696px; background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
+    <div class="col-9 flex-grow-1 p-0 h-100" style="max-height: 696px;">
+        <div class="card h-100 p-5" style="height: 696px; background: linear-gradient(to bottom, @Model.user.color 0%, #121212 25%);">
             <div class="row p-0 m-0 mb-5">
                 @{
                     if (HttpContext.Session.GetInt32("Id") == Model.user.userId)
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="row p-0 m-0 overflow-auto gap-2">
+            <div class="row p-0 m-0 overflow-y-auto gap-2" style="height: 350px">
                 @{
                     foreach (Albums album in ArtistAlbums)
                     {

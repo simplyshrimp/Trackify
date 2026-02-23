@@ -11,9 +11,12 @@
             @{
                 foreach (Genres genre in allGenres)
                 {
-                    <div class="card d-flex justify-content-center align-items-center" style="height: 250px; width: 250px;">
-                        <a id="clickable-link" class="h2" asp-page="/Artist/Genre" asp-route-GenreID="@genre.GenreId">@genre.GenreName</a>
-                    </div>
+                    if (genre.Deleted != true)
+                    {
+                        <div class="card d-flex justify-content-center align-items-center" style="height: 250px; width: 250px;">
+                            <a id="clickable-link" class="h2" asp-page="/Artist/Genre" asp-route-GenreID="@genre.GenreId">@genre.GenreName</a>
+                        </div>                        
+                    }
                 }
             }
         </div>

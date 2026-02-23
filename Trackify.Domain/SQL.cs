@@ -703,7 +703,7 @@ namespace Trackify.Domain
                             albumImage = reader.GetString("AlbumImage"),
                             madePrivate = reader.GetBoolean("MadePrivate"),
                             color = reader.GetString("Color"),
-                            songs = GetSongsByArtist(artistID),
+                            songs = GetSongsByAlbum(reader.GetInt32("AlbumID")),
                         });
                     }
                 }
