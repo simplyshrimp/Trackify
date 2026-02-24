@@ -25,7 +25,10 @@
                             </div>
 
                         </form>
-                        <div class="col-8 ps-1 me-5" style="">@song.title</div>
+                        <div class="col-6 ps-1 me-5" style="">@song.title</div>
+                        <p class="m-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 157px">
+                            <a class="text-reset opacity-50 col-2" id="clickable-link" asp-route-ArtistId="@Model.GetSongArtist(song).artistID" asp-page="/Artist/ArtistPage">@Model.GetSongArtist(song).user.nickname</a>
+                        </p>
                         <div class="col-2 opacity-50" style="">@song.timesPlayed</div>
                         <div class="col-1 d-flex justify-content-end pe-2 align-items-center" style="">
                             <div>

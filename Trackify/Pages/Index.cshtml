@@ -25,7 +25,9 @@
                                 </p>
                             </a>
                             <a class="text-reset" id="clickable-link" asp-page="/Artist/ArtistPage" asp-route-ArtistId="@album.artist.artistID">
-                                <span class="small fw-semibold">@album.artist.user.nickname</span>
+                                <p class="m-0" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden; width: 157px">
+                                    <span class="small fw-semibold">@album.artist.user.nickname</span>
+                                </p>
                             </a>
                         </div>
                     }

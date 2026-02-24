@@ -36,7 +36,7 @@
                             <div class="p-2 row" style="height: 66px;">
                                 <img style="width: 74px;" src="@playlist.PlaylistImage" height="50" width="50" />
                                 <div class="ps-1" style ="width: fit-content">
-                                    <span class="p-0 fw-bold clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
+                                    <span class="p-0 fw-bold" id="clickable-link" @onclick="() => RedirectToPlaylist(playlist.PlaylistId)" style="width: fit-content">@playlist.PlaylistName</span>
                                     <br />
                                     <span style="width: fit-content">songs: @playlist.Songs.Count</span>
                                 </div>

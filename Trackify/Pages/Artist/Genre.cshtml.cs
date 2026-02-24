@@ -50,5 +50,9 @@ namespace Trackify.Pages.Artist
 
             return Redirect($"/Artist/Genre/{GenreID}");
         }
+        public Artists GetSongArtist(Songs song)
+        {
+            return usermethod.ShowArtistByID(song.artistId);
+        }
     }
 }
