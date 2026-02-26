@@ -4,20 +4,39 @@
     Layout = "_Layout2";
 }
 <div class="d-flex justify-content-center">
-    <div class="card" style="height: 500px">
+    <div class="card" style="height: 600px; width: 700px;">
         <span>Tell us about your album, it'll start as private so you can add songs before releasing it'</span>
-        <form method="post" enctype="multipart/form-data">
-            <input placeholder="Title" maxlength="255" asp-for="Title"/> <!--maybe do the textbox thingy? get this to work first though-->
-            <select asp-for="AlbumTypeInput">
-                <option selected>Choose your album type</option>
-                <option value="0">Single</option>
-                <option value="1">EP</option>
-                <option value="2">Album</option>
-                <option value="3">Soundtrack</option>
-            </select>
-            <input type="color" asp-for="Color" />
-            <input type="file" asp-for="AlbumCover" accept=".jpg, .png, .jpeg .webp" />
-            <input type="submit" asp-page="/Album"/>
-        </form>
+            <form method="post" enctype="multipart/form-data">
+                <div class="row p-2" style=" height: 300px;">
+                    <div class="col-5">
+                        <input type="file" asp-for="AlbumCover" accept=".jpg, .png, .jpeg" id="imgInp" /> <br />
+                        <img class="pt-2" id="preview" src="#" alt="your image here" height="200px" width="200px" />
+                    </div>
+                    <div class="col-7">
+                        <input class="mb-4 mt-4" placeholder="Title" maxlength="255" asp-for="Title"/> <br /> <!--maybe do the textbox thingy? get this to work first though-->
+                        <select class="mb-4" asp-for="AlbumTypeInput">
+                            <option selected>Choose your album type</option>
+                            <option value="0">Single</option>
+                            <option value="1">EP</option>
+                            <option value="2">Album</option>
+                            <option value="3">Soundtrack</option>
+                        </select> <br />
+                        <input type="color" asp-for="Color" />
+                
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <input class="" type="submit" asp-page="/Album"/>
+                </div>
+            </form>
     </div>
 </div>
+
+<script>
+    imgInp.onchange = evt => {
+      const [file] = imgInp.files
+      if (file) {
+        preview.src = URL.createObjectURL(file)
+      }
+    }
+</script>
