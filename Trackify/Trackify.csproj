@@ -19,4 +19,8 @@
     <Folder Include="wwwroot\ImagesAndSongs\Albums\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\jsmusic.js" />
+  </ItemGroup>
+
 </Project>
